@@ -20,7 +20,7 @@ Then it reads your materials, creates the structure, and drafts a VISION.md with
 
 **Shell script** (portable fallback):
 ```bash
-/home/mark/research/forge-methodology/scripts/bootstrap-research.sh ~/research/my-study --conversation ~/chats/exploration.md
+/home/mark/tuvium/projects/forge-methodology/scripts/bootstrap-research.sh ~/tuvium/projects/my-study --conversation ~/chats/exploration.md
 ```
 
 See [Conversation Bootstrapping](../concepts/conversation-bootstrapping.md) for details.
