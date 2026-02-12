@@ -1,0 +1,46 @@
+# Phase 3: Roadmap Creation
+
+## Purpose
+
+Break the stable design into an ordered sequence of implementable steps, each with clear entry criteria, exit criteria, and deliverables.
+
+## Inputs
+
+- Stabilized DESIGN.md
+- Research findings (for complexity estimation)
+
+## Outputs
+
+- **ROADMAP.md** — ordered implementation steps (see [template](../templates/ROADMAP-TEMPLATE.md))
+
+## Key Activities
+
+1. **Decompose the design** — Identify natural implementation boundaries. Each step should produce something testable.
+2. **Order by dependency** — What must exist before something else can be built? Data layer before service layer, interfaces before implementations.
+3. **Define entry/exit criteria per step** — Entry: what must be true to start. Exit: what must be true to consider it done.
+4. **Include standard early steps** — Every roadmap's first stage starts with design review, project scaffolding, [quality infrastructure](../concepts/quality-infrastructure.md) setup, and test infrastructure, before any implementation. See the [Roadmap Template](../templates/ROADMAP-TEMPLATE.md).
+5. **Group into stages** — Related steps form roadmap stages. Each stage ends with a [stage review](phase-review-template.md).
+6. **Identify the learnings structure** — What will you capture along the way? Set up the learnings file structure.
+
+## Exit Criteria
+
+- Every design component has at least one roadmap step
+- Stage 1 includes design review, project scaffolding, quality infrastructure, and test infrastructure steps
+- Steps are ordered with no circular dependencies
+- Each step has entry criteria, exit criteria, and expected deliverables
+- The first step can start immediately (no unmet entry criteria)
+- Learnings structure is defined
+
+## Relationship to Other Phases
+
+- **Consumes Phase 2** — translates design into implementation order
+- **Feeds Phase 4** — the roadmap is what the learning loop executes
+- First phase of the [Execution Pipeline](../concepts/execution-pipeline.md) — no more iteration with discovery phases
+
+## Anti-Patterns
+
+- **Steps without exit criteria** — "Implement the data layer" is not a step. "Data layer passes all schema tests and loads reference dataset" is.
+- **Too-large steps** — If a step takes more than a few focused sessions, break it down further.
+- **Too-small steps** — If a step produces nothing testable, merge it with the next step.
+- **Missing dependencies** — Step N requires something from Step M, but M comes after N.
+- **No learnings structure** — If you don't plan where learnings go, they get lost in chat history.
