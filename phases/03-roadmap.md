@@ -37,6 +37,16 @@ Break the stable design into an ordered sequence of implementable steps, each wi
 - **Feeds Phase 4** — the roadmap is what the learning loop executes
 - First phase of the [Execution Pipeline](../concepts/execution-pipeline.md) — no more iteration with discovery phases
 
+## Model Capability Considerations
+
+Different AI models vary in how reliably they follow structured process checklists. Roadmaps may need tailoring based on the model executing them:
+
+- **Frontier reasoning models** (e.g., Opus) — Strong at design decisions and architecture, but may skip process artifacts (learnings files, CLAUDE.md updates) in favor of "substance" work. Mitigation: prominent reminders at the top of the roadmap, and in the model's persistent memory.
+- **Instruction-following models** (e.g., Sonnet) — More literal with checklists and exit criteria, less likely to skip process steps. May make more conservative design choices.
+- **Smaller/local models** (e.g., 17B parameter) — May need even more structure: explicit sub-steps within each step, inline checklists rather than references to conventions sections, and shorter steps with fewer work items.
+
+**Key insight**: The exit criteria convention is easily missed when buried deep in a roadmap document. Place a prominent reminder near the top of the Overview section, not just in a Conventions section at the bottom.
+
 ## Anti-Patterns
 
 - **Steps without exit criteria** — "Implement the data layer" is not a step. "Data layer passes all schema tests and loads reference dataset" is.
@@ -44,3 +54,4 @@ Break the stable design into an ordered sequence of implementable steps, each wi
 - **Too-small steps** — If a step produces nothing testable, merge it with the next step.
 - **Missing dependencies** — Step N requires something from Step M, but M comes after N.
 - **No learnings structure** — If you don't plan where learnings go, they get lost in chat history.
+- **Exit criteria buried at the bottom** — If the standard exit criteria convention is only mentioned in a Conventions section at line 600+, models will miss it. Add a prominent callout in the Overview.

@@ -1,6 +1,7 @@
 # Roadmap: {{PROJECT_NAME}}
 
-> **Created**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Design version**: {{DESIGN_VERSION}}
 
 > **Note**: For research projects, use [ROADMAP-TEMPLATE-research.md](ROADMAP-TEMPLATE-research.md) instead. It includes context loading sections, go/no-go decision gates, and the pilot-then-full pattern.
@@ -8,6 +9,8 @@
 ## Overview
 
 {{ONE_PARAGRAPH_DESCRIBING_IMPLEMENTATION_ORDER_AND_RATIONALE}}
+
+> **Before every commit**: Verify ALL exit criteria for the current step are met — especially the standard items (see [Step Exit Criteria Convention](#step-exit-criteria-convention)). Do NOT remove exit criteria to mark a step complete — fulfill them.
 
 ## Stage 1: {{STAGE_NAME}}
 
@@ -285,3 +288,13 @@ Every step's exit criteria must include these items (in addition to step-specifi
 - [ ] Update `ROADMAP.md` checkboxes
 - [ ] COMMIT
 ```
+
+---
+
+## Revision History
+
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.
