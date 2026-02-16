@@ -316,6 +316,6 @@ Paper-QA's automatic citation tracking is a feature worth adopting — the Resea
 
 1. **Summary invalidation** — When should summaries be regenerated? When the summarization model improves? When the research question changes and needs different emphasis?
 2. **Cluster stability** — Re-clustering after adding papers may reassign existing papers to different clusters, invalidating cluster summaries. Should clusters be append-only with manual splits?
-3. **Cross-corpus search** — Should multiple projects share a corpus, or should each Forge project have its own? A shared corpus amortizes indexing cost but creates relevance noise.
+3. **Cross-corpus search** — Each Forge project has its own corpus. Cross-corpus queries are handled by a federation index (`KB-FEDERATION.md`) that routes agents to the right KB. See [Knowledge Base Architecture](knowledge-base-architecture.md) for the federation pattern.
 4. **Embedding fallback** — Is one embedding vector per paper (of the summary) worth maintaining for semantic fuzzy search, or does keyword search on LLM summaries suffice?
 5. **Implementation language** — Python (DuckDB + LLM APIs + PDF extraction all have Python-first libraries) or Java (consistency with Tuvium stack)?

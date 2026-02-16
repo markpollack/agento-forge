@@ -272,8 +272,54 @@ echo "data/expanded/" >> .gitignore
 echo "*.pyc" >> .gitignore
 ```
 
+## Two KB Types
+
+Research projects often produce knowledge artifacts that fall into two distinct patterns. Use the right structure for each:
+
+### Code-Agent KB
+
+For structured reference knowledge consumed by AI agents during task execution (migration, review, configuration).
+
+```
+code-agent-kb/
+├── index.md                    # Root routing table (≤100 lines)
+├── VOCABULARY.md               # Controlled vocabulary for faceted metadata
+├── NAVIGATOR-PROMPT.md         # Paste-ready consumer template
+├── {domain}/
+│   ├── index.md                # Domain routing + Negative Knowledge
+│   ├── CHEATSHEET.md           # Compact quick reference
+│   └── {topic}/
+│       ├── index.md
+│       └── {detail}.md
+└── findings/                   # Architectural findings
+```
+
+**Use when**: The output is a knowledge store that code agents will navigate at runtime. The content is stable reference material (API changes, migration guides, review checklists). Emerges during Phase 4.
+
+### Research-Partner KB
+
+For synthesized strategic knowledge consumed by an AI research partner for human thinking.
+
+```
+research-partner-kb/
+├── CLAUDE.md                   # Session bridge (orchestrator)
+├── synthesis/
+│   ├── THEME-INDEX.md          # Thematic routing
+│   ├── MASTER-SUMMARY.md       # Corpus overview
+│   └── phase2/                 # Theme deep-dives
+├── conversations/              # L0 source conversations (immutable)
+└── plans/
+    └── supporting_docs/
+        └── paper-tracker.md    # Literature tracking
+```
+
+**Use when**: The output is synthesized knowledge from conversations and research — themes, strategic decisions, action items. Emerges during Phase 1.
+
+See [Knowledge Base Architecture](../concepts/knowledge-base-architecture.md) for the full concept including faceted classification, librarian layer, two-agent design, and multi-KB federation.
+
 ## See Also
 
+- [Knowledge Base Architecture](../concepts/knowledge-base-architecture.md) — Full KB architecture concept
 - [Research Variant Guide](../variants/research.md) — Full research methodology
 - [PROVENANCE-TEMPLATE.md](../templates/PROVENANCE-TEMPLATE.md) — Data lineage documentation
 - [Conversation Bootstrapping](../concepts/conversation-bootstrapping.md) — Using saved conversations

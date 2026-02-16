@@ -65,6 +65,7 @@ All three use the same phase structure. They differ in how "done" is measured. S
 - **[Judges and Evaluation](concepts/judges-and-evaluation.md)** — Deterministic judges, AI judges, and loss computation
 - **[Quality Infrastructure](concepts/quality-infrastructure.md)** — Automated quality checks set up early and running on every build
 - **[Prerequisite Designs](concepts/prerequisite-designs.md)** — Lightweight design docs for tooling and data prerequisites that emerge from research
+- **[Knowledge Base Architecture](concepts/knowledge-base-architecture.md)** — Two KB types (Code-Agent vs Research-Partner), librarian layer, faceted classification, multi-KB federation
 - **[Conversation Bootstrapping](concepts/conversation-bootstrapping.md)** — Starting projects from saved AI conversations as the natural entry point
 - **[Conversational Review](concepts/conversational-review.md)** — Using conversational AI to review discovery loop artifacts against the methodology
 
