@@ -1,6 +1,7 @@
 # Roadmap: {{PAPER_OR_STUDY_NAME}}
 
-> **Created**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Status**: Not started | In progress | Complete
 > **Vision version**: {{VISION_VERSION}}
 > **Variant**: Research
@@ -234,3 +235,13 @@ plans/learnings/
 ├── stage1-review.md
 └── archive/
 ```
+
+---
+
+## Revision History
+
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.

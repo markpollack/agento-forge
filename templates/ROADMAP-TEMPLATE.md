@@ -108,9 +108,9 @@
 
 ---
 
-### Steps 1.4–1.6: Evaluation Infrastructure (Agent Projects Only)
+### Steps 1.4–1.6: Evaluation Infrastructure (Eval-Agent Projects Only)
 
-> *Include these steps for agent projects. Skip for conventional software projects. See the [Evaluation Architecture section](../templates/DESIGN-TEMPLATE.md) in the design template.*
+> *Include these steps for eval-agent projects. Skip for project variant. See the [Evaluation Architecture section](../templates/DESIGN-TEMPLATE.md) in the design template.*
 
 ```markdown
 ### Step 1.4: Benchmark Case Models
@@ -194,7 +194,7 @@
 
 ### Agent Projects: Benchmark Stage Template
 
-> *Include as a dedicated stage (typically the last or second-to-last) for agent projects.*
+> *Include as a dedicated stage (typically the last or second-to-last) for eval-agent projects.*
 
 ```markdown
 ## Stage N: Judges and Benchmarking

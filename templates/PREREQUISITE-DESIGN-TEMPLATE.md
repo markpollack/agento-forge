@@ -1,6 +1,7 @@
 # Prerequisite Design: {{TOOL_NAME}}
 
-> **Created**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Parent project**: {{PROJECT_NAME}}
 > **Feeds into**: {{WHAT_THIS_ENABLES}} (e.g., "Main DESIGN.md — provides validation corpus")
 
@@ -50,3 +51,13 @@
 
 1. {{OPEN_QUESTION_1}}
 2. {{OPEN_QUESTION_2}}
+
+---
+
+## Revision History
+
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.

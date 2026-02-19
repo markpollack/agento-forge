@@ -1,7 +1,7 @@
 # Paper Tracker: {{RESEARCH_AREA}}
 
-> **Created**: {{DATE}}
-> **Last updated**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 
 A structured inventory of papers relevant to this research. Organized by topic with reading priority.
 
@@ -97,7 +97,7 @@ Document the searches performed to find papers:
 
 | Date | Query | Source | Results |
 |------|-------|--------|---------|
-| {{DATE}} | {{SEARCH_QUERY}} | Google Scholar / Semantic Scholar / dblp | {{N results}}, {{N relevant}} |
+| {{DATETIME}} | {{SEARCH_QUERY}} | Google Scholar / Semantic Scholar / dblp | {{N results}}, {{N relevant}} |
 
 ---
 
@@ -119,5 +119,5 @@ Papers that should be cited together:
 
 | Date | Action |
 |------|--------|
-| {{DATE}} | Initial tracker created |
+| {{DATETIME}} | Initial tracker created |
 | | |

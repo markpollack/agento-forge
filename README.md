@@ -6,13 +6,14 @@ Forge structures the messy process of creating something new into repeatable pha
 
 ## Choose Your Variant
 
-Forge supports three project types. Start here:
+Forge supports four project types. Start here:
 
 | Variant | Use when... | Guide |
 |---------|-------------|-------|
-| **Agent** | Building an AI agent with automated evaluation | [variants/agent.md](variants/agent.md) |
-| **Software** | Building conventional software | [variants/project.md](variants/project.md) |
+| **Eval-Agent** | Building an autonomous agent with judge-based evaluation | [variants/agent.md](variants/agent.md) |
+| **Project** | Bootstrapping new software projects | [variants/project.md](variants/project.md) |
 | **Research** | Conducting research (papers, studies, investigations) | [variants/research.md](variants/research.md) |
+| **Steward** | Ongoing stewardship of an active project or domain | [variants/steward.md](variants/steward.md) |
 
 Not sure which to choose? See [variants/README.md](variants/README.md) for a detailed comparison.
 
@@ -51,9 +52,10 @@ The **Execution Pipeline** is sequential — you commit to a roadmap, execute it
 
 Phase 4 adapts its feedback mechanism based on what you're building:
 
-- **Agent creation** — a loss-function optimization loop. Execute tests, compute loss, analyze capability gaps, modify the agent, repeat until loss converges.
-- **Software creation** — a QA review loop. Implement a roadmap stage, run a structured review, fix findings by severity, repeat until zero blocking issues remain.
+- **Eval-agent** — a loss-function optimization loop. Execute tests, compute loss, analyze capability gaps, modify the agent, repeat until loss converges.
+- **Project** — a QA review loop. Implement a roadmap stage, run a structured review, fix findings by severity, repeat until zero blocking issues remain.
 - **Research** — a knowledge quality loop. Execute analysis, evaluate claims against evidence, refine hypotheses, repeat until claims are publication-ready.
+- **Steward** — a health monitoring loop. Check project health, review incoming changes, maintain KB currency, plan development work. Continuous, not convergent.
 
 All three use the same phase structure. They differ in how "done" is measured. See [Judges and Evaluation](concepts/judges-and-evaluation.md) for agent evaluation, and [Research Loop](concepts/research-loop.md) for research evaluation.
 
@@ -96,8 +98,8 @@ Ready-to-use templates for each phase output:
 
 Minimal project structure examples:
 
-- **[Agent Project](examples/agent-project/)** — AI agent with automated evaluation
-- **[Software Project](examples/software-project/)** — Conventional software with QA review
+- **[Eval-Agent Project](examples/agent-project/)** — Autonomous agent with judge-based evaluation
+- **[Project Variant](examples/software-project/)** — Software project with QA review
 - **[Research Project](examples/research-project/)** — Research with multi-roadmap pattern
 
 ## Philosophy
@@ -113,7 +115,7 @@ Most AI development guides focus on prompt engineering or tool configuration. Fo
 - It separates discovery (iterative, exploratory) from execution (sequential, disciplined)
 - It treats evaluation as a first-class concern, not an afterthought
 - It produces learnings as a primary artifact, not just code
-- It works for both AI agents and conventional software projects
+- It works for AI agents, software projects, research programs, and ongoing stewardship
 
 ## License
 

@@ -1,6 +1,6 @@
-# Software Project Example
+# Project Variant Example
 
-A minimal example of a software project structure using the Forge methodology.
+A minimal example of a project variant structure using the Forge methodology.
 
 ## Structure
 
@@ -127,6 +127,6 @@ public interface Parser<T> {
 
 ## See Also
 
-- [Software Variant Guide](../../variants/project.md)
+- [Project Variant Guide](../../variants/project.md)
 - [Phase Review Template](../../phases/phase-review-template.md)
 - [Quality Infrastructure](../../concepts/quality-infrastructure.md)

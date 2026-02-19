@@ -10,7 +10,7 @@
 
 In the Forge Methodology, Phase 4 (Learning Loop) executes roadmap steps iteratively. Each **roadmap stage** (a group of related steps) ends with a structured review before proceeding to the next stage. This review is a **compound judge** — it evaluates API design, code quality, documentation grammar, and design conformance in a single pass.
 
-> **Note for research projects**: This template is designed for software and agent projects. Research projects use a **knowledge quality review** instead, evaluating whether claims are supported by evidence, threats to validity are acknowledged, and findings are reproducible. See the [research variant guide](../variants/research.md) and [research loop concept](../concepts/research-loop.md) for the L₁/L₂/L₃ evaluation framework.
+> **Note for research projects**: This template is designed for project and eval-agent variants. Research projects use a **knowledge quality review** instead, evaluating whether claims are supported by evidence, threats to validity are acknowledged, and findings are reproducible. See the [research variant guide](../variants/research.md) and [research loop concept](../concepts/research-loop.md) for the L₁/L₂/L₃ evaluation framework.
 
 ```
 Phase 4: Learning Loop

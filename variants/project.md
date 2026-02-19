@@ -1,24 +1,25 @@
-# Software Variant
+# Project Variant
 
-Building conventional software with QA review feedback.
+Bootstrapping new software projects through discovery, build, and handoff.
 
 ## When to Use
 
-Use the software variant when:
+Use the project variant when:
 
 - You're building a library, service, application, or tool
 - Quality is measured through code review, testing, and documentation
 - The output is deployable software with users
 - Success means "it works correctly and is maintainable"
 
-## Key Differences from Agent Projects
+## Key Differences from Other Variants
 
-| Aspect | Software | Agent |
-|--------|----------|-------|
+| Aspect | Project | Eval-Agent |
+|--------|---------|-----------|
 | Phase 4 feedback | QA review loop | Loss optimization loop |
 | Success metric | Zero blocking review findings | Loss converges below threshold |
 | Evaluation | Human review + automated tests | Automated judges |
 | Artifacts | Test suites, documentation | Benchmark cases, judges |
+| Lifecycle | Finite (build + ship) | Finite (converge) |
 
 ## Discovery Loop (Phases 0-2)
 
@@ -51,7 +52,7 @@ Use [DESIGN-TEMPLATE.md](../templates/DESIGN-TEMPLATE.md) to specify:
 - Data models
 - Design decisions with rationale
 
-**Skip the Evaluation Architecture section** — that's for agent projects only.
+**Skip the Evaluation Architecture section** — that's for eval-agent projects only.
 
 ## Execution Pipeline (Phases 3-5)
 
@@ -67,7 +68,7 @@ Each step has entry criteria, work items, and exit criteria. End each stage with
 
 ### Phase 4: QA Review Loop
 
-The software variant uses a **QA review loop** for feedback:
+The project variant uses a **QA review loop** for feedback:
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -113,7 +114,28 @@ Document for users:
 - [Discovery Loop](../concepts/discovery-loop.md) — When to exit the iterative discovery phases
 - [Execution Pipeline](../concepts/execution-pipeline.md) — How feedback flows in phases 3-5
 - [Conversational Review](../concepts/conversational-review.md) — Using AI to review discovery artifacts
+- [Hierarchical Reporting](../concepts/hierarchical-reporting.md) — Status reports with phase progress and blocking issues
 
 ## Example
 
-See [examples/software-project/](../examples/software-project/) for a minimal software project structure.
+See [examples/software-project/](../examples/software-project/) for a minimal project variant structure.
+
+## Handoff to Steward
+
+The project variant has a finite lifecycle — it ends when Phase 5 (docs) is complete and the software is shipped. For ongoing maintenance, the project transitions to the [Steward variant](steward.md):
+
+```
+Project Variant (bootstrap) ──handoff──> Steward Variant (maintain & evolve)
+```
+
+**Handoff conditions:**
+- Phase 5 (documentation) complete
+- Project is live and has users or consumers
+- Ongoing development, monitoring, or KB maintenance is expected
+
+**What transfers:**
+- Knowledge accumulated during build phases becomes the steward's initial KB
+- The build-phase CLAUDE.md is augmented (not replaced) with steward sections
+- Roadmap items deferred during build become the steward's initial development queue
+
+See [Steward variant](steward.md) for the ongoing lifecycle.

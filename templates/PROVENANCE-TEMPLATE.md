@@ -1,7 +1,7 @@
 # Data Provenance: {{DATASET_NAME}}
 
-> **Created**: {{DATE}}
-> **Last updated**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Version**: {{VERSION}}
 
 This document tracks the lineage of data from source through analysis-ready form. Required for reproducibility.
@@ -30,7 +30,7 @@ Where the raw data came from:
 |-------|-------|
 | **Source** | {{SOURCE_NAME}} (e.g., GitHub API, survey, web scrape) |
 | **Access method** | {{HOW_ACCESSED}} (API, download, manual) |
-| **Access date** | {{DATE}} |
+| **Access date** | {{DATETIME}} |
 | **Credentials** | {{CREDENTIAL_TYPE}} (PAT, API key, none) |
 | **Rate limits** | {{RATE_LIMIT_INFO}} |
 
@@ -176,7 +176,7 @@ python scripts/verify_data.py
 
 | Date | Version | Change | Impact |
 |------|---------|--------|--------|
-| {{DATE}} | 1.0 | Initial collection | — |
+| {{DATETIME}} | 1.0 | Initial collection | — |
 | | | | |
 
 ---

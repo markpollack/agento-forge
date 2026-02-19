@@ -1,6 +1,6 @@
-# Agent Project Example
+# Eval-Agent Project Example
 
-A minimal example of an agent project structure using the Forge methodology.
+A minimal example of an eval-agent project structure using the Forge methodology.
 
 ## Structure
 
@@ -107,6 +107,6 @@ Include benchmark stage near the end:
 
 ## See Also
 
-- [Agent Variant Guide](../../variants/agent.md)
+- [Eval-Agent Variant Guide](../../variants/agent.md)
 - [Judges and Evaluation](../../concepts/judges-and-evaluation.md)
 - [DESIGN-TEMPLATE.md](../../templates/DESIGN-TEMPLATE.md) — includes Evaluation Architecture section

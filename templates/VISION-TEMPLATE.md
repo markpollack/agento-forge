@@ -1,6 +1,7 @@
 # Vision: {{PROJECT_NAME}}
 
-> **Created**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Status**: Draft | Stable
 
 > **Note**: For research projects (papers, studies, investigations), use [VISION-TEMPLATE-research.md](VISION-TEMPLATE-research.md) instead. It includes hypothesis tracking, unknowns management, and paper structure sections.
@@ -55,6 +56,8 @@ What are you assuming to be true? Each assumption is a risk if wrong.
 
 ## Revision History
 
-| Date | Change | Trigger |
-|------|--------|---------|
-| {{DATE}} | Initial draft | — |
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`. These documents are living artifacts — inline revision history avoids needing to check git for change context.

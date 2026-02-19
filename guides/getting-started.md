@@ -14,13 +14,13 @@ Before diving in, identify which Forge variant fits your project:
 
 | Variant | Use when... | Guide |
 |---------|-------------|-------|
-| **Agent** | Building an AI agent with automated evaluation | [variants/agent.md](../variants/agent.md) |
-| **Software** | Building conventional software | [variants/project.md](../variants/project.md) |
+| **Eval-Agent** | Building an autonomous agent with judge-based evaluation | [variants/agent.md](../variants/agent.md) |
+| **Project** | Bootstrapping new software projects | [variants/project.md](../variants/project.md) |
 | **Research** | Conducting research (papers, studies) | [variants/research.md](../variants/research.md) |
 
 Not sure? See [variants/README.md](../variants/README.md) for a detailed comparison.
 
-The steps below assume the **software** or **agent** variant. For **research projects**, follow the [research variant guide](../variants/research.md) instead — it uses different templates and a different feedback loop (Vision↔Research iteration rather than QA review).
+The steps below assume the **project** or **eval-agent** variant. For **research projects**, follow the [research variant guide](../variants/research.md) instead — it uses different templates and a different feedback loop (Vision↔Research iteration rather than QA review).
 
 ## Step 0: Gather Your Conversations
 
@@ -125,7 +125,7 @@ Work through the roadmap. The feedback loop differs based on what you're buildin
 3. Fix MUST FIX / SHOULD FIX findings
 4. Repeat until zero blocking findings remain
 
-**For agents** — Optimization loop:
+**For eval-agents** — Optimization loop:
 1. Execute benchmark cases against the agent
 2. Compute loss from judge scores
 3. Analyze capability gaps (which cases fail? why?)

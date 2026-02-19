@@ -1,6 +1,6 @@
 # Learnings: {{PROJECT_NAME}}
 
-> **Last compacted**: {{DATE}}
+> **Last compacted**: {{DATETIME}}
 > **Covers through**: Phase {{N}}, Step {{X.Y}}
 
 This is the **Tier 1 compacted summary**. Read this first for the current state of project knowledge. For details on specific steps, see the per-step files (Tier 2).
@@ -54,3 +54,13 @@ Mistakes made during implementation that future steps should avoid:
 |------|------|-------|
 | `step-1.0-{{topic}}.md` | 1.0 | {{BRIEF_DESCRIPTION}} |
 | `step-1.1-{{topic}}.md` | 1.1 | {{BRIEF_DESCRIPTION}} |
+
+---
+
+## Revision History
+
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.

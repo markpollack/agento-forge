@@ -36,13 +36,14 @@ Use the research variant when:
 
 ## Key Differences from Other Variants
 
-| Aspect | Research | Software | Agent |
-|--------|----------|----------|-------|
-| Phase 4 feedback | Knowledge quality loop | QA review loop | Loss optimization loop |
-| Success metric | Claims supported by evidence | Zero blocking findings | Loss below threshold |
-| Primary artifact | Papers, datasets, findings | Working software | Trained/tuned agent |
-| Discovery pattern | Vision↔Research iteration | Vision→Research→Design | Vision→Research→Design |
-| Roadmap pattern | Multi-roadmap (per paper/study) | Single roadmap | Single roadmap |
+| Aspect | Research | Project | Eval-Agent | Steward |
+|--------|----------|---------|-----------|---------|
+| Phase 4 feedback | Knowledge quality loop | QA review loop | Loss optimization loop | Health monitoring loop |
+| Success metric | Claims supported by evidence | Zero blocking findings | Loss below threshold | Domain health maintained |
+| Primary artifact | Papers, datasets, findings | Working software | Trained/tuned agent | Maintained project + KB |
+| Discovery pattern | Vision↔Research iteration | Vision→Research→Design | Vision→Research→Design | Inherits from build phase |
+| Lifecycle | Finite (publish) | Finite (build + ship) | Finite (converge) | **Ongoing** (continuous) |
+| Roadmap pattern | Multi-roadmap (per paper/study) | Single roadmap | Single roadmap | Rolling (development queue) |
 
 ## The Vision↔Research Loop
 
@@ -283,6 +284,7 @@ Actively looking for ways the research could be wrong:
 - [Research Loop](../concepts/research-loop.md) — Vision↔Research iteration with L₁/L₂/L₃ loss
 - [Discovery Loop](../concepts/discovery-loop.md) — The broader iterative structure
 - [Conversation Bootstrapping](../concepts/conversation-bootstrapping.md) — Starting from saved AI conversations
+- [Hierarchical Reporting](../concepts/hierarchical-reporting.md) — Status reports with corpus state, hypothesis status, and foraging progress
 
 ## Example
 

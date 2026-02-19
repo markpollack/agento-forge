@@ -1,6 +1,7 @@
 # Research: {{PROJECT_NAME}}
 
-> **Created**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Vision version**: {{VISION_VERSION}} (e.g., v2 after first Discovery Loop iteration)
 
 ## Research Questions
@@ -61,3 +62,13 @@ Questions that emerged during research (feed back to VISION.md):
 ## Summary
 
 {{ONE_PARAGRAPH_SUMMARY_OF_KEY_FINDINGS}}
+
+---
+
+## Revision History
+
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.

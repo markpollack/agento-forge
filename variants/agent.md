@@ -1,19 +1,19 @@
-# Agent Variant
+# Eval-Agent Variant
 
-Building AI agents with automated evaluation and loss-function optimization.
+Building autonomous agents with judge-based evaluation and loss optimization.
 
 ## When to Use
 
-Use the agent variant when:
+Use the eval-agent variant when:
 
 - You're building an AI agent that completes tasks (code generation, classification, planning, etc.)
 - Success is measurable through automated judges
 - You want iterative improvement guided by a loss function
 - The agent interacts with external systems (APIs, tools, environments)
 
-## Key Differences from Software Projects
+## Key Differences from Other Variants
 
-| Aspect | Agent | Software |
+| Aspect | Eval-Agent | Project |
 |--------|-------|----------|
 | Phase 4 feedback | Loss optimization loop | QA review loop |
 | Success metric | Loss converges below threshold | Zero blocking review findings |
@@ -22,7 +22,7 @@ Use the agent variant when:
 
 ## Discovery Loop (Phases 0-2)
 
-The Discovery Loop is the same as for software projects:
+The Discovery Loop is the same as for project variant:
 
 1. **Vision** — Define what the agent does, success criteria, scope
 2. **Research** — Investigate similar agents, evaluation approaches, baseline performance
@@ -30,7 +30,7 @@ The Discovery Loop is the same as for software projects:
 
 ### Evaluation Architecture Section
 
-The DESIGN.md for agent projects must include:
+The DESIGN.md for eval-agent projects must include:
 
 ```markdown
 ## Evaluation Architecture
@@ -66,7 +66,7 @@ See [DESIGN-TEMPLATE.md](../templates/DESIGN-TEMPLATE.md) for the full template.
 
 ### Phase 3: Roadmap
 
-Agent roadmaps include additional steps not needed for software projects:
+Eval-agent roadmaps include additional steps not needed for project variant:
 
 **Stage 1 additions (after test infrastructure):**
 
@@ -85,7 +85,7 @@ See [ROADMAP-TEMPLATE.md](../templates/ROADMAP-TEMPLATE.md) for the full templat
 
 ### Phase 4: Optimization Loop
 
-The agent variant uses a **loss-function optimization loop** instead of QA review:
+The eval-agent variant uses a **loss-function optimization loop** instead of QA review:
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -119,7 +119,7 @@ The agent variant uses a **loss-function optimization loop** instead of QA revie
 
 ### Phase 5: Documentation
 
-Agent documentation includes:
+Eval-agent documentation includes:
 
 - How to run the agent
 - Expected inputs and outputs
@@ -132,7 +132,8 @@ Agent documentation includes:
 - [Judges and Evaluation](../concepts/judges-and-evaluation.md) — How to design judges and compute loss
 - [Discovery Loop](../concepts/discovery-loop.md) — When to exit the iterative discovery phases
 - [Execution Pipeline](../concepts/execution-pipeline.md) — How feedback flows in phases 3-5
+- [Hierarchical Reporting](../concepts/hierarchical-reporting.md) — Status reports with experiment results, judge performance, and measurement gaps
 
 ## Example
 
-See [examples/agent-project/](../examples/agent-project/) for a minimal agent project structure.
+See [examples/agent-project/](../examples/agent-project/) for a minimal eval-agent project structure.

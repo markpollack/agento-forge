@@ -1,6 +1,7 @@
 # Vision: {{RESEARCH_PROGRAM_NAME}}
 
-> **Created**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Status**: Draft | Active | Stable
 > **Variant**: Research
 
@@ -164,6 +165,8 @@ Preliminary list of validity threats. Refine during Vision↔Research iteration.
 
 ## Revision History
 
-| Date | Change | Trigger |
-|------|--------|---------|
-| {{DATE}} | Initial draft | — |
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.

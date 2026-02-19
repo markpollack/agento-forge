@@ -1,6 +1,7 @@
 # Design: {{PROJECT_NAME}}
 
-> **Created**: {{DATE}}
+> **Created**: {{DATETIME}}
+> **Last updated**: {{DATETIME}}
 > **Vision version**: {{VISION_VERSION}}
 > **Research version**: {{RESEARCH_VERSION}}
 
@@ -113,7 +114,7 @@ One-paragraph summary of the technical approach.
 
 ## Evaluation Architecture
 
-> *Include this section for agent projects. Skip for conventional software projects.*
+> *Include this section for eval-agent projects. Skip for project variant.*
 
 ### Agent Loop
 
@@ -157,3 +158,13 @@ loss = 1 - weighted_sum(judge_scores) / max_score
 Questions that don't block design but should be resolved before or during implementation:
 
 1. {{OPEN_QUESTION_1}}
+
+---
+
+## Revision History
+
+| Timestamp | Change | Trigger |
+|-----------|--------|---------|
+| {{DATETIME}} | Initial draft | — |
+
+> **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`. These documents are living artifacts — inline revision history avoids needing to check git for change context.
