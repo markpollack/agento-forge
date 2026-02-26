@@ -37,6 +37,7 @@
 
 **Entry criteria**:
 - [ ] Step 1.0 complete
+- [ ] Read: `plans/learnings/step-1.0-design-review.md` — prior step learnings
 - [ ] Read: `DESIGN.md` — Build Coordinates section (groupId, artifactId, module structure, base package, dependencies)
 
 **Work items**:
@@ -66,6 +67,7 @@
 
 **Entry criteria**:
 - [ ] Step 1.1 complete (buildable project exists)
+- [ ] Read: `plans/learnings/step-1.1-project-scaffolding.md` — prior step learnings
 
 **Work items**:
 - [ ] CONFIGURE test coverage tool (see [quality guide](../guides/))
@@ -92,6 +94,7 @@
 
 **Entry criteria**:
 - [ ] Step 1.2 complete
+- [ ] Read: `plans/learnings/step-1.2-quality-infrastructure.md` — prior step learnings
 
 **Work items**:
 - [ ] CREATE test fixtures and shared test data
@@ -181,6 +184,7 @@
 
 **Entry criteria**:
 - [ ] Previous step exit criteria met
+- [ ] Read: `plans/learnings/step-{{PREV}}-{{topic}}.md` — prior step learnings
 
 **Work items**:
 - [ ] {{WORK_ITEM_1}}
@@ -230,20 +234,30 @@
 
 ---
 
-### Step 1.K: Stage 1 Cleanup and Review
+### Step 1.K: Stage 1 Consolidation and Review
 
 **Entry criteria**:
 - [ ] All Stage 1 steps complete
+- [ ] Read: all `plans/learnings/step-1.*` files from this stage
 
 **Work items**:
+- [ ] COMPACT learnings from all Stage 1 steps into `plans/learnings/LEARNINGS.md`
+  - Key discoveries that changed the approach
+  - Patterns established during implementation
+  - Deviations from design with rationale
+  - Common pitfalls to avoid in future stages
+- [ ] UPDATE `CLAUDE.md` with distilled learnings from the full stage
 - [ ] Generate stage review prompt (`plans/prompts/stage1-review-prompt.md`)
 - [ ] Run stage review (see [review template](../phases/phase-review-template.md))
 - [ ] Address MUST FIX and SHOULD FIX findings
-- [ ] Compact learnings into summary
 
 **Exit criteria**:
+- [ ] `LEARNINGS.md` updated with compacted summary covering Stage 1
 - [ ] Stage review passes (zero MUST FIX findings)
-- [ ] Learnings compacted
+- [ ] Create: `plans/learnings/step-1.K-stage1-summary.md`
+- [ ] Update `CLAUDE.md` with distilled learnings
+- [ ] Update `ROADMAP.md` checkboxes
+- [ ] COMMIT
 
 ---
 
@@ -277,6 +291,17 @@ Every step ends with a git commit. Use this format:
 Step X.Y: Brief description of what was done
 ```
 
+### Step Entry Criteria Convention
+
+Every step's entry criteria must include (in addition to step-specific criteria):
+
+```markdown
+- [ ] Previous step complete
+- [ ] Read: `plans/learnings/step-{{PREV}}-{{topic}}.md` — prior step learnings
+```
+
+**Why**: Learnings from the previous step may contain discoveries, design changes, or pitfalls that affect the current step. Without this, context is lost between steps — especially across sessions.
+
 ### Step Exit Criteria Convention
 
 Every step's exit criteria must include these items (in addition to step-specific criteria):
@@ -288,6 +313,17 @@ Every step's exit criteria must include these items (in addition to step-specifi
 - [ ] Update `ROADMAP.md` checkboxes
 - [ ] COMMIT
 ```
+
+### Stage Consolidation Convention
+
+The last step of each stage (or the final stage) should be a **consolidation step** that:
+
+1. **Reads all per-step learnings** from the stage
+2. **Compacts learnings** into `plans/learnings/LEARNINGS.md` (key discoveries, patterns, deviations, pitfalls)
+3. **Updates `CLAUDE.md`** with the full stage's distilled learnings
+4. **Creates a stage summary** learnings file (e.g., `step-1.K-stage1-summary.md`)
+
+**Why**: Per-step learnings are detailed but fragmented. Without consolidation, the overall narrative is lost. `LEARNINGS.md` is the Tier 1 compacted summary that future stages and sessions read first.
 
 ---
 
