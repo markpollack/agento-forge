@@ -175,7 +175,7 @@ Code-Agent KBs use two agents with distinct roles:
 | **Curator** | `CLAUDE.md` | Classify, cross-reference, maintain routing tables | Read-write |
 | **Navigator** | `NAVIGATOR-PROMPT.md` | Route queries, follow routing tables, report gaps | Read-only |
 
-The **Curator** is the resident agent. It owns the KB — classifies new content, maintains cross-references, updates routing tables, enforces the controlled vocabulary. Its prompt (CLAUDE.md) contains intake workflows, maintenance workflows, and quality checklists.
+The **Curator** is the resident agent. It owns the KB — classifies new content, maintains cross-references, updates routing tables, enforces the controlled vocabulary. Its prompt (CLAUDE.md) contains intake workflows, maintenance workflows, and quality checklists. The Curator also handles batch intake — processing inbox directories of raw research results into classified KB entries. See [Curator Intake Protocol](../guides/curator-intake.md) for the repeatable workflow.
 
 The **Navigator** is a paste-ready template for consumer projects. It defines a 6-step navigation algorithm: read root index → follow routing → read cheatsheet → read detail files → search by facet → report gaps. Consumer projects paste this into their CLAUDE.md with a path substitution.
 

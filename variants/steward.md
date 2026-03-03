@@ -139,6 +139,9 @@ plans/knowledge/
 3. **Gap identification** — Note what's missing and flag to the human
 4. **Federation** — Maintain cross-references to external KBs via federation routing
 5. **Pruning** — Remove stale or incorrect entries
+6. **Concept coverage** — Verify every important concept (taxonomies, named patterns, tier counts) appears in the KB's glossary/KEY-CONCEPTS file. Operational concepts (jury architecture, gap types) are as important as strategic ones (moat, licensing)
+7. **Summary-source consistency** — When a summary file (THEME-INDEX, index.md) quotes a number, count, or taxonomy name, verify it still matches the source document. Definitions evolve; summaries lag
+8. **Batch intake** — Process `plans/inbox/` directories of raw research using the [Curator Intake Protocol](../guides/curator-intake.md)
 
 See [Knowledge Base Architecture](../concepts/knowledge-base-architecture.md) for the full KB structure specification.
 

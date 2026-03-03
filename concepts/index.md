@@ -21,6 +21,7 @@
 | How do I bootstrap a project from saved AI conversations? | `conversation-bootstrapping.md` |
 | What documentation types exist (tutorial, how-to, reference, explanation)? | `documentation-taxonomy.md` |
 | How do I collect and aggregate status across multiple projects? | `hierarchical-reporting.md` |
+| How do I batch-ingest research results into an existing KB? | `../guides/curator-intake.md` |
 
 ## Contents
 
