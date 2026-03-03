@@ -22,6 +22,7 @@
 | What documentation types exist (tutorial, how-to, reference, explanation)? | `documentation-taxonomy.md` |
 | How do I collect and aggregate status across multiple projects? | `hierarchical-reporting.md` |
 | How do I batch-ingest research results into an existing KB? | `../guides/curator-intake.md` |
+| How do I scout and collect references to bootstrap a new KB domain? | `../guides/reference-harvest.md` |
 
 ## Contents
 
