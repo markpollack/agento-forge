@@ -18,7 +18,9 @@
 | What is a steward and when do I need one? | `concepts/steward-agent.md` then `variants/steward.md` |
 | How do I review my design artifacts before implementation? | `concepts/conversational-review.md` |
 | What quality tools should I set up first? | `concepts/quality-infrastructure.md` |
-| How does Forge compare to other AI methodologies? | `inbox/bmad-vs-forge-comparison.md` |
+| How does Forge compare to other AI methodologies? | `inbox/bmad-vs-forge-comparison.md`, `inbox/another-ai-methodology.md` |
+| How does AGENTS.md relate to Forge? | `inbox/agents-md-and-plans-directory.md` |
+| How does OpenAI's PLANS.md compare to Forge? | `inbox/plans-md-convergence.md` |
 | What's the oracle learning loop? | `concepts/oracle-learning-loop.md` |
 
 ## Topic Routing
@@ -31,7 +33,7 @@
 | Project variants | `variants/` | Agent, project, research, steward — when to use each, key differences |
 | Guides | `guides/` | Getting started, Java quality checklist, research project structure |
 | Examples | `examples/` | Minimal directory structure examples for each variant |
-| Unsorted | `inbox/` | Methodology comparisons and raw research (staging area) |
+| Unsorted | `inbox/` | Methodology comparisons, AGENTS.md/PLANS.md convergence research (staging area) |
 
 ## Cross-Topic Questions
 

@@ -36,7 +36,7 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Core concepts (13 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns |
 | Templates (11 docs) | `templates/` | Fill-in templates for every phase output |
 | Getting started | `guides/getting-started.md` | Step-by-step walkthrough of applying Forge |
-| Methodology comparisons | `inbox/` | BMAD-METHOD comparison (staging area) |
+| Methodology comparisons & research | `inbox/` | BMAD-METHOD comparison, AGENTS.md standard, PLANS.md convergence (staging area) |
 
 ## Corpus Layout
 
