@@ -47,6 +47,29 @@ Different AI models vary in how reliably they follow structured process checklis
 
 **Key insight**: The exit criteria convention is easily missed when buried deep in a roadmap document. Place a prominent reminder near the top of the Overview section, not just in a Conventions section at the bottom.
 
+## Plans Directory Lifecycle
+
+During execution, the `plans/` directory accumulates more than just learnings. Research notes, design briefs, handoff documents, and future ideas arrive organically — often faster than they can be incorporated into the roadmap. The **inbox pattern** manages this:
+
+```
+plans/
+├── ROADMAP.md           # Execution plan
+├── DESIGN.md            # Architecture decisions
+├── inbox/               # Unprocessed: ideas, research briefs, handoff notes
+├── research/            # Active: reference material informing upcoming stages
+├── archive/             # Completed/superseded: kept for provenance, not consulted
+└── learnings/           # Per-step and compacted learnings
+```
+
+**Lifecycle**: Items start in `inbox/`. At stage boundaries (typically during consolidation steps), triage the inbox:
+- Items informing upcoming work → move to `research/`, link from roadmap steps
+- Completed or superseded items → move to `archive/`
+- Items that should become roadmap steps → incorporate into the roadmap, then archive the original
+
+When `inbox/` is empty, delete it. The goal is zero inbox at each wave boundary.
+
+This pattern emerged from building Loopy — research notes, gap analyses, and design briefs accumulated in inbox during Waves 1-2, then were triaged into research (active reference for Stage 7 steps) and archive (completed Wave 1 handoffs) when the wave completed.
+
 ## Anti-Patterns
 
 - **Steps without exit criteria** — "Implement the data layer" is not a step. "Data layer passes all schema tests and loads reference dataset" is.

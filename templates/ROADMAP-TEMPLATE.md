@@ -267,17 +267,27 @@
 
 ---
 
-## Learnings Structure
+## Plans Directory Structure
 
 ```
-plans/learnings/
-├── LEARNINGS.md              # Tier 1: Compacted summary
-├── step-1.0-{{topic}}.md    # Tier 2: Per-step details
-├── step-1.1-{{topic}}.md
-├── stage1-qa-review.md       # Stage review findings (iteration 1)
-├── stage1-qa-review-2.md     # Stage review findings (iteration 2, if needed)
-└── archive/                  # Tier 3: Historical records
+plans/
+├── ROADMAP.md                # This file — step-by-step execution plan
+├── DESIGN.md                 # Architecture decisions
+├── VISION.md                 # Product vision
+├── inbox/                    # Unprocessed ideas, research briefs, handoff notes
+│   └── (items arrive here during development)
+├── research/                 # Active reference material informing upcoming stages
+│   └── (promoted from inbox when linked to roadmap steps)
+├── archive/                  # Completed/superseded items (provenance, not consulted)
+│   └── (demoted from inbox when work is done)
+└── learnings/                # Per-step and compacted learnings
+    ├── LEARNINGS.md          # Tier 1: Compacted summary
+    ├── step-1.0-{{topic}}.md # Tier 2: Per-step details
+    ├── step-1.1-{{topic}}.md
+    └── stage1-qa-review.md   # Stage review findings
 ```
+
+**Inbox lifecycle**: At stage boundaries (consolidation steps), triage `inbox/` — promote active research to `research/`, archive completed items, incorporate actionable items into the roadmap. Delete `inbox/` when empty. See [Phase 3: Roadmap](../phases/03-roadmap.md) for details.
 
 ---
 
