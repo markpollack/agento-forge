@@ -199,7 +199,7 @@ Start by understanding the domain. Be conversational:
 Create the consumer project directory:
 
 ```bash
-mkdir -p {project}/plans/{learnings,prompts,research}
+mkdir -p {project}/plans/{learnings,prompts,research,inbox,archive}
 mkdir -p {project}/src/main/java/{base_package}/{agent,judge,dataset,config}
 mkdir -p {project}/src/test/java/{base_package}
 mkdir -p {project}/datasets
@@ -212,6 +212,12 @@ Copy templates from forge-methodology:
 - `{forge-methodology}/templates/VISION-TEMPLATE.md` → `{project}/plans/VISION.md`
 - `{forge-methodology}/templates/DESIGN-TEMPLATE.md` → `{project}/plans/DESIGN.md`
 - `{forge-methodology}/templates/ROADMAP-TEMPLATE.md` → `{project}/plans/ROADMAP.md`
+
+Also create these experiment-specific files (not in the generic template):
+- `{project}/experiment-config.yaml` — variant definitions (prompt file path, KB files, model)
+- `{project}/plans/prompts/v0-control.txt` — control prompt text (externalized from Java)
+- `{project}/plans/prompts/v1-hardened.txt` — hardened variant prompt
+- Additional prompt files per variant (one .txt file per variant)
 
 Create build file (pom.xml or equivalent) with dependencies:
 ```xml
@@ -346,31 +352,68 @@ Per-judge thresholds (preferred over composite loss):
 
 #### ROADMAP.md
 
-Use ROADMAP-TEMPLATE.md. For consumer projects, the stages are:
+**CRITICAL**: Use ROADMAP-TEMPLATE.md as the base. The template defines the step conventions that
+MUST be followed — do not write steps that skip these conventions:
+
+1. **Per-step entry criteria** must include reading the prior step's learnings file:
+   ```markdown
+   - [ ] Previous step complete
+   - [ ] Read: `plans/learnings/step-{PREV}-{topic}.md` — prior step learnings
+   ```
+
+2. **Per-step exit criteria** must include:
+   ```markdown
+   - [ ] All tests pass: `./mvnw test`
+   - [ ] Create: `plans/learnings/step-X.Y-{topic}.md`
+   - [ ] Update `CLAUDE.md` with distilled learnings
+   - [ ] Update `ROADMAP.md` checkboxes
+   - [ ] COMMIT: `Step X.Y: Brief description`
+   ```
+
+3. **Stage consolidation step** (last step of each stage): reads all prior step learnings,
+   compacts into `plans/learnings/LEARNINGS.md`, updates `CLAUDE.md`.
+
+4. **Inter-stage gate** (first step of Stage N > 1): entry criteria must read the Stage N-1
+   consolidation summary and `LEARNINGS.md` before any work begins.
+
+5. **Experiment variants are steps** in the ROADMAP (not forge project variants). Each variant
+   run is a step: `Step N.M: [Variant name] runs — Items X–Y`.
+
+6. **Sweeps** (N≥3 per item): introduced only after a variant shows promise on N=1 runs.
+   Early steps use N=1 for pipeline validation. Confirmation sweeps are explicit steps.
+
+For consumer (eval-agent) projects, the stages are:
 
 **Stage 1: Consumer Scaffolding**
 - Step 1.0: Design review (read experiment-driver DESIGN docs)
-- Step 1.1: Project scaffolding (Maven, dependencies on experiment-core)
-- Step 1.2: Quality infrastructure
-- Step 1.3: Test infrastructure
-- Step 1.4: AgentInvoker implementation (the domain agent wrapper)
-- Step 1.5: Dataset adapter (load domain benchmark into DatasetManager format)
-- Step 1.6: Domain judges (Tier 1 guardrails at minimum)
+- Step 1.1: Project scaffolding (Maven, pom.xml, mvnw, directories, git init)
+- Step 1.2: Verify compile + externalize prompts (`plans/prompts/`, `experiment-config.yaml`)
+- Step 1.3: AgentInvoker implementation (the domain agent wrapper — loads prompt from file)
+- Step 1.4: Dataset adapter (load domain benchmark items, `datasets/manifest.yaml`)
+- Step 1.5: T0 judge (guardrail — fail-fast, deterministic)
+- Step 1.6: T1 judge (structural grader — deterministic, scores 0-1)
+- Step 1.7: End-to-end smoke test (dry-run + single live item validates wiring)
+- Step 1.K: Stage 1 consolidation (compact learnings → `LEARNINGS.md`)
 
-**Stage 2: Baseline Reproduction**
-- Step 2.0: End-to-end smoke test (1-3 benchmark cases)
-- Step 2.1: Full baseline run (reproduce published result)
-- Step 2.2: Baseline analysis (per-judge scores, failure classification)
+**Stage 2: Control Baseline**
+- Step 2.0: Stage 2 entry (inter-stage gate: read Stage 1 summary + `LEARNINGS.md`)
+- Step 2.1: Control run — item 1 (N=1)
+- Step 2.2: Control run — item 2 (N=1)
+- Step 2.3: Baseline analysis (run Markov scripts; refine `classify_state()` from actual traces)
+- Step 2.K: Stage 2 consolidation
 
-**Stage 3: Infrastructure-Level Variants**
-- Step 3.0: Build domain knowledge base (mini-KBs)
-- Step 3.1: Run Variant A (KB only, no prompt optimization)
-- Step 3.2: Run Variant B (KB + judges-as-process)
-- Step 3.3: Run Variant C (prompt + infrastructure combined)
-- Step 3.4: Cross-variant comparison and analysis
+**Stage 3: Forge Variant (or highest-priority hypothesis)**
+- Step 3.0: Stage 3 entry (inter-stage gate)
+- Step 3.1: Variant-d (forge plan/act) runs — items 1–2 (N=1)
+- Step 3.2: Markov comparison + analysis; if variant wins: plan N=3 confirmation
+- Step 3.K: Stage 3 consolidation
 
-**Stage N: Judges and Benchmarking** (from ROADMAP-TEMPLATE)
-- Deterministic judges, AI judges, composite jury, end-to-end benchmark
+**Stage 4: KB Development (evidence-driven)**
+- Steps defined after Stage 3 Markov findings identify which change types cause FIX loops
+- KB content targets FIX loop triggers — do not populate KB speculatively
+
+**Stage 5+: Scale Up**
+- Advance to harder dataset items, gated on previous item passing T0+T1
 
 ### Phase 5: Review and Refine
 
