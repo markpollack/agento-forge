@@ -263,6 +263,30 @@
 
 ## Stage 2: {{STAGE_NAME}}
 
+### Step 2.0: Stage 2 Entry — Review and Context Load
+
+**Entry criteria** *(inter-stage gate — do not skip)*:
+- [ ] Stage 1 consolidation complete — Read: `plans/learnings/step-1.K-stage1-summary.md`
+- [ ] Read: `plans/learnings/LEARNINGS.md` — full compacted project learnings
+- [ ] Read: `DESIGN.md` — sections relevant to Stage 2 work
+
+**Work items**:
+- [ ] REVIEW Stage 1 summary for open questions or deferred decisions that affect Stage 2
+- [ ] VERIFY design assumptions still hold before beginning Stage 2 implementation
+- [ ] DOCUMENT any scope changes or design adjustments discovered during review
+
+**Exit criteria**:
+- [ ] Stage 1 context loaded; no blocking issues unresolved
+- [ ] Create: `plans/learnings/step-2.0-stage2-entry.md`
+- [ ] Update `ROADMAP.md` checkboxes
+- [ ] COMMIT
+
+**Deliverables**: Verified entry into Stage 2 with full prior-stage context
+
+---
+
+> *Repeat step structure for Stage 2 work steps (2.1, 2.2, ...). Each step's entry criteria includes reading the prior step's learnings file. The last step of Stage 2 must be a consolidation step (step-2.K-stage2-summary.md) before Stage 3 begins.*
+
 {{REPEAT_STRUCTURE}}
 
 ---
@@ -334,6 +358,17 @@ The last step of each stage (or the final stage) should be a **consolidation ste
 4. **Creates a stage summary** learnings file (e.g., `step-1.K-stage1-summary.md`)
 
 **Why**: Per-step learnings are detailed but fragmented. Without consolidation, the overall narrative is lost. `LEARNINGS.md` is the Tier 1 compacted summary that future stages and sessions read first.
+
+### Inter-Stage Gate Convention
+
+The **first step of Stage N (N > 1)** must have these entry criteria in addition to step-specific ones:
+
+```markdown
+- [ ] Stage N-1 consolidation complete — Read: `plans/learnings/step-X.K-stageN-1-summary.md`
+- [ ] Read: `plans/learnings/LEARNINGS.md` — full compacted project learnings
+```
+
+**Why**: Stage consolidation is the *exit* of Stage N-1, but it is only honored if Stage N's *entry* gates on it. Without an explicit entry gate, a new stage can start before consolidation is done, causing exactly the knowledge fragmentation that consolidation is meant to prevent.
 
 ---
 
