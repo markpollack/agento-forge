@@ -389,11 +389,59 @@ For consumer (eval-agent) projects, the stages are:
 - Step 1.1: Project scaffolding (Maven, pom.xml, mvnw, directories, git init)
 - Step 1.2: Verify compile + externalize prompts (`plans/prompts/`, `experiment-config.yaml`)
 - Step 1.3: AgentInvoker implementation (the domain agent wrapper — loads prompt from file)
-- Step 1.4: Dataset adapter (load domain benchmark items, `datasets/manifest.yaml`)
+- Step 1.4: Dataset adapter (load domain benchmark items, `datasets/manifest.json`)
 - Step 1.5: T0 judge (guardrail — fail-fast, deterministic)
 - Step 1.6: T1 judge (structural grader — deterministic, scores 0-1)
-- Step 1.7: End-to-end smoke test (dry-run + single live item validates wiring)
+- Step 1.7: ExperimentFactory + SmokeTest (dry-run wiring validation)
 - Step 1.K: Stage 1 consolidation (compact learnings → `LEARNINGS.md`)
+
+**Step 1.7 — ExperimentFactory + SmokeTest Pattern**:
+
+Create `{Domain}ExperimentFactory` that wires all components:
+```java
+public class {Domain}ExperimentFactory {
+  // createDatasetAdapter()       — manifest → DatasetManager
+  // createAgentInvoker(config)   — ClaudeSdkInvoker → DomainAgentInvoker
+  // createJury()                 — T0 REJECT_ON_ANY_FAIL → T1 FINAL_TIER (add T2/T3 in Stage 4)
+  // createRunner(config, stores) — ExperimentRunner wired
+  // runVariant(config, session)  — convenience: FileSystem stores, run + return result
+}
+```
+
+Create `SmokeTest` (`@Tag("integration")`) that validates wiring without API calls:
+```java
+@Tag("integration")
+@EnabledIfEnvironmentVariable(named = "{DOMAIN}_SMOKE_TEST", matches = "true")
+class SmokeTest {
+    // 1. Factory.createDatasetAdapter().load() → assertThat(items).isNotEmpty()
+    // 2. Factory.createJury() → assertThat(jury).isNotNull()
+    // 3. Factory.createRunner(invokerConfig, InMemoryResultStore, InMemorySessionStore)
+    // 4. runner.run(placeholderInvoker, activeSession)
+    // 5. assertThat(result.items()).isNotEmpty()
+    // Judges FAIL (no output) — that's expected. We're testing wiring, not agent output.
+}
+
+private AgentInvoker createPlaceholderInvoker() {
+    return ctx -> InvocationResult.completed(
+        List.of(), 0, 0, 0, 0.0, 100L, "smoke-session", ctx.metadata());
+}
+```
+
+Key API facts (read source before writing — do NOT guess):
+- `ExperimentResult.items()` (not `itemResults()`)
+- `ItemResult.success()`, `ItemResult.passed()` (not `skipped()`)
+- `ResultStore` has 4 methods: `save`, `load(id)`, `listByName`, `mostRecent`
+- `InMemorySessionStore` is in MAIN scope (can import); `InMemoryResultStore` must be inlined in test
+- Read API source from `~/tuvium/projects/tuvium-experiment-driver/experiment-core/src/main/java/`
+- Canonical wiring example: `~/projects/code-coverage-experiment/src/main/java/.../ExperimentApp.java`
+
+**Source repos for framework dependencies must match pom.xml versions**:
+```bash
+# Before Step 1.5+ (judge implementation), verify these exist at correct versions:
+# ~/research/supporting_repos/{framework}  checked out at tag matching pom.xml
+# If missing: clone or checkout the matching tag
+# Never use jar tf — always read from source repos
+```
 
 **Stage 2: Control Baseline**
 - Step 2.0: Stage 2 entry (inter-stage gate: read Stage 1 summary + `LEARNINGS.md`)
