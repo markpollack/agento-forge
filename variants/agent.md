@@ -110,6 +110,30 @@ The eval-agent variant uses a **loss-function optimization loop** instead of QA 
 4. **Modify** — Change prompts, add tools, adjust strategy
 5. **Record** — Log iteration metrics (tokens, cost, duration, cases passed)
 
+### Agent Prompt: Stopping Condition
+
+Every agent prompt must include a **domain-specific stopping condition** — a concrete,
+runnable command the agent executes to confirm the task is complete. Without it, the agent
+stops when output files exist, not when they are correct.
+
+The stopping condition must be:
+- A specific command (not a vague instruction to "verify your work")
+- Runnable in the agent's environment without external services or credentials
+- Binary: passes or fails with a clear exit code or output
+- The same criterion the T0/T1 judges use — same definition of done
+
+Examples by domain:
+
+| Domain | Stopping condition command |
+|--------|---------------------------|
+| SQL migration | `java -jar validator.jar --validate ./db/migration` (exits 0 = PASS) |
+| Java refactoring | `./mvnw test` (exits 0 = all tests pass) |
+| Python upgrade | `pytest` (exits 0 = all tests pass) |
+| Code coverage | `./mvnw verify` (exits 0 = coverage threshold met) |
+
+If the stopping condition tool does not exist yet, build it before writing the agent prompt.
+The agent should not have to guess when it is done.
+
 **Exit criteria:**
 
 - Loss below convergence threshold for N consecutive iterations
