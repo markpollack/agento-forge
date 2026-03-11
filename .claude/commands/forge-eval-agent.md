@@ -402,10 +402,13 @@ For consumer (eval-agent) projects, the stages are:
 - Step 2.3: Baseline analysis (run Markov scripts; refine `classify_state()` from actual traces)
 - Step 2.K: Stage 2 consolidation
 
-**Stage 3: Forge Variant (or highest-priority hypothesis)**
+**Stage 3: Forge Variant (highest-priority hypothesis)**
 - Step 3.0: Stage 3 entry (inter-stage gate)
 - Step 3.1: Variant-d (forge plan/act) runs — items 1–2 (N=1)
-- Step 3.2: Markov comparison + analysis; if variant wins: plan N=3 confirmation
+  NOTE: "forge plan/act" = produce explicit checklist plan, then execute item by item.
+  This is NOT the same as "two-phase explore+act" (which scores lower in experiments).
+  Forge plan/act scored T3=0.95 vs two-phase T3=0.80 in code-coverage-experiment.
+- Step 3.2: Markov comparison + analysis; if variant wins: plan N=3 confirmation sweeps
 - Step 3.K: Stage 3 consolidation
 
 **Stage 4: KB Development (evidence-driven)**
