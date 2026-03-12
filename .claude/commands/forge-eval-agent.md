@@ -213,6 +213,16 @@ Copy templates from forge-methodology:
 - `{forge-methodology}/templates/DESIGN-TEMPLATE.md` → `{project}/plans/DESIGN.md`
 - `{forge-methodology}/templates/ROADMAP-TEMPLATE.md` → `{project}/plans/ROADMAP.md`
 
+Copy analysis scripts from `~/projects/agent-experiment-template/scripts/`:
+- `load_results.py` — ETL: session JSON → 4 parquet tables (runs, item_results, tool_uses, judge_details)
+- `make_figures.py` — pass rate bars, cost/quality scatter, per-item breakdown
+- `make_markov_analysis.py` — Markov chain analysis; **CUSTOMIZE** `classify_state()` in Step 2.2
+- `requirements.txt`, `setup_venv.sh`
+
+The `make_markov_analysis.py` template has a `MARKOV_DISCOVERY` mode (see Step 2.2). Draft your
+domain states in `classify_state()` from workflow knowledge; use discovery mode to validate and
+catch unexpected edge cases (e.g. agent writes a helper script rather than the direct output).
+
 Also create these experiment-specific files (not in the generic template):
 - `{project}/experiment-config.yaml` — variant definitions (prompt file path, KB files, model)
 - `{project}/plans/prompts/v0-control.txt` — control prompt text (externalized from Java)
@@ -446,8 +456,12 @@ Key API facts (read source before writing — do NOT guess):
 **Stage 2: Control Baseline**
 - Step 2.0: Stage 2 entry (inter-stage gate: read Stage 1 summary + `LEARNINGS.md`)
 - Step 2.1: Control run — item 1 (N=1)
-- Step 2.2: Control run — item 2 (N=1)
-- Step 2.3: Baseline analysis (run Markov scripts; refine `classify_state()` from actual traces)
+- Step 2.2: State taxonomy — draft states from domain workflow knowledge (e.g. EXPLORE, WRITE, BUILD,
+  FIX, VERIFY). Then validate: run `MARKOV_DISCOVERY=true python scripts/make_markov_analysis.py`
+  and inspect tool:target frequencies to confirm your hypothesis covers the actual trace patterns.
+  Revise `classify_state()` if the traces reveal unexpected states or edge cases (e.g. an agent
+  writing a helper script instead of direct output → needs its own classification).
+- Step 2.3: Control run — item 2 (N=1); run Markov analysis (normal mode) for baseline matrices
 - Step 2.K: Stage 2 consolidation
 
 **Stage 3: Forge Variant (highest-priority hypothesis)**
