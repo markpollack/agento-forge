@@ -1,8 +1,10 @@
 # Agento Studio
 
-A methodology and toolkit for building, testing, and improving AI agent knowledge bases.
+A methodology and toolkit for building agents that actually work.
 
-Built on the **Forge methodology** — a six-phase system for taking AI agent projects from initial vision through production-ready results. Forge separates discovery (iterative phases 0-2) from execution (sequential phases 3-5), treats evaluation as first-class, and produces learnings as a primary artifact alongside code.
+Slash commands for Claude Code that scaffold knowledge bases, software projects, research projects, and ongoing stewardship. Start with `/forge-kb` — the rest is coming.
+
+Built on the **Forge methodology** — a six-phase system that separates discovery (iterative phases 0-2) from execution (sequential phases 3-5), treats evaluation as first-class, and produces learnings as a primary artifact alongside code.
 
 ## Quick Start
 
