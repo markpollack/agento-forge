@@ -265,10 +265,10 @@ The key insight is that the Phase Review is already structured as a judge — it
 |----------|-------------|---------|
 | `{{PROJECT_NAME}}` | Human-readable project name | `github-explorer (ghx)` |
 | `{{STAGE_NAME}}` | Roadmap stage being reviewed | `Stage 1 — Data Layer` |
-| `{{PROJECT_ROOT}}` | Absolute path to project root | `/home/mark/projects/github-explorer` |
-| `{{REFERENCE_IMPL_PATH}}` | Path to reference implementation (or "N/A") | `/home/mark/projects/prplot/prplot/data_loader.py` |
-| `{{DESIGN_DOC_PATH}}` | Path to design document | `/home/mark/projects/github-explorer/plans/DESIGN.md` |
-| `{{ROADMAP_PATH}}` | Path to roadmap | `/home/mark/projects/github-explorer/plans/ROADMAP.md` |
+| `{{PROJECT_ROOT}}` | Absolute path to project root | `{project-root}` |
+| `{{REFERENCE_IMPL_PATH}}` | Path to reference implementation (or "N/A") | `{project-root}/reference/data_loader.py` |
+| `{{DESIGN_DOC_PATH}}` | Path to design document | `{project-root}/plans/DESIGN.md` |
+| `{{ROADMAP_PATH}}` | Path to roadmap | `{project-root}/plans/ROADMAP.md` |
 | `{{SOURCE_FILE_LIST}}` | Numbered list of source files with full paths | (see example below) |
 | `{{TEST_FILE_LIST}}` | Numbered list of test files with full paths | (see example below) |
 | `{{CONFIG_AND_DOCS_LIST}}` | Numbered list of config/doc files with full paths | (see example below) |
@@ -366,24 +366,24 @@ As the Judge Framework matures, sections of this template will be automated:
 ```
 #### Source Files to Review
 
-1. `/home/mark/projects/my-project/src/main/java/com/example/data/DataLoader.java`
-2. `/home/mark/projects/my-project/src/main/java/com/example/data/FieldInfo.java`
-3. `/home/mark/projects/my-project/src/main/java/com/example/data/package-info.java`
+1. `{project-root}/src/main/java/com/example/data/DataLoader.java`
+2. `{project-root}/src/main/java/com/example/data/FieldInfo.java`
+3. `{project-root}/src/main/java/com/example/data/package-info.java`
 
 #### Test Files to Review
 
-4. `/home/mark/projects/my-project/src/test/java/com/example/data/DataLoaderTest.java`
-5. `/home/mark/projects/my-project/src/test/java/com/example/data/FieldInfoTest.java`
-6. `/home/mark/projects/my-project/src/test/java/com/example/ArchitectureTest.java`
-7. `/home/mark/projects/my-project/src/test/java/com/example/TestFixtures.java`
-8. `/home/mark/projects/my-project/src/test/resources/test-data.json`
+4. `{project-root}/src/test/java/com/example/data/DataLoaderTest.java`
+5. `{project-root}/src/test/java/com/example/data/FieldInfoTest.java`
+6. `{project-root}/src/test/java/com/example/ArchitectureTest.java`
+7. `{project-root}/src/test/java/com/example/TestFixtures.java`
+8. `{project-root}/src/test/resources/test-data.json`
 
 #### Config and Docs to Review
 
-9. `/home/mark/projects/my-project/pom.xml`
-10. `/home/mark/projects/my-project/CLAUDE.md`
-11. `/home/mark/projects/my-project/plans/learnings/step-1.0-topic.md`
-12. `/home/mark/projects/my-project/plans/learnings/step-1.1-topic.md`
+9. `{project-root}/pom.xml`
+10. `{project-root}/CLAUDE.md`
+11. `{project-root}/plans/learnings/step-1.0-topic.md`
+12. `{project-root}/plans/learnings/step-1.1-topic.md`
 ```
 
 ---

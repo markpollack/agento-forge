@@ -96,7 +96,7 @@ Cheaper, faster, for targeted lookups. No synthesis, just results.
 
 ### Tier 3: Hierarchical Corpus Engine (Deep Reasoning)
 
-Papers collected from Tiers 1-2 get indexed into the local corpus for deep agentic reasoning. This is the proprietary Tuvium component.
+Papers collected from Tiers 1-2 get indexed into the local corpus for deep agentic reasoning. This is the corpus engine component.
 
 ```
 Tier 1 discovers papers → download PDFs → Tier 3 indexes and summarizes →
@@ -318,4 +318,4 @@ Paper-QA's automatic citation tracking is a feature worth adopting — the Resea
 2. **Cluster stability** — Re-clustering after adding papers may reassign existing papers to different clusters, invalidating cluster summaries. Should clusters be append-only with manual splits?
 3. **Cross-corpus search** — Each Forge project has its own corpus. Cross-corpus queries are handled by a federation index (`KB-FEDERATION.md`) that routes agents to the right KB. See [Knowledge Base Architecture](knowledge-base-architecture.md) for the federation pattern.
 4. **Embedding fallback** — Is one embedding vector per paper (of the summary) worth maintaining for semantic fuzzy search, or does keyword search on LLM summaries suffice?
-5. **Implementation language** — Python (DuckDB + LLM APIs + PDF extraction all have Python-first libraries) or Java (consistency with Tuvium stack)?
+5. **Implementation language** — Python (DuckDB + LLM APIs + PDF extraction all have Python-first libraries) or Java (consistency with your existing stack)?

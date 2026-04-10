@@ -5,17 +5,14 @@ description: "Bootstrap an eval-agent project (Forge: consumer of experiment-dri
 
 # Forge Eval-Agent — Bootstrap an Agent Evaluation Project
 
-> **Installation**: Copy this file to `~/.claude/commands/forge-eval-agent.md` for global access.
-> Then update the paths in the Configuration section below.
-
-You are helping bootstrap a new eval-agent project using the Forge methodology's eval-agent variant. Eval-agent projects are **consumer projects** that plug into the `tuvium-experiment-driver` orchestration framework. They provide domain-specific agents, judges, datasets, and knowledge bases — the framework handles orchestration, result persistence, comparison, and the optimization loop.
+You are helping bootstrap a new eval-agent project using the Forge methodology's eval-agent variant. Eval-agent projects are **consumer projects** that plug into an experiment-driver orchestration framework. They provide domain-specific agents, judges, datasets, and knowledge bases — the framework handles orchestration, result persistence, comparison, and the optimization loop.
 
 ## Architecture Context
 
 Eval-agent projects sit at the **consumer layer** of the experiment stack:
 
 ```
-tuvium-experiment-driver (orchestration framework)
+experiment-driver (orchestration framework)
   ├── ExperimentRunner   — dataset → workspace → invoke → judge → persist
   ├── CascadedJury       — 3-tier: deterministic → structural → semantic LLM
   ├── DatasetManager     — versioned datasets with item filtering
@@ -47,7 +44,7 @@ Do NOT use this for:
 - **Research projects** (gathering papers, building a corpus) → use `/forge-research`
 - **Standard software projects** (libraries, services, tools) → use `/forge-project`
 - **Existing projects needing maintenance** → use `/forge-steward`
-- **The experiment framework itself** — that's tuvium-experiment-driver
+- **The experiment framework itself** — that's experiment-driver
 
 ## Arguments
 - `$ARGUMENTS` - Optional: project path, brief file path, reference material paths
@@ -132,13 +129,12 @@ Private | Community
 
 ## Configuration
 
-**UPDATE THESE PATHS** to point to your installations:
+This command expects to run from the Agento Studio repo root (or via `claude --add-dir` pointing at it).
 
-- **Forge methodology location**: `/path/to/forge-methodology`
-- **Templates directory**: `/path/to/forge-methodology/templates`
-- **Eval-agent variant doc**: `/path/to/forge-methodology/variants/agent.md`
-- **Experiment-driver location**: `/path/to/tuvium-experiment-driver`
-- **Refactoring-agent location** (exemplar consumer): `/path/to/refactoring-agent`
+- **Templates directory**: `templates/`
+- **Eval-agent variant doc**: `variants/agent.md`
+- **Experiment-driver location**: *(user-provided — ask during Phase 1)*
+- **Refactoring-agent location** (exemplar consumer): *(user-provided — ask during Phase 1)*
 
 ## Instructions
 
@@ -233,13 +229,13 @@ Create build file (pom.xml or equivalent) with dependencies:
 ```xml
 <!-- Core experiment infrastructure -->
 <dependency>
-    <groupId>ai.tuvium</groupId>
+    <groupId>com.example</groupId>
     <artifactId>experiment-core</artifactId>
 </dependency>
 
 <!-- Claude SDK integration (if using Claude as the agent) -->
 <dependency>
-    <groupId>ai.tuvium</groupId>
+    <groupId>com.example</groupId>
     <artifactId>experiment-claude</artifactId>
 </dependency>
 
@@ -251,7 +247,7 @@ Create build file (pom.xml or equivalent) with dependencies:
 
 <!-- Tracking / observability -->
 <dependency>
-    <groupId>ai.tuvium</groupId>
+    <groupId>com.example</groupId>
     <artifactId>tracking-core</artifactId>
 </dependency>
 ```
@@ -321,7 +317,7 @@ Fill in all sections. Pay special attention to:
 ```markdown
 ## Evaluation Architecture
 
-> This project is a consumer of `tuvium-experiment-driver`.
+> This project is a consumer of experiment-driver.
 > See `{experiment-driver}/plans/DESIGN-jury.md` for the CascadedJury framework.
 
 ### Consumer Integration
@@ -442,7 +438,7 @@ Key API facts (read source before writing — do NOT guess):
 - `ItemResult.success()`, `ItemResult.passed()` (not `skipped()`)
 - `ResultStore` has 4 methods: `save`, `load(id)`, `listByName`, `mostRecent`
 - `InMemorySessionStore` is in MAIN scope (can import); `InMemoryResultStore` must be inlined in test
-- Read API source from `~/tuvium/projects/tuvium-experiment-driver/experiment-core/src/main/java/`
+- Read API source from `{experiment-driver}/experiment-core/src/main/java/`
 - Canonical wiring example: `~/projects/code-coverage-experiment/src/main/java/.../ExperimentApp.java`
 
 **Source repos for framework dependencies must match pom.xml versions**:

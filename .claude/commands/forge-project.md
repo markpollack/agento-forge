@@ -5,9 +5,6 @@ description: "Bootstrap a software project (Forge: Vision + Design + Roadmap wit
 
 # Forge Project — Bootstrap a Software Project
 
-> **Installation**: Copy this file to `~/.claude/commands/forge-project.md` for global access.
-> Then update the paths in the Configuration section below.
-
 You are helping bootstrap a new software project using the Forge methodology's project variant. This skill handles the full lifecycle: understanding the problem, surveying existing solutions and reusable infrastructure, scaffolding the project structure, drafting VISION.md, DESIGN.md, and ROADMAP.md, creating a CLAUDE.md session bridge, and defining the first build stage.
 
 ## When to Use
@@ -88,12 +85,9 @@ Private | Community (Apache 2.0)
 
 ## Configuration
 
-**UPDATE THESE PATHS** to point to your installations:
-
-- **Forge methodology location**: `/path/to/forge-methodology`
-- **Templates directory**: `/path/to/forge-methodology/templates`
-- **Project variant doc**: `/path/to/forge-methodology/variants/project.md`
-- **Phase review template**: `/path/to/forge-methodology/phases/phase-review-template.md`
+- **Templates directory**: `templates/`
+- **Project variant doc**: `variants/project.md`
+- **Phase review template**: `phases/phase-review-template.md`
 
 ## Instructions
 

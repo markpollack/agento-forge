@@ -221,4 +221,4 @@ A steward's CLAUDE.md augments the existing project CLAUDE.md with these section
 See the agent-client project (`~/community/agent-client/`) for a steward instance with:
 - KB at `plans/knowledge/` with architecture, development, and monitoring domains
 - CLAUDE.md with steward sections, health checklist, and accountability boundaries
-- Federation cross-references to agentic-patterns-research and tuvium-devnexus-2026
+- Federation cross-references to research projects and conference preparation

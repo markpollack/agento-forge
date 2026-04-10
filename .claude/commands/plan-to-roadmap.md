@@ -12,9 +12,9 @@ You have just produced a plan (likely in `~/.claude/plans/`). Do NOT execute it 
 1. **Read the plan** you just created (check `~/.claude/plans/` for the most recent file, or the plan you just presented to the user).
 
 2. **Read the Forge roadmap template and phase definition** for structural guidance:
-   - Template: `/path/to/forge-methodology/templates/ROADMAP-TEMPLATE.md`
-   - Phase definition: `/path/to/forge-methodology/phases/03-roadmap.md`
-   - Learnings template: `/path/to/forge-methodology/templates/LEARNINGS-TEMPLATE.md`
+   - Template: `templates/ROADMAP-TEMPLATE.md`
+   - Phase definition: `phases/03-roadmap.md`
+   - Learnings template: `templates/LEARNINGS-TEMPLATE.md`
 
 3. **Transform your plan** into the `ROADMAP-TEMPLATE.md` format:
    - Group related work items into numbered **stages** (Stage 1, Stage 2, ...)

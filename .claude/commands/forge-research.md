@@ -5,9 +5,6 @@ description: "Bootstrap a research project (Forge Phase 0+1: Forage + Vision)"
 
 # Forge Research — Bootstrap a Research Project
 
-> **Installation**: Copy this file to `~/.claude/commands/forge-research.md` for global access.
-> Then update the forge-methodology paths in the Configuration section below.
-
 You are helping bootstrap a new research project using the Forge methodology's research variant. This skill handles the full lifecycle: understanding the research domain, gathering and extracting from source material, scaffolding the project structure, drafting VISION.md, pre-populating the paper tracker, creating a CLAUDE.md session bridge, and defining the foraging mission.
 
 ## When to Use This vs `/forge-research-kb`
@@ -78,11 +75,8 @@ Private | Community
 
 ## Configuration
 
-**UPDATE THESE PATHS** to point to your installations:
-
-- **Forge methodology location**: `/path/to/forge-methodology`
-- **Templates directory**: `/path/to/forge-methodology/templates`
-- **arXiv batch pipeline** (optional): `/path/to/scripts/run_arxiv_batch.sh` — for batch downloading arXiv papers. See docs at `scripts/../docs/arxiv-ingest.md`
+- **Templates directory**: `templates/`
+- **arXiv batch pipeline** (optional): *(user-provided — for batch downloading arXiv papers)*
 
 ## Instructions
 

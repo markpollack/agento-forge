@@ -5,9 +5,6 @@ description: "Structure a document corpus for JIT context Q&A via Claude Code (F
 
 # Forge KB — Structure a Corpus for JIT Context Q&A
 
-> **Installation**: Copy this file to `~/.claude/commands/forge-kb.md` for global access.
-> Then update the forge-methodology path in the Configuration section below.
-
 You are helping structure an existing collection of documents into a queryable knowledge base that Claude Code can navigate using its built-in file tools (Glob, Grep, Read). No vector database, no embeddings — just flat files with routing tables that enable hierarchical agentic RAG.
 
 The user has already collected documents. Your job is to survey what's there, identify the natural structure, build navigation infrastructure (routing tables, indexes, session bridge), and validate that questions can be answered in ≤3 hops.
@@ -31,9 +28,7 @@ Do **not** use this for:
 
 ## Configuration
 
-**UPDATE THIS PATH** to point to your installation:
-
-- **Forge methodology**: `/home/mark/tuvium/projects/forge-methodology`
+This command expects to run from the Agento Studio repo root (or via `claude --add-dir` pointing at it). Concept and guide files are referenced by relative paths from the repo root.
 
 ## How This Relates to Forge Concepts
 

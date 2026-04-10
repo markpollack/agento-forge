@@ -23,7 +23,7 @@ This doesn't scale. With 10+ active projects, the human cannot maintain accurate
     │  Steward   │  │  Research   │  │  Eval-  │  │  Project  │
     │  Agent     │  │  Partner    │  │  Agent  │  │  Agent    │
     │            │  │             │  │         │  │           │
-    │ agent-     │  │ agentic-    │  │ experi- │  │ tuvium-   │
+    │ agent-     │  │ agentic-    │  │ experi- │  │ project-  │
     │ client     │  │ patterns    │  │ ment-   │  │ collector │
     │            │  │ research    │  │ driver  │  │           │
     └────────────┘  └─────────────┘  └─────────┘  └───────────┘
@@ -144,7 +144,7 @@ Human
         │     ├── agent-client steward
         │     ├── agent-judge steward
         │     └── ...
-        ├── Tuvium Manager (aggregates all private projects)
+        ├── Private Manager (aggregates all private projects)
         │     ├── experiment-driver eval-agent
         │     ├── refactoring-agent steward
         │     └── ...

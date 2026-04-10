@@ -87,14 +87,13 @@ Result: experiments runnable out of the box — users curate from a starting poi
 
 ## Proven Example
 
-The tuvium-knowledge Spring Testing KB was bootstrapped using this exact pattern:
+A Spring Testing KB was bootstrapped using this exact pattern:
 
-- **Source files**: `tuvium-knowledge/plans/inbox/archive/testing-deep-research-results-2026-03-02/chatgpt/`
 - **5 sprints**: mvc.md, jpa.md, security.md, webflux.md, patterns.md (cross-domain)
 - **ChatGPT mode**: Normal (not deep research), "Mode C" = A-tier + B-tier
 - **Consistent A-tier sources found**: Spring official docs, Spring GitHub repos, domain experts (Sam Brannen, Oliver Drotbohm, Mark Paluch, Rob Winch, Rossen Stoyanchev)
 - **Consistent B-tier sources found**: Reflectoring, Baeldung, Rieckpil
-- **Ingested via**: Curator Intake Protocol → classified KB entries in tuvium-knowledge
+- **Ingested via**: Curator Intake Protocol → classified KB entries
 
 ## Related
 

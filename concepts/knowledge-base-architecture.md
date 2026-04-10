@@ -265,16 +265,16 @@ Across KBs, the federation index adds one level: federation → KB root → doma
 
 ## Provenance
 
-This concept is grounded in findings from the tuvium-knowledge project:
+This concept is grounded in findings from dedicated knowledge-architecture research:
 
-| Finding | Location |
-|---------|----------|
-| KB Layout Specification v1.0 | `tuvium-knowledge/findings/kb-layout-specification.md` |
-| Dual-Mode Pattern | `tuvium-knowledge/findings/dual-mode-pattern.md` |
-| knowledgeRefs Integration Spec | `tuvium-knowledge/findings/knowledge-refs-integration-spec.md` |
-| Scalability Analysis | `tuvium-knowledge/findings/scalability-analysis.md` |
-| Cross-KB Orchestration Architecture | `tuvium-knowledge/findings/cross-kb-orchestration-architecture.md` |
-| Two KB Types | `tuvium-knowledge/findings/two-kb-types.md` |
-| Librarian Layer Summary | `tuvium-knowledge/plans/SUMMARY-librarian-layer.md` |
+| Finding | Description |
+|---------|-------------|
+| KB Layout Specification v1.0 | Two-level domain/topic hierarchy, index.md at every level |
+| Dual-Mode Pattern | Experiment-driver (knowledgeRefs) vs production (root index.md routing) |
+| knowledgeRefs Integration Spec | 1-5 directory refs per DatasetItem, relative to knowledgeBaseDir |
+| Scalability Analysis | File count thresholds, routing table saturation signals |
+| Cross-KB Orchestration Architecture | Federation routing, union catalog, per-KB cross-references |
+| Two KB Types | Code-Agent (task-driven) vs Research-Partner (question-driven) |
+| Librarian Layer Summary | Routing tables, faceted metadata, controlled vocabulary |
 
 Design influences: Ranganathan (faceted classification), SKOS/Dublin Core (controlled vocabulary), GraphRAG (community summaries as index.md), Anthropic Skills (progressive disclosure), Dex Horthy (smart zone context engineering), Amp/Sourcegraph (Finder/Librarian sub-agent split).

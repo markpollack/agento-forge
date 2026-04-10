@@ -5,8 +5,6 @@ description: "Bootstrap stewardship for an existing project (Forge Steward Varia
 
 # Forge Steward — Bootstrap Project Stewardship
 
-> **Installation**: Copy this file to `~/.claude/commands/forge-steward.md` for global access.
-
 You are helping bootstrap stewardship for an existing project using the Forge methodology's steward variant. This skill handles: understanding the project's current state, bootstrapping a knowledge base, writing steward sections for CLAUDE.md, configuring monitoring, and defining accountability boundaries.
 
 ## When to Use
@@ -23,11 +21,8 @@ Use this skill when:
 
 ## Configuration
 
-**UPDATE THESE PATHS** to point to your installations:
-
-- **Forge methodology location**: `/path/to/forge-methodology`
-- **Steward variant doc**: `/path/to/forge-methodology/variants/steward.md`
-- **KB architecture doc**: `/path/to/forge-methodology/concepts/knowledge-base-architecture.md`
+- **Steward variant doc**: `variants/steward.md`
+- **KB architecture doc**: `concepts/knowledge-base-architecture.md`
 
 ## Instructions
 

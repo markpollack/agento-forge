@@ -165,4 +165,4 @@ The `index.md` at the root is the agent's entry point. It lists what's available
 
 ## Attribution
 
-The Diataxis framework was created by Daniele Procida and is documented at [diataxis.fr](https://diataxis.fr/). It has been adopted by hundreds of documentation projects including Gatsby, Cloudflare, and Django. The agent-consumption weighting and Forge integration described here are Tuvium's application of the framework.
+The Diataxis framework was created by Daniele Procida and is documented at [diataxis.fr](https://diataxis.fr/). It has been adopted by hundreds of documentation projects including Gatsby, Cloudflare, and Django. The agent-consumption weighting and Forge integration described here extend the framework for AI agent knowledge bases.

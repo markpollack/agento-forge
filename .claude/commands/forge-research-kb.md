@@ -5,9 +5,6 @@ description: "Bootstrap a research-partner KB — a federated research project c
 
 # Forge Research KB — Bootstrap a Research-Partner Knowledge Base
 
-> **Installation**: Copy this file to `~/.claude/commands/forge-research-kb.md` for global access.
-> Then update the paths in the Configuration section below.
-
 You are bootstrapping a **research-partner knowledge base** — a research project specifically designed to be consumed by other projects via federation. This differs from a generic research project (`/forge-research`) in that it has explicit consumers, produces findings that feed into downstream projects, and integrates into a multi-KB federation.
 
 See [Knowledge Base Architecture](concepts/knowledge-base-architecture.md) in forge-methodology for the full conceptual foundation.
@@ -50,7 +47,7 @@ Extends the `forge-research` brief with consumer and federation fields:
 - {project-name} — {what it needs}
 
 ## Project Path
-{Where the project should live, e.g., ~/tuvium/projects/tuvium-{name}/}
+{Where the project should live, e.g., ~/projects/{name}/}
 
 ## Visibility
 Private | Community (Apache 2.0)
@@ -75,12 +72,11 @@ Private | Community (Apache 2.0)
 
 ## Configuration
 
-**UPDATE THESE PATHS** to point to your installations:
+This command expects to run from the Agento Studio repo root (or via `claude --add-dir` pointing at it).
 
-- **Forge methodology**: `/home/mark/tuvium/projects/forge-methodology`
-- **KB Federation file**: `/home/mark/tuvium/projects/tuvium-research-conversation-agent/KB-FEDERATION.md`
-- **arXiv batch pipeline**: `/home/mark/tuvium/projects/tuvium-agentic-patterns-research/scripts/run_arxiv_batch.sh`
-- **arXiv ingest docs**: `/home/mark/tuvium/projects/tuvium-agentic-patterns-research/docs/arxiv-ingest.md`
+- **KB Federation file**: *(user-provided — ask during Phase 1)*
+- **arXiv batch pipeline**: *(optional, user-provided)*
+- **arXiv ingest docs**: *(optional, user-provided)*
 
 ## Instructions
 
@@ -104,7 +100,7 @@ Start conversationally. Research-partner KBs exist to serve other projects, so c
    - Related KBs that already exist in the federation
 
 4. **Where should the project live?**
-   - Project path (suggest `~/tuvium/projects/tuvium-{topic}-research/`)
+   - Project path (suggest `~/projects/{topic}-research/`)
    - Private or community visibility
 
 ### Phase 2: Gather Materials and Extract Bibliography
@@ -369,8 +365,7 @@ git commit -m "Bootstrap {project-name} research KB"
 #### 6.2: Create GitHub remote
 
 ```bash
-GITHUB_TOKEN="" gh auth switch --user mark-tuvium
-GITHUB_TOKEN="" gh repo create tuvium/{project-name} --private --source=. --push
+gh repo create {your-org}/{project-name} --private --source=. --push
 ```
 
 #### 6.3: Add to KB-FEDERATION.md

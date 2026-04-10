@@ -6,7 +6,7 @@
 #
 # What it does:
 #   1. Copies all .md files from .claude/commands/ to ~/.claude/commands/
-#   2. Replaces /path/to/forge-methodology with the actual FORGE_PATH
+#   2. Replaces /path/to/agento-studio with the actual FORGE_PATH
 #   3. Reports what was installed
 
 set -euo pipefail
@@ -28,7 +28,7 @@ for cmd in "$SOURCE_DIR"/*.md; do
   [ -f "$cmd" ] || continue
   name="$(basename "$cmd")"
   # Copy and substitute placeholder paths
-  sed "s|/path/to/forge-methodology|$FORGE_PATH|g" "$cmd" > "$TARGET_DIR/$name"
+  sed -e "s|/path/to/agento-studio|$FORGE_PATH|g" -e "s|/path/to/agento-studio|$FORGE_PATH|g" "$cmd" > "$TARGET_DIR/$name"
   echo "  Installed: $name"
   installed=$((installed + 1))
 done

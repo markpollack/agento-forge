@@ -1,12 +1,42 @@
-# Forge Methodology
+# Agento Studio
 
-A systematic six-phase methodology for building AI agents, software projects, and conducting research — from initial vision through production-ready results.
+A methodology and toolkit for building, testing, and improving AI agent knowledge bases.
 
-Forge structures the messy process of creating something new into repeatable phases with clear inputs, outputs, and exit criteria.
+Built on the **Forge methodology** — a six-phase system for taking AI agent projects from initial vision through production-ready results. Forge separates discovery (iterative phases 0-2) from execution (sequential phases 3-5), treats evaluation as first-class, and produces learnings as a primary artifact alongside code.
+
+## Quick Start
+
+Clone and open in Claude Code:
+
+```bash
+git clone https://github.com/markpollack/agento-studio.git
+cd agento-studio
+claude
+```
+
+All slash commands are available immediately. From another project, use `--add-dir`:
+
+```bash
+cd ~/my-project
+claude --add-dir ~/agento-studio
+```
+
+## Slash Commands
+
+| Command | What it does |
+|---------|-------------|
+| `/forge-project` | Bootstrap a software project (Vision + Design + Roadmap with QA review) |
+| `/forge-research` | Bootstrap a research project (Forage + Vision) |
+| `/forge-research-kb` | Bootstrap a federated research-partner knowledge base |
+| `/forge-eval-agent` | Bootstrap an eval-agent project with judges and benchmarks |
+| `/forge-steward` | Bootstrap stewardship for an existing project |
+| `/forge-kb` | Structure a document corpus for JIT context Q&A |
+| `/plan-to-roadmap` | Convert a plan into a Forge methodology roadmap |
+| `/collect-status` | Produce a timestamped status report |
 
 ## Choose Your Variant
 
-Forge supports four project types. Start here:
+Forge supports four project types:
 
 | Variant | Use when... | Guide |
 |---------|-------------|-------|
@@ -30,8 +60,6 @@ Not sure which to choose? See [variants/README.md](variants/README.md) for a det
 
 ## Two Loops
 
-Forge organizes the six phases into two distinct execution patterns:
-
 ```
         DISCOVERY LOOP (Phases 0-2)              EXECUTION PIPELINE (Phases 3-5)
         Iterate until stable                      Sequential after discovery stabilizes
@@ -44,79 +72,39 @@ Forge organizes the six phases into two distinct execution patterns:
      <─> = Iterative refinement                       ──> = Sequential execution
 ```
 
-The **Discovery Loop** iterates freely — research invalidates vision assumptions, design reveals knowledge gaps, and that's expected. You exit when vision, research, and design are consistent and no new discoveries are changing direction.
+The **Discovery Loop** iterates freely — research invalidates vision assumptions, design reveals knowledge gaps. You exit when vision, research, and design are consistent.
 
-The **Execution Pipeline** is sequential — you commit to a roadmap, execute it with feedback, and document the result. See [Discovery Loop](concepts/discovery-loop.md) and [Execution Pipeline](concepts/execution-pipeline.md) for details.
+The **Execution Pipeline** is sequential — commit to a roadmap, execute with feedback, document the result.
 
-## Phase 4: Three Feedback Modes
+## Knowledge Base Architecture
 
-Phase 4 adapts its feedback mechanism based on what you're building:
+Agento Studio codifies two types of knowledge bases for AI agents:
 
-- **Eval-agent** — a loss-function optimization loop. Execute tests, compute loss, analyze capability gaps, modify the agent, repeat until loss converges.
-- **Project** — a QA review loop. Implement a roadmap stage, run a structured review, fix findings by severity, repeat until zero blocking issues remain.
-- **Research** — a knowledge quality loop. Execute analysis, evaluate claims against evidence, refine hypotheses, repeat until claims are publication-ready.
-- **Steward** — a health monitoring loop. Check project health, review incoming changes, maintain KB currency, plan development work. Continuous, not convergent.
+**Code-Agent KB** — Structured reference knowledge consumed by agents during task execution. Routing tables, faceted metadata, controlled vocabulary. Optimized for ≤3-hop lookup.
 
-All three use the same phase structure. They differ in how "done" is measured. See [Judges and Evaluation](concepts/judges-and-evaluation.md) for agent evaluation, and [Research Loop](concepts/research-loop.md) for research evaluation.
+**Research-Partner KB** — Synthesized strategic knowledge consumed by an AI research partner. Theme-based routing, conversation synthesis, cross-cutting analysis.
+
+Both use **JIT Retrieval** (Explore RAG) — Claude Code's native file tools navigate structured flat files. No vector database, no embeddings. Just markdown files with routing tables in git.
+
+See [concepts/knowledge-base-architecture.md](concepts/knowledge-base-architecture.md) for the full specification including multi-KB federation.
 
 ## Key Concepts
 
 - **[Discovery Loop](concepts/discovery-loop.md)** — Why phases 0-2 iterate and when to exit
-- **[Execution Pipeline](concepts/execution-pipeline.md)** — Why phases 3-5 are sequential and how feedback flows
-- **[Research Loop](concepts/research-loop.md)** — Vision↔Research iteration for research projects (L₁/L₂/L₃ loss function)
-- **[Judges and Evaluation](concepts/judges-and-evaluation.md)** — Deterministic judges, AI judges, and loss computation
-- **[Quality Infrastructure](concepts/quality-infrastructure.md)** — Automated quality checks set up early and running on every build
-- **[Prerequisite Designs](concepts/prerequisite-designs.md)** — Lightweight design docs for tooling and data prerequisites that emerge from research
-- **[Knowledge Base Architecture](concepts/knowledge-base-architecture.md)** — Two KB types (Code-Agent vs Research-Partner), librarian layer, faceted classification, multi-KB federation
-- **[Conversation Bootstrapping](concepts/conversation-bootstrapping.md)** — Starting projects from saved AI conversations as the natural entry point
-- **[Conversational Review](concepts/conversational-review.md)** — Using conversational AI to review discovery loop artifacts against the methodology
+- **[Execution Pipeline](concepts/execution-pipeline.md)** — Why phases 3-5 are sequential
+- **[Research Loop](concepts/research-loop.md)** — Vision↔Research iteration (L₁/L₂/L₃ loss)
+- **[Judges and Evaluation](concepts/judges-and-evaluation.md)** — Deterministic + AI judges
+- **[Knowledge Base Architecture](concepts/knowledge-base-architecture.md)** — Two KB types, librarian layer, federation
+- **[Conversation Bootstrapping](concepts/conversation-bootstrapping.md)** — Starting projects from saved AI conversations
 
 ## Templates
 
-Ready-to-use templates for each phase output:
-
-- [VISION-TEMPLATE.md](templates/VISION-TEMPLATE.md) — Standard vision template
-- [VISION-TEMPLATE-research.md](templates/VISION-TEMPLATE-research.md) — Research variant with hypotheses and unknowns tracking
-- [RESEARCH-TEMPLATE.md](templates/RESEARCH-TEMPLATE.md)
-- [DESIGN-TEMPLATE.md](templates/DESIGN-TEMPLATE.md)
-- [ROADMAP-TEMPLATE.md](templates/ROADMAP-TEMPLATE.md) — Standard roadmap template
-- [ROADMAP-TEMPLATE-research.md](templates/ROADMAP-TEMPLATE-research.md) — Research variant with context loading and go/no-go gates
-- [LEARNINGS-TEMPLATE.md](templates/LEARNINGS-TEMPLATE.md)
-- [PREREQUISITE-DESIGN-TEMPLATE.md](templates/PREREQUISITE-DESIGN-TEMPLATE.md)
-- [CONVERSATIONAL-REVIEW-TEMPLATE.md](templates/CONVERSATIONAL-REVIEW-TEMPLATE.md)
-- [PAPER-TRACKER-TEMPLATE.md](templates/PAPER-TRACKER-TEMPLATE.md) — Literature tracking for research projects
-- [PROVENANCE-TEMPLATE.md](templates/PROVENANCE-TEMPLATE.md) — Data lineage documentation
-
-## Guides
-
-- **[Getting Started](guides/getting-started.md)** — Walk through applying Forge to a real problem
-- **[Java Library Quality](guides/java-library-quality.md)** — Quality checklist for Java library projects
-- **[Research Project Structure](guides/research-project-structure.md)** — Directory conventions for research projects
-- **[Phase Review Template](phases/phase-review-template.md)** — Structured quality gate for implementation phases
-
-## Examples
-
-Minimal project structure examples:
-
-- **[Eval-Agent Project](examples/agent-project/)** — Autonomous agent with judge-based evaluation
-- **[Project Variant](examples/software-project/)** — Software project with QA review
-- **[Research Project](examples/research-project/)** — Research with multi-roadmap pattern
+Ready-to-use templates for each phase output in [`templates/`](templates/).
 
 ## Philosophy
 
-Forge is open methodology. The phases, templates, and evaluation patterns are all here for anyone to use.
-
-The core insight: building agents (and software generally) is a discovery problem first, then an execution problem. Most failures come from skipping discovery — jumping straight to implementation without understanding the problem space. Forge makes discovery explicit and gives it structure.
-
-## How Forge Differs
-
-Most AI development guides focus on prompt engineering or tool configuration. Forge is a **project-level methodology** — it structures the entire lifecycle from "I want to build X" through "here's the working, documented result."
-
-- It separates discovery (iterative, exploratory) from execution (sequential, disciplined)
-- It treats evaluation as a first-class concern, not an afterthought
-- It produces learnings as a primary artifact, not just code
-- It works for AI agents, software projects, research programs, and ongoing stewardship
+The core insight: building agents is a discovery problem first, then an execution problem. Most failures come from skipping discovery — jumping straight to implementation without understanding the problem space. Forge makes discovery explicit and gives it structure.
 
 ## License
 
-[Apache 2.0](LICENSE)
+[BSL 1.1](LICENSE) — Converts to Apache 2.0 on April 1, 2029.
