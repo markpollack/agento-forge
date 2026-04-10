@@ -97,6 +97,27 @@ See [concepts/knowledge-base-architecture.md](concepts/knowledge-base-architectu
 - **[Knowledge Base Architecture](concepts/knowledge-base-architecture.md)** — Two KB types, librarian layer, federation
 - **[Conversation Bootstrapping](concepts/conversation-bootstrapping.md)** — Starting projects from saved AI conversations
 
+## Scripts
+
+Deterministic tools for research corpus management. No external dependencies — Python 3 standard library only.
+
+| Script | What it does |
+|--------|-------------|
+| [`scripts/arxiv_ingest.py`](scripts/arxiv_ingest.py) | Download PDFs, metadata, and LaTeX source from arXiv. Idempotent, rate-limited, with verify mode. |
+| [`scripts/sync_tracker_download_status.py`](scripts/sync_tracker_download_status.py) | Update paper-tracker tables with download status from batch manifests. |
+| [`scripts/run_arxiv_batch.sh`](scripts/run_arxiv_batch.sh) | One-command pipeline: download → sync tracker → verify. |
+
+```bash
+# Download papers listed in your tracker
+python3 scripts/arxiv_ingest.py --from-tracker --tracker-file plans/supporting_docs/paper-tracker.md
+
+# Download specific papers
+python3 scripts/arxiv_ingest.py --id 2210.03629 --id 2405.15793
+
+# Full pipeline (download + sync + verify)
+scripts/run_arxiv_batch.sh --from-tracker
+```
+
 ## Templates
 
 Ready-to-use templates for each phase output in [`templates/`](templates/).
