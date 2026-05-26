@@ -23,6 +23,9 @@
 | How do I collect and aggregate status across multiple projects? | `hierarchical-reporting.md` |
 | How do I batch-ingest research results into an existing KB? | `../guides/curator-intake.md` |
 | How do I scout and collect references to bootstrap a new KB domain? | `../guides/reference-harvest.md` |
+| How does the iterative improvement loop work for agent systems? | `improvement-flywheel.md` |
+| What are the five levers for improving agent behavior? | `improvement-flywheel.md` (Intervention Levers) |
+| How do I build a state taxonomy for Markov analysis? | `improvement-flywheel.md` (Phase 0: State Taxonomy Discovery) |
 
 ## Contents
 
@@ -42,6 +45,7 @@
 | `prerequisite-designs.md` | Lightweight designs for tooling/data prerequisites | Research revealed you need a tool before the main project |
 | `documentation-taxonomy.md` | Diataxis framework (tutorial/how-to/reference/explanation) | You're writing docs and need to classify content type |
 | `hierarchical-reporting.md` | Status collection and aggregation across projects | You're managing multiple agent-driven projects |
+| `improvement-flywheel.md` | Loss-driven iterative improvement for agent systems | You're improving an agent through measured behavioral deltas and experiments |
 
 ## Not Covered
 

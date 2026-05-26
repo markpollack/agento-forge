@@ -85,7 +85,7 @@ See [ROADMAP-TEMPLATE.md](../templates/ROADMAP-TEMPLATE.md) for the full templat
 
 ### Phase 4: Optimization Loop
 
-The eval-agent variant uses a **loss-function optimization loop** instead of QA review:
+The eval-agent variant centers on a **loss-function optimization loop**. For agents that produce code or other durable artifacts, compose this optimization loop with QA review gates. For non-trivial eval-agent projects, apply the [Improvement Flywheel](../concepts/improvement-flywheel.md).
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -153,6 +153,7 @@ Eval-agent documentation includes:
 
 ## Concepts
 
+- [Improvement Flywheel](../concepts/improvement-flywheel.md) — Loss-driven iterative improvement using journals, Markov analysis, and variant progression
 - [Judges and Evaluation](../concepts/judges-and-evaluation.md) — How to design judges and compute loss
 - [Discovery Loop](../concepts/discovery-loop.md) — When to exit the iterative discovery phases
 - [Execution Pipeline](../concepts/execution-pipeline.md) — How feedback flows in phases 3-5

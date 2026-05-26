@@ -11,7 +11,7 @@
 | How do I get started with Forge? | `guides/getting-started.md` |
 | What are the six phases? | `README.md` (The Six Phases table) |
 | How does the discovery loop work? | `concepts/discovery-loop.md` |
-| How does Phase 4 differ across variants? | `README.md` (Phase 4: Three Feedback Modes) then `variants/` |
+| How does Phase 4 differ across variants? | `phases/04-learning-loop.md` (Primary Feedback Modes) then `variants/` |
 | How do I structure a knowledge base for agents? | `concepts/knowledge-base-architecture.md` |
 | What template do I use for my vision doc? | `templates/VISION-TEMPLATE.md` (or `VISION-TEMPLATE-research.md` for research) |
 | How do judges and evaluation work? | `concepts/judges-and-evaluation.md` |
@@ -22,6 +22,8 @@
 | How does AGENTS.md relate to Forge? | `inbox/agents-md-and-plans-directory.md` |
 | How does OpenAI's PLANS.md compare to Forge? | `inbox/plans-md-convergence.md` |
 | What's the oracle learning loop? | `concepts/oracle-learning-loop.md` |
+| How does the Improvement Flywheel work? | `concepts/improvement-flywheel.md` |
+| What are the five levers for improving agents? | `concepts/improvement-flywheel.md` (Intervention Levers) |
 
 ## Topic Routing
 

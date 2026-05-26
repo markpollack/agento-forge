@@ -33,7 +33,7 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Phase 3: Roadmap | `phases/03-roadmap.md` | Implementable steps with entry/exit criteria |
 | Phase 4: Learning Loop | `phases/04-learning-loop.md` | Iterative execution with variant-specific feedback |
 | Phase 5: Documentation | `phases/05-documentation.md` | User-facing docs, Diataxis taxonomy |
-| Core concepts (13 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns |
+| Core concepts (14 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns, improvement flywheel |
 | Templates (11 docs) | `templates/` | Fill-in templates for every phase output |
 | Getting started | `guides/getting-started.md` | Step-by-step walkthrough of applying Forge |
 | Methodology comparisons & research | `inbox/` | BMAD-METHOD comparison, AGENTS.md standard, PLANS.md convergence (staging area) |
@@ -60,7 +60,8 @@ forge-methodology/
 │   ├── prerequisite-designs.md
 │   ├── quality-infrastructure.md
 │   ├── documentation-taxonomy.md
-│   └── hierarchical-reporting.md
+│   ├── hierarchical-reporting.md
+│   └── improvement-flywheel.md
 ├── phases/                # Phase 0-5 definitions
 ├── templates/             # Fill-in templates for phase outputs
 ├── variants/              # Agent, project, research, steward variants
@@ -77,6 +78,7 @@ forge-methodology/
 - **Judges** — Deterministic (test suites, linters) and AI judges that produce verdicts. Judges drive the Phase 4 feedback loop for eval-agent projects.
 - **Knowledge Base Architecture** — Two KB types: Code-Agent (task-driven, faceted, two-agent curator/navigator) and Research-Partner (question-driven, single session bridge). Both use routing tables for ≤3-hop navigation.
 - **Steward** — A Level 1 cognitive-altitude agent that combines curator (KB maintenance) and developer (project evolution) roles. The natural successor to a completed build phase.
+- **Improvement Flywheel** — A loss-driven iterative improvement method for agent systems. Five levers (prompt, knowledge, execution structure, model, rubric), seven loss dimensions, loop type classification, and the deterministic-over-exploratory principle. Uses journals, Markov analysis, and variant progression. See [concepts/improvement-flywheel.md](concepts/improvement-flywheel.md).
 
 ## Not Covered
 

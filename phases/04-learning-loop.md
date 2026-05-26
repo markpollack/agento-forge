@@ -24,9 +24,13 @@ Execute the roadmap iteratively with structured feedback. This is where implemen
 4. **Fix and iterate** — Address review findings. Repeat reviews until zero blocking findings remain.
 5. **Compact learnings** — Periodically distill step-level learnings into a summary document for quick reference.
 
-## Two Feedback Modes
+## The Improvement Flywheel
 
-Phase 4's inner loop adapts based on what you're building:
+Phase 4 applies the [Improvement Flywheel](../concepts/improvement-flywheel.md): run the agent, measure the loss signal, diagnose the dominant loss dimension, intervene with the correct lever, and verify the delta. The flywheel is the methodology's answer to "how do I know what to change next?" — it converts observed behavioral gaps into targeted interventions.
+
+## Primary Feedback Modes
+
+Phase 4's inner loop adapts based on what you're building. The agent and project variants are the two primary implementation modes. Research and steward variants adapt the same feedback-loop structure for evidence iteration and ongoing project health monitoring.
 
 ### Agent Creation — Optimization Loop
 
@@ -49,6 +53,10 @@ Used when building conventional software. The feedback is qualitative — a stru
 **Current operation**: The review runs manually — the implementation agent generates a populated review prompt, a developer copies it to a separate QA session, and findings are copied back. See the [Phase Review Template](phase-review-template.md) for the full operational workflow including handoff prompts and iteration numbering.
 
 **Target automation**: A `PhaseReviewJudge` programmatically spawns the QA agent via an agent SDK, passes the prompt, receives structured findings, and loops until the phase passes. The manual workflow is structured to make this transition straightforward — the review prompt is already self-contained and the findings are already severity-tagged.
+
+### Composing Feedback Modes
+
+The modes are not mutually exclusive. Eval-agent projects that generate code (Java, Python, etc.) should apply QA reviews alongside loss optimization — best practices, design conformance, and domain-specific reviews (e.g., DDD knowledge base review for domain modeling) still apply. The optimization loop measures whether the agent improves; the QA review ensures the agent's output meets quality standards independent of the loss function.
 
 ### What They Share
 
