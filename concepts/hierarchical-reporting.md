@@ -145,7 +145,7 @@ Human
         │     ├── agent-judge steward
         │     └── ...
         ├── Private Manager (aggregates all private projects)
-        │     ├── experiment-driver eval-agent
+        │     ├── agent-experiment eval-agent
         │     ├── refactoring-agent steward
         │     └── ...
         └── Research Manager (aggregates all research projects)
@@ -170,7 +170,7 @@ For scheduled status collection, see the architecture in ACTION-ITEMS.md MEDIUM-
 - **Jobs**: Per-project recurring jobs (weekly), synthesis job (after collection)
 - **Persistence**: PostgreSQL (job history, metadata via JobRunr labels)
 
-The StorageProvider API enables orchestrator agents to query job history: "When was the last successful status collection for experiment-driver?"
+The StorageProvider API enables orchestrator agents to query job history: "When was the last successful status collection for agent-experiment?"
 
 ## Relationship to Other Concepts
 

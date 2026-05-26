@@ -11,7 +11,7 @@ The Steward concept emerges from the cognitive altitude hierarchy described in c
 | Level 0 | Task executor | Minutes | "Run this migration on File.java" |
 | Level 1 | **Steward** | Days–weeks | "Keep agent-client healthy, execute roadmap items" |
 | Level 2 | Strategist | Weeks–months | "Plan the three-paper research arc" |
-| Level 3 | Meta-architect | Months–years | "Design the experiment-driver platform" |
+| Level 3 | Meta-architect | Months–years | "Design the agent-experiment platform" |
 
 The Steward sits at Level 1 — above individual task execution, but below strategic planning. It owns a domain, maintains awareness of its state, and executes work within its scope.
 
