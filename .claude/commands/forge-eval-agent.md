@@ -195,7 +195,7 @@ Start by understanding the domain. Be conversational:
 
    The choice determines:
    - Which Maven dependencies are added to `pom.xml`
-   - Which `AgentInvoker` subclass is created (`WorkflowAgentInvoker`, `TemplateAgentInvoker`, or `TwoPhaseTemplateAgentInvoker`)
+   - Which `AgentInvoker` subclass is created (`WorkflowAgentInvoker`, `WorkflowInvoker<S>`, `TemplateAgentInvoker`, or `TwoPhaseTemplateAgentInvoker`)
    - The `orchestration` field in `experiment-config.yaml` (set to `workflow` for agent-workflow, omitted otherwise)
 
 3. **What baselines exist?** Ask about:
@@ -505,7 +505,8 @@ For consumer (eval-agent) projects, the stages are:
 - Step 1.1: Project scaffolding (Maven, pom.xml, mvnw, directories, git init)
 - Step 1.2: Verify compile + externalize prompts (`plans/prompts/`, `experiment-config.yaml`)
 - Step 1.3: AgentInvoker implementation — extend the invoker matching the SDK chosen in Phase 1:
-    - **agent-workflow**: extend `WorkflowAgentInvoker` (single `ClaudeStep` in a `Workflow`, set `orchestration: workflow` in experiment-config.yaml)
+    - **agent-workflow (single-step)**: extend `WorkflowAgentInvoker` (single `ClaudeStep` with journal + knowledge injection, set `orchestration: workflow` in experiment-config.yaml)
+    - **agent-workflow (multi-step)**: extend `WorkflowInvoker<S>` (typed state, multi-step with journal + cost tracking — implement `buildWorkflow`/`buildInitialState`)
     - **agent-client**: extend `TemplateAgentInvoker` (inject `AgentClient`, implement `invokeAgent()`)
     - **claude-code-sdk**: extend `TwoPhaseTemplateAgentInvoker` (use `ClaudeSyncClient` for explore + act phases)
 - Step 1.4: Dataset adapter (load domain benchmark items, `datasets/manifest.json`)
