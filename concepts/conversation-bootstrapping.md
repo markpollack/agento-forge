@@ -100,10 +100,10 @@ Forge provides tools to automate the bootstrapping process:
 
 ### Claude Code Skill (recommended)
 
-If using Claude Code, invoke the `/bootstrap-research` skill:
+If using Claude Code, invoke the `/forge-research` skill:
 
 ```
-/bootstrap-research
+/forge-research
 ```
 
 The skill will conversationally guide you through:
@@ -113,7 +113,7 @@ The skill will conversationally guide you through:
 4. **Drafting VISION.md** — Extracting research questions, hypotheses, unknowns from your materials
 5. **Refining** — Iterating until the vision captures your research accurately
 
-**Installation**: Copy `.claude/commands/bootstrap-research.md` to `~/.claude/commands/` for global access.
+**Installation**: Copy `.claude/commands/forge-research.md` to `~/.claude/commands/` for global access.
 
 ### Shell Script (portable)
 

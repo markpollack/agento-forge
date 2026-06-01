@@ -75,8 +75,16 @@ Private | Community
 
 ## Configuration
 
-- **Templates directory**: `templates/`
-- **arXiv batch pipeline** (optional): *(user-provided — for batch downloading arXiv papers)*
+Paths are resolved via environment variables. Set these before running the command,
+or add them to your shell profile.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AGENTO_FORGE_HOME` | `$HOME/projects/agento-forge` | Root of the agento-forge checkout (forge methodology, templates) |
+| `ARXIV_BATCH_PIPELINE` | *(optional)* | Path to `run_arxiv_batch.sh` for batch downloading arXiv papers |
+
+**Path references in this command use placeholders**:
+- `{agento-forge}` → `$AGENTO_FORGE_HOME`
 
 ## Instructions
 
@@ -135,9 +143,9 @@ mkdir -p {project}/findings
 mkdir -p {project}/docs
 ```
 
-Copy templates from forge-methodology (use paths from Configuration above):
-- `{forge-methodology}/templates/VISION-TEMPLATE-research.md` → `{project}/plans/VISION.md`
-- `{forge-methodology}/templates/PAPER-TRACKER-TEMPLATE.md` → `{project}/plans/supporting_docs/paper-tracker.md`
+Copy templates from agento-forge (use paths from Configuration above):
+- `{agento-forge}/templates/VISION-TEMPLATE-research.md` → `{project}/plans/VISION.md`
+- `{agento-forge}/templates/PAPER-TRACKER-TEMPLATE.md` → `{project}/plans/supporting_docs/paper-tracker.md`
 
 Copy their conversation files to `{project}/plans/conversations/`.
 

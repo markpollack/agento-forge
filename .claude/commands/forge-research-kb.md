@@ -7,7 +7,7 @@ description: "Bootstrap a research-partner KB — a federated research project c
 
 You are bootstrapping a **research-partner knowledge base** — a research project specifically designed to be consumed by other projects via federation. This differs from a generic research project (`/forge-research`) in that it has explicit consumers, produces findings that feed into downstream projects, and integrates into a multi-KB federation.
 
-See [Knowledge Base Architecture](concepts/knowledge-base-architecture.md) in forge-methodology for the full conceptual foundation.
+See [Knowledge Base Architecture](concepts/knowledge-base-architecture.md) in agento-forge for the full conceptual foundation.
 
 ## When to Use This vs `/forge-research`
 
@@ -72,11 +72,17 @@ Private | Community (Apache 2.0)
 
 ## Configuration
 
-This command expects to run from the Agento Studio repo root (or via `claude --add-dir` pointing at it).
+Paths are resolved via environment variables. Set these before running the command,
+or add them to your shell profile.
 
-- **KB Federation file**: *(user-provided — ask during Phase 1)*
-- **arXiv batch pipeline**: *(optional, user-provided)*
-- **arXiv ingest docs**: *(optional, user-provided)*
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AGENTO_FORGE_HOME` | `$HOME/projects/agento-forge` | Root of the agento-forge checkout (forge methodology) |
+| `KB_FEDERATION_FILE` | *(optional)* | Path to `KB-FEDERATION.md` for federation integration |
+| `ARXIV_BATCH_PIPELINE` | *(optional)* | Path to `run_arxiv_batch.sh` for batch downloading arXiv papers |
+
+**Path references in this command use placeholders**:
+- `{agento-forge}` → `$AGENTO_FORGE_HOME`
 
 ## Instructions
 

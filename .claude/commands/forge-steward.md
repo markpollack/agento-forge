@@ -21,8 +21,15 @@ Use this skill when:
 
 ## Configuration
 
-- **Steward variant doc**: `variants/steward.md`
-- **KB architecture doc**: `concepts/knowledge-base-architecture.md`
+Paths are resolved via environment variables. Set these before running the command,
+or add them to your shell profile.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AGENTO_FORGE_HOME` | `$HOME/projects/agento-forge` | Root of the agento-forge checkout (forge methodology, variant docs, concept docs) |
+
+**Path references in this command use placeholders**:
+- `{agento-forge}` → `$AGENTO_FORGE_HOME`
 
 ## Instructions
 

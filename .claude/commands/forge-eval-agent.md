@@ -154,7 +154,7 @@ required path is missing.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `AGENTO_FORGE_HOME` | `/home/mark/projects/agento-forge` | Root of the agento-forge checkout (forge methodology) |
+| `AGENTO_FORGE_HOME` | `$HOME/projects/agento-forge` | Root of the agento-forge checkout (forge methodology) |
 | `AGENT_EXPERIMENT_HOME` | *(required)* | Root of the agent-experiment checkout |
 | `AGENT_EXPERIMENT_TEMPLATE_HOME` | `$AGENT_EXPERIMENT_HOME/../agent-experiment-template` | Canonical consumer scaffold |
 
@@ -187,15 +187,17 @@ Start by understanding the domain. Be conversational:
 
    | Option | SDK | Source | Best for |
    |--------|-----|--------|----------|
-   | **agent-workflow** (default) | `workflow-flows` | `~/projects/agent-workflow` | Composable step-based orchestration. Single-step to start, can evolve to multi-step (gates, parallel, loops). Delegates to ClaudeStep internally. |
-   | **agent-client** | `spring-ai-agent-client` | `~/community/agent-client` | Simple single-phase invocation via AgentClient abstraction. Lightweight, no workflow overhead. |
+   | **agent-workflow** (default) | `workflow-flows` + `workflow-journal` | `~/projects/agent-workflow` | Composable step-based orchestration. Single-step to start, can evolve to multi-step (gates, parallel, loops). Delegates to ClaudeStep internally. Journal integration via `workflow-journal` bridge. |
+   | **agent-client** | `agent-client-core` + `agent-claude` | `~/community/agent-client` | Simple single-phase invocation via AgentClient abstraction. Lightweight, no workflow overhead. |
    | **claude-code-sdk** | `claude-code-sdk` | `~/community/claude-agent-sdk-java` | Direct ClaudeSyncClient for multi-turn session continuity. Best for two-phase (explore + act) patterns. |
 
-   Default is **agent-workflow** — it starts as a single `ClaudeStep` in a `Workflow` and can grow into multi-step orchestration without changing the experiment framework contract.
+   Default is **agent-workflow** — it starts as a single `AgentClientStep` in a `Workflow` and can grow into multi-step orchestration without changing the experiment framework contract. Two invoker base classes are available:
+   - `WorkflowAgentInvoker` — single-step workflow with trace capture (extends `AbstractTemplateAgentInvoker`)
+   - `WorkflowInvoker<S>` — multi-step typed workflow base with journal + cost tracking (implements `AgentInvoker` directly)
 
    The choice determines:
    - Which Maven dependencies are added to `pom.xml`
-   - Which `AgentInvoker` subclass is created (`WorkflowAgentInvoker`, `WorkflowInvoker<S>`, `TemplateAgentInvoker`, or `TwoPhaseTemplateAgentInvoker`)
+   - Which `AgentInvoker` subclass is created (`WorkflowAgentInvoker` or `WorkflowInvoker<S>`, `TemplateAgentInvoker`, or `TwoPhaseTemplateAgentInvoker`)
    - The `orchestration` field in `experiment-config.yaml` (set to `workflow` for agent-workflow, omitted otherwise)
 
 3. **What baselines exist?** Ask about:
@@ -305,29 +307,35 @@ Use `~/projects/agent-experiment-template/pom.xml` as the canonical reference fo
     <artifactId>workflow-flows</artifactId>
 </dependency>
 
-<!-- Agent client (single-phase AgentClient abstraction) -->
+<!-- Workflow journal — bridges agent-workflow DSL with agent-journal Run -->
 <dependency>
-    <groupId>org.springaicommunity.agents</groupId>
-    <artifactId>spring-ai-agent-client</artifactId>
+    <groupId>io.github.markpollack</groupId>
+    <artifactId>workflow-journal</artifactId>
+</dependency>
+
+<!-- Agent client -->
+<dependency>
+    <groupId>io.github.markpollack</groupId>
+    <artifactId>agent-client-core</artifactId>
 </dependency>
 <dependency>
-    <groupId>org.springaicommunity.agents</groupId>
-    <artifactId>spring-ai-claude-agent</artifactId>
+    <groupId>io.github.markpollack</groupId>
+    <artifactId>agent-claude</artifactId>
 </dependency>
 
 <!-- Claude Code SDK (multi-turn session continuity) -->
 <dependency>
-    <groupId>org.springaicommunity</groupId>
+    <groupId>io.github.markpollack</groupId>
     <artifactId>claude-code-sdk</artifactId>
 </dependency>
 
 <!-- Judge infrastructure -->
 <dependency>
-    <groupId>org.springaicommunity</groupId>
+    <groupId>io.github.markpollack</groupId>
     <artifactId>agent-judge-core</artifactId>
 </dependency>
 <dependency>
-    <groupId>org.springaicommunity</groupId>
+    <groupId>io.github.markpollack</groupId>
     <artifactId>agent-judge-exec</artifactId>
 </dependency>
 
@@ -505,8 +513,8 @@ For consumer (eval-agent) projects, the stages are:
 - Step 1.1: Project scaffolding (Maven, pom.xml, mvnw, directories, git init)
 - Step 1.2: Verify compile + externalize prompts (`plans/prompts/`, `experiment-config.yaml`)
 - Step 1.3: AgentInvoker implementation — extend the invoker matching the SDK chosen in Phase 1:
-    - **agent-workflow (single-step)**: extend `WorkflowAgentInvoker` (single `ClaudeStep` with journal + knowledge injection, set `orchestration: workflow` in experiment-config.yaml)
-    - **agent-workflow (multi-step)**: extend `WorkflowInvoker<S>` (typed state, multi-step with journal + cost tracking — implement `buildWorkflow`/`buildInitialState`)
+    - **agent-workflow (single-step)**: extend `WorkflowAgentInvoker` (single `AgentClientStep` in a `Workflow` with trace capture, set `orchestration: workflow` in experiment-config.yaml)
+    - **agent-workflow (multi-step)**: extend `WorkflowInvoker<S>` (typed multi-step workflow with journal + cost tracking, implement `buildWorkflow()`/`buildInitialState()`)
     - **agent-client**: extend `TemplateAgentInvoker` (inject `AgentClient`, implement `invokeAgent()`)
     - **claude-code-sdk**: extend `TwoPhaseTemplateAgentInvoker` (use `ClaudeSyncClient` for explore + act phases)
 - Step 1.4: Dataset adapter (load domain benchmark items, `datasets/manifest.json`)

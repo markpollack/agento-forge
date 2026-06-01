@@ -85,9 +85,15 @@ Private | Community (Apache 2.0)
 
 ## Configuration
 
-- **Templates directory**: `templates/`
-- **Project variant doc**: `variants/project.md`
-- **Phase review template**: `phases/phase-review-template.md`
+Paths are resolved via environment variables. Set these before running the command,
+or add them to your shell profile.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AGENTO_FORGE_HOME` | `$HOME/projects/agento-forge` | Root of the agento-forge checkout (forge methodology, templates, variant docs) |
+
+**Path references in this command use placeholders**:
+- `{agento-forge}` → `$AGENTO_FORGE_HOME`
 
 ## Instructions
 
@@ -151,10 +157,10 @@ mkdir -p {project}/src/test/java/{base_package}
 mkdir -p {project}/docs
 ```
 
-Copy templates from forge-methodology:
-- `{forge-methodology}/templates/VISION-TEMPLATE.md` → `{project}/plans/VISION.md`
-- `{forge-methodology}/templates/DESIGN-TEMPLATE.md` → `{project}/plans/DESIGN.md`
-- `{forge-methodology}/templates/ROADMAP-TEMPLATE.md` → `{project}/plans/ROADMAP.md`
+Copy templates from agento-forge:
+- `{agento-forge}/templates/VISION-TEMPLATE.md` → `{project}/plans/VISION.md`
+- `{agento-forge}/templates/DESIGN-TEMPLATE.md` → `{project}/plans/DESIGN.md`
+- `{agento-forge}/templates/ROADMAP-TEMPLATE.md` → `{project}/plans/ROADMAP.md`
 
 Create build file (pom.xml, build.gradle, etc.) with dependencies identified in Phase 2.
 
@@ -252,7 +258,7 @@ Iterate until satisfied.
    - Key integration context (which projects to reference, which interfaces to implement)
    - "After Each Step" checklist (run tests, update learnings, commit)
 
-5. **QA review setup** — Note when the first QA review should happen (typically after Stage 1 complete). Reference the phase review template from forge-methodology.
+5. **QA review setup** — Note when the first QA review should happen (typically after Stage 1 complete). Reference the phase review template from agento-forge.
 
 ## Extraction Patterns
 

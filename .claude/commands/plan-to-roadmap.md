@@ -12,9 +12,11 @@ You have just produced a plan (likely in `~/.claude/plans/`). Do NOT execute it 
 1. **Read the plan** you just created (check `~/.claude/plans/` for the most recent file, or the plan you just presented to the user).
 
 2. **Read the Forge roadmap template and phase definition** for structural guidance:
-   - Template: `templates/ROADMAP-TEMPLATE.md`
-   - Phase definition: `phases/03-roadmap.md`
-   - Learnings template: `templates/LEARNINGS-TEMPLATE.md`
+   - Template: `{agento-forge}/templates/ROADMAP-TEMPLATE.md`
+   - Phase definition: `{agento-forge}/phases/03-roadmap.md`
+   - Learnings template: `{agento-forge}/templates/LEARNINGS-TEMPLATE.md`
+
+   `{agento-forge}` → `$AGENTO_FORGE_HOME` (default: `$HOME/projects/agento-forge`)
 
 3. **Transform your plan** into the `ROADMAP-TEMPLATE.md` format:
    - Group related work items into numbered **stages** (Stage 1, Stage 2, ...)
@@ -45,6 +47,12 @@ You have just produced a plan (likely in `~/.claude/plans/`). Do NOT execute it 
      - Updates `CLAUDE.md` with the full stage's distilled learnings
      - Creates a stage summary learnings file
      This prevents fragmented knowledge — `LEARNINGS.md` is the Tier 1 compacted summary that future stages and sessions read first.
+   - **The first step of Stage N (N > 1)** must gate on Stage N-1 consolidation being complete. Add these to its entry criteria:
+     ```
+     - [ ] Stage N-1 consolidation complete — Read: `plans/learnings/step-X.K-stageN-1-summary.md`
+     - [ ] Read: `plans/learnings/LEARNINGS.md` — full compacted project learnings
+     ```
+     Without this, a new stage can start before the prior stage's knowledge is captured, causing the exact knowledge fragmentation that consolidation is meant to prevent.
 
 4. **Write the roadmap** to `plans/ROADMAP.md` in the current project directory.
 

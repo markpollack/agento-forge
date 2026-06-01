@@ -12,6 +12,7 @@
 | What are the six phases? | `README.md` (The Six Phases table) |
 | How does the discovery loop work? | `concepts/discovery-loop.md` |
 | How does Phase 4 differ across variants? | `phases/04-learning-loop.md` (Primary Feedback Modes) then `variants/` |
+| How do I develop or maintain a forge command? | `guides/command-development.md` |
 | How do I structure a knowledge base for agents? | `concepts/knowledge-base-architecture.md` |
 | What template do I use for my vision doc? | `templates/VISION-TEMPLATE.md` (or `VISION-TEMPLATE-research.md` for research) |
 | How do judges and evaluation work? | `concepts/judges-and-evaluation.md` |

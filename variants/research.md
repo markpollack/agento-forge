@@ -8,7 +8,7 @@ Bootstrap a new research project:
 
 **Claude Code** (recommended):
 ```
-/bootstrap-research
+/forge-research
 ```
 
 The skill will ask you:
@@ -17,11 +17,6 @@ The skill will ask you:
 3. Where should the project live?
 
 Then it reads your materials, creates the structure, and drafts a VISION.md with extracted research questions, hypotheses, and unknowns — iterating with you until it captures your research accurately.
-
-**Shell script** (portable fallback):
-```bash
-{forge-home}/scripts/bootstrap-research.sh ~/projects/my-study --conversation ~/chats/exploration.md
-```
 
 See [Conversation Bootstrapping](../concepts/conversation-bootstrapping.md) for details.
 
