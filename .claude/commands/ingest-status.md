@@ -98,6 +98,13 @@ from the status file — don't paraphrase into vague summaries.
 
 **Theme fan-out discipline**: If more than three themes are selected for a single project, include a brief confidence/justification note for each theme in the commit message. Keep additions concise — a single project mapping to 5 themes should be the exception, not the norm.
 
+**Size-class maintenance**: after appending, `wc -l` each touched theme doc and check whether it crossed a size-class threshold:
+- **S** (small): < 800 lines — agents may read whole freely
+- **M** (medium): 800–1,800 — read whole only when the theme is the primary target
+- **L** (large): > 1,800 — navigate via THEME-INDEX summaries + targeted offsets
+
+If a class changed, update the Size cell in BOTH theme tables: root `CLAUDE.md` and `synthesis/CLAUDE.md`. Never record exact line counts anywhere — size classes only (exact counts rot on every ingest; classes only change on threshold crossings).
+
 ---
 
 ## Phase 4: Update ACTION-ITEMS.md
