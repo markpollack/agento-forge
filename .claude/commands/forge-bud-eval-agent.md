@@ -95,7 +95,7 @@ The brief uses the same shape as the generic eval-agent brief (Agent Description
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `AGENTO_FORGE_HOME` | `$HOME/projects/agento-forge` | Root of the agento-forge checkout (forge methodology, templates) |
-| `BUD_AGENT_EXPERIMENT_TEMPLATE_HOME` | `$HOME/projects/bud-agent-experiment-template` | The working Bud template to copy from |
+| `BUD_AGENT_EXPERIMENT_TEMPLATE_HOME` | `$HOME/tuvium/projects/bud-agent-experiment-template` | The working Bud template to copy from |
 
 **Path references in this command use placeholders**:
 - `{agento-forge}` → `$AGENTO_FORGE_HOME`
