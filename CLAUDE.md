@@ -26,7 +26,8 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Document / Area | Path | Key Content |
 |----------------|------|-------------|
 | Methodology overview | `README.md` | Six phases, two loops, variant comparison, philosophy |
-| Variant selection | `variants/README.md` | Decision tree for agent/project/research/steward |
+| Variant selection | `variants/README.md` | Decision tree for agent/project/research/steward/kb |
+| KB creation & federation | `variants/kb.md` | Graduation ladder, `/forge-kb` vs `/forge-research-kb`, federation registration, freshness obligations |
 | Phase 0: Vision | `phases/00-vision.md` | Problem statement, success criteria, unknowns, exit criteria |
 | Phase 1: Research | `phases/01-research.md` | Investigation of problem space, reference implementations |
 | Phase 2: Design | `phases/02-design.md` | Technical specification, decisions with rationale |
@@ -64,7 +65,7 @@ forge-methodology/
 │   └── improvement-flywheel.md
 ├── phases/                # Phase 0-5 definitions
 ├── templates/             # Fill-in templates for phase outputs
-├── variants/              # Agent, project, research, steward variants
+├── variants/              # Agent, project, research, steward, kb variants
 ├── guides/                # Getting started, Java quality, research structure
 ├── examples/              # Minimal project structure examples
 ├── inbox/                 # Unsorted staging (comparisons, raw research)
@@ -74,7 +75,7 @@ forge-methodology/
 ## Key Concepts
 
 - **Discovery Loop vs Execution Pipeline** — Phases 0-2 iterate freely until stable; phases 3-5 execute sequentially. The transition is the highest-leverage review point.
-- **Four Variants** — Agent (loss optimization), Project (QA review), Research (hypothesis-evidence iteration), Steward (ongoing health monitoring). Same six phases, different Phase 4 feedback loops.
+- **Five Variants** — Agent (loss optimization), Project (QA review), Research (hypothesis-evidence iteration), Steward (ongoing health monitoring), KB (navigation quality + graduation ladder). Same six phases, different Phase 4 feedback loops.
 - **Judges** — Deterministic (test suites, linters) and AI judges that produce verdicts. Judges drive the Phase 4 feedback loop for eval-agent projects.
 - **Knowledge Base Architecture** — Two KB types: Code-Agent (task-driven, faceted, two-agent curator/navigator) and Research-Partner (question-driven, single session bridge). Both use routing tables for ≤3-hop navigation.
 - **Steward** — A Level 1 cognitive-altitude agent that combines curator (KB maintenance) and developer (project evolution) roles. The natural successor to a completed build phase.

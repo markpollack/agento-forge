@@ -14,6 +14,8 @@
 | How does Phase 4 differ across variants? | `phases/04-learning-loop.md` (Primary Feedback Modes) then `variants/` |
 | How do I develop or maintain a forge command? | `guides/command-development.md` |
 | How do I structure a knowledge base for agents? | `concepts/knowledge-base-architecture.md` |
+| How do I create a new KB and register it in a federation? | `variants/kb.md` (then `/forge-kb` or `/forge-research-kb`) |
+| When should a KB get frontmatter / VOCABULARY.md? | `variants/kb.md` (Stage 3 upgrade path) |
 | What template do I use for my vision doc? | `templates/VISION-TEMPLATE.md` (or `VISION-TEMPLATE-research.md` for research) |
 | How do judges and evaluation work? | `concepts/judges-and-evaluation.md` |
 | What is a steward and when do I need one? | `concepts/steward-agent.md` then `variants/steward.md` |
@@ -33,7 +35,7 @@
 | Core concepts | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, research patterns |
 | Phase definitions | `phases/` | Phase 0-5 detailed descriptions, exit criteria, anti-patterns |
 | Templates | `templates/` | Fill-in templates for vision, research, design, roadmap, learnings, reviews |
-| Project variants | `variants/` | Agent, project, research, steward — when to use each, key differences |
+| Project variants | `variants/` | Agent, project, research, steward, kb — when to use each, key differences |
 | Guides | `guides/` | Getting started, Java quality checklist, research project structure |
 | Examples | `examples/` | Minimal directory structure examples for each variant |
 | Unsorted | `inbox/` | Methodology comparisons, AGENTS.md/PLANS.md convergence research (staging area) |

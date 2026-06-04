@@ -382,6 +382,9 @@ Read the federation file (path from Configuration). Add:
 2. **Cross-KB Task Routing** — 1-2 new rows for tasks that involve this KB
 3. **KB Freshness** — new row with `last_consolidated` date and "Bootstrapped — 0/N papers summarized"
 4. **Update "Not Federated"** — remove any topic that this KB now covers
+5. **Registry entry** — if the federation maintains a machine-readable project registry alongside the catalog, add an entry there too (id, path, status directory, declared `entryPoint`). The registry, not the catalog, is what automation reads.
+
+See `{agento-forge}/variants/kb.md` ("Federation Registration") for the full registration contract, and ("Freshness Obligations") for what the KB commits to by federating — declared entry point, drift checks, consolidation dates. A concrete catalog format example is in `{agento-forge}/concepts/knowledge-base-architecture.md` ("The Union Catalog Pattern").
 
 #### 6.4: Add to consumer project See Also sections
 

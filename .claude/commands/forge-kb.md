@@ -52,6 +52,7 @@ It does NOT build (but can be extended to):
 - VOCABULARY.md controlled vocabulary
 - NAVIGATOR-PROMPT.md consumer template
 - Curator/Navigator two-agent split
+- Federation registration — graduating a standalone KB into a federation is a manual follow-up; see `{agento-forge}/variants/kb.md` ("Federation Registration")
 
 Those are Phase 2 concerns. This skill gets you from "pile of docs" to "I can ask questions" — the 80/20 of KB structuring.
 
@@ -296,7 +297,7 @@ Summarize what was built and how to use it:
    - 50+ files: consider YAML frontmatter for faceted search (grep by task_types, subjects)
    - 100+ files: consider VOCABULARY.md for controlled metadata
    - Consumer agents need access: consider NAVIGATOR-PROMPT.md (paste-ready template)
-   - Multiple corpora need coordination: consider KB-FEDERATION.md
+   - Multiple corpora need coordination: federate — see `{agento-forge}/variants/kb.md` for the graduation ladder, registration procedure, and the freshness obligations federation brings
 
 ## Scale Adaptation
 
