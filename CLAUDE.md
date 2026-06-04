@@ -27,6 +27,7 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 |----------------|------|-------------|
 | Methodology overview | `README.md` | Six phases, two loops, variant comparison, philosophy |
 | Variant selection | `variants/README.md` | Decision tree for agent/project/research/steward/kb |
+| Bud eval-agent scaffolding | `.claude/commands/forge-bud-eval-agent.md` | `/forge-bud-eval-agent` — copy-then-replace cousin of `/forge-eval-agent` that scaffolds from `bud-agent-experiment-template` (ACP/bud-core, studio.json, golden-path instrumentation pre-wired) |
 | KB creation & federation | `variants/kb.md` | Graduation ladder, `/forge-kb` vs `/forge-research-kb`, federation registration, freshness obligations |
 | Phase 0: Vision | `phases/00-vision.md` | Problem statement, success criteria, unknowns, exit criteria |
 | Phase 1: Research | `phases/01-research.md` | Investigation of problem space, reference implementations |

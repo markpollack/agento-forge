@@ -75,6 +75,8 @@ The [Discovery Loop](../concepts/discovery-loop.md) (Phases 0-2) and [Execution 
 3. Follow the eval-agent-specific steps in [ROADMAP-TEMPLATE.md](../templates/ROADMAP-TEMPLATE.md) (Steps 1.4-1.6, benchmark stage)
 4. See [agent.md](agent.md) for the optimization loop
 
+Bud-domain experiments use `/forge-bud-eval-agent` (bud-agent-experiment-template: ACP/bud-core, studio.json, golden-path instrumentation pre-wired).
+
 ### Project Variant
 
 1. Copy [VISION-TEMPLATE.md](../templates/VISION-TEMPLATE.md) → your `plans/VISION.md`
