@@ -50,6 +50,14 @@ Run these checks. Git history is the primary signal — everything else is suppl
 10. **Experiment results**: Check `plans/learnings/` for recent retrospectives
 11. **Judge inventory**: List judges found in the codebase, note any known issues (ABSTAINing, missing data)
 
+### If this is a code project (has build files or src/)
+
+12. **Federation entry-point drift check**: Determine the project's declared federation entry point — look up this project's `entryPoint` field in `~/tuvium/projects/tuvium-research-conversation-agent/kb/projects.yaml` if readable; otherwise default to `CLAUDE.md` and record in the block that the entry point is **implicit (undeclared)**. Then check drift:
+    - `git log -1 --format=%cs -- {entry-doc}` vs the dates of this period's substantive commits. **Git history only — never filesystem mtime** (mtime lies: checkouts, copies, tooling touches, restores)
+    - Does the entry doc mention the components/concepts central to this period's work?
+
+    This feeds the `## Federation Routing` block in Phase 3. **Scope guard**: this is a check, not a fix — never edit the entry doc, the registry, or KB-FEDERATION.md from here.
+
 ## Phase 3: Produce Status Report
 
 Write the report to `plans/status-{today's date YYYY-MM-DD}.md`:
@@ -96,6 +104,23 @@ Write the report to `plans/status-{today's date YYYY-MM-DD}.md`:
 - If KB exists → add `## KB Freshness` with dates
 - If judges exist → add `## Judge Inventory` table
 - If open issues/PRs → add `## Open Issues & PRs` summary
+
+### Federation Routing block (code projects — always emit)
+
+For code projects, append this section. It is consumed by `/ingest-status` and weekly-kb-sync as a **recommendation** — emitting it never edits the KB:
+
+```markdown
+## Federation Routing
+
+- **Declared entry point**: {path from registry, or "IMPLICIT — none declared, defaulted to CLAUDE.md"}
+- **Entry doc last commit**: {YYYY-MM-DD via `git log -1 --format=%cs -- {entryPoint}`, never filesystem mtime} — {N} substantive commits since
+- **Latest status report**: this file
+- **Stale docs detected**: {paths with 1-line reason each, or "none"}
+- **Drift**: yes | no | unknown
+- **Recommended routing**: keep {path} | change to {path}
+- **Confidence**: high | medium | low
+- **Reason**: {1-2 sentences citing specific gaps, e.g., "DESIGN.md predates RunSession/Sweep, both central to this period's work"}
+```
 
 ## Phase 4: Verify
 

@@ -3,97 +3,118 @@ name: kb-reindex
 description: "Run re-indexing health checks across all federated knowledge bases"
 ---
 
-# KB Re-Index — Health Check
+# KB Re-Index — Federation-Wide Health Check
 
-You are running health checks on the knowledge base(s) in the current project. This catches structural drift before it compounds — broken links, orphaned files, stale routing tables.
+You are running a re-indexing health check across the Tuvium knowledge base federation. This command can be run from any project — it operates on all federated KBs.
 
 ## Arguments
 
-- `$ARGUMENTS` — Optional: path to a specific KB directory to check. If omitted, checks the current project root and any KBs listed in `KB-FEDERATION.md` (if it exists).
+- `$ARGUMENTS` — Optional: specific KB name to check (e.g., "tuvium-knowledge", "research-conversation-agent"). If omitted, checks all federated KBs.
 
-## Finding KBs to Check
+## Federation Catalog
 
-1. Check if the current project root has a `CLAUDE.md` or `index.md` — if so, it's a KB
-2. Check if `KB-FEDERATION.md` exists — if so, read it and check each listed KB
-3. If `$ARGUMENTS` is a path, check that specific directory
+Read the canonical federation catalog at:
+`/home/mark/tuvium/projects/tuvium-research-conversation-agent/KB-FEDERATION.md`
 
-## Health Checks
+This lists all KBs, their entry points, and last-consolidated dates.
 
-Run these checks against each KB. Skip checks that don't apply (e.g., vocabulary checks only matter if `VOCABULARY.md` exists).
+## Health Checks (per KB)
 
-### Check 1: Routing Table Coverage
+Run these 7 checks against each KB. Adapt based on KB type — not all KBs have all file types.
 
-For each `index.md` or routing table file:
-- List all `.md` files in the same directory (and subdirectories if the table references them)
-- Verify every file appears in at least one routing table
-- Report files that exist but aren't referenced (**orphans**)
-- Report table entries that reference files that don't exist (**broken links**)
+### Check 1: Cross-reference integrity
+- Extract all `see_also` targets from YAML frontmatter
+- Verify each referenced file exists
+- Report broken links
 
-### Check 2: Cross-Reference Integrity
-
-- Extract all markdown links and `see_also` references from YAML frontmatter
-- Verify each referenced file exists at the specified path
-- Report broken references
-
-### Check 3: Vocabulary Compliance
-
-Only if `VOCABULARY.md` exists:
-- Extract all `subjects` values from YAML frontmatter across all files
-- Confirm each value appears in `VOCABULARY.md`
+### Check 2: Vocabulary compliance (Code-Agent KBs only)
+- Extract all `subjects` values from frontmatter
+- Confirm each is in the KB's `VOCABULARY.md`
 - Report uncontrolled terms
 
-### Check 4: Bidirectional Links
+### Check 3: Orphan detection
+- Find files without faceted metadata: `grep -rL "task_types:" {kb}/*/`
+- For Research KBs without frontmatter, check for files not referenced by any index
+- Report orphaned files
 
-- If file A references file B in `see_also`, verify B also references A
-- Report one-directional references (these cause navigation dead-ends)
+### Check 4: Index freshness
+- For each index.md, verify routing tables reference all files in their directory
+- Check for files added since last index update
+- Report stale routing tables
 
-### Check 5: Index Freshness
+### Check 5: Bidirectional links
+- If A→B in see_also, verify B→A exists
+- Report one-directional references
 
-- Compare file modification dates against their parent `index.md`
-- Flag routing tables that haven't been updated since new files were added to their directory
-- Check the `last_updated` date in file frontmatter if present
+### Check 6: Concept coverage (NEW — from rehydration experiment)
+- Grep theme docs, detail files, and synthesis docs for defined terms and taxonomies
+- Check which concepts appear in KEY-CONCEPTS.md (or equivalent glossary)
+- Flag concepts that exist in detail docs but not in the glossary
+- Bias toward operational concepts: if an agent would need it to answer a domain question, it should be indexed
+- **What to grep for**: pattern names with capital letters, "N-tier/N-layer/N-branch" constructs, named taxonomies, acronyms defined in-place
 
-### Check 6: Not Covered Sections
+### Check 7: Summary-source consistency (NEW — from rehydration experiment)
+- For each bullet in THEME-INDEX.md (or equivalent summary) that contains a number or taxonomy name
+- Read the source document and verify the number/name still matches
+- Flag mismatches (e.g., summary says "3-tier" but source says "4-tier")
+- **Common failure mode**: a concept evolves in the detail doc but the summary isn't updated
 
-- Check that each `index.md` or `CLAUDE.md` has a "Not Covered" section
-- Flag KBs missing negative knowledge (these cause hallucination on out-of-scope questions)
+## KB-Specific Adaptations
 
-### Check 7: Federation Consistency
+| KB | Glossary File | Summary File | Has Frontmatter? |
+|----|--------------|--------------|-------------------|
+| tuvium-knowledge | `index.md` + domain indexes | Domain index.md files | Yes (full YAML) |
+| research-conversation-agent | `KEY-CONCEPTS.md` | `synthesis/phase2/THEME-INDEX.md` | Partial |
+| agentic-patterns-research | `CLAUDE.md` (lines 110-136) | Synthesis docs | No |
+| tuvium-experiment-driver | `plans/DESIGN.md` | N/A | No |
+| judge-evaluation-research | `CLAUDE.md` | N/A | No |
+| tuvium-collector | `plans/DESIGN.md` | `plans/ROADMAP*.md` | No |
 
-Only if `KB-FEDERATION.md` exists:
-- Verify each KB path in the catalog is accessible
-- Check `last_consolidated` dates — flag KBs not updated in 30+ days as potentially stale
-- Verify "Read when..." descriptions exist for each entry
+For KBs without formal frontmatter, adapt checks:
+- Skip checks 1-3, 5 (no structured metadata)
+- Run checks 4, 6, 7 against their CLAUDE.md, DESIGN.md, and synthesis docs
 
 ## Output Format
 
-```markdown
-## KB Health Report — {date}
+For each KB, produce a health report:
 
-### {KB Name or Path}
+```markdown
+### {KB Name}
+**Path**: {path}
+**Last consolidated**: {date from KB-FEDERATION.md}
 **Checks run**: {N}/7
 
 | Check | Status | Issues |
 |-------|--------|--------|
-| Routing table coverage | PASS/FAIL | {N orphans, M broken links} |
 | Cross-references | PASS/FAIL | {details} |
 | Vocabulary | PASS/SKIP | {details} |
-| Bidirectional links | PASS/FAIL | {details} |
-| Index freshness | PASS/WARN | {details} |
-| Not Covered sections | PASS/FAIL | {details} |
-| Federation consistency | PASS/SKIP | {details} |
-
-### Recommended Fixes
-1. {Specific fix with file path}
-2. {Specific fix with file path}
+| Orphans | PASS/FAIL | {details} |
+| Index freshness | PASS/FAIL | {details} |
+| Bidirectional links | PASS/SKIP | {details} |
+| Concept coverage | PASS/FAIL | {N concepts missing from glossary} |
+| Summary-source consistency | PASS/FAIL | {N mismatches} |
 ```
 
 ## After All Checks
 
-1. Present the report to the user
-2. Offer to fix simple issues automatically (add missing files to routing tables, create stub "Not Covered" sections)
-3. For complex issues (stale content, vocabulary drift), describe the fix but let the user decide
+1. Write the full report to `/home/mark/tuvium/projects/tuvium-research-conversation-agent/analysis/kb-health-report-{date}.md`
+2. Update the `last_consolidated` dates in `KB-FEDERATION.md` for any KBs that pass all checks
+3. Summarize: total issues found, KBs needing attention, recommended fixes
 
-## Tone
+## Execution Strategy
 
-Direct and actionable. Each finding should include the file path and a one-line fix description. Don't over-explain — if a routing table is missing a file, say which file and which table.
+Use parallel subagents (one per KB) for speed. Each agent should:
+1. Read the KB's entry point and structure
+2. Run the applicable checks
+3. Return structured results
+
+Then aggregate into the final report.
+
+## Provenance
+
+This command was created based on findings from the **cognitive rehydration experiment** (2026-02-27). The experiment revealed that:
+- Concept coverage gaps (Check 6) caused agents to miss important terms not indexed in KEY-CONCEPTS.md
+- Summary-source inconsistencies (Check 7) caused scoring disagreements about factual details (e.g., "3-tier" vs "4-tier" CascadedJury)
+- These gaps were invisible to the existing 5-check maintenance workflow
+
+See: `/home/mark/tuvium/projects/tuvium-cognitive-rehydration/findings/cognitive-rehydration-results.md`
