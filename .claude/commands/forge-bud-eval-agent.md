@@ -171,7 +171,7 @@ cp {agento-forge}/templates/ROADMAP-TEMPLATE.md {workspace}/plans/ROADMAP.md
 - [ ] First commit made containing the stubs + this checklist
 
 ## Phase 3 — Replacements
-- [ ] `grep -rn "REPLACE" .` clean (except deliberate scaffold-groupId default)
+- [ ] `grep -rnE 'REPLACE[-_ ](WITH|with)' .` clean (`CUSTOMIZE:` comments and `REPLACE_EXISTING` are not placeholders; scaffold-groupId default exempt)
 - [ ] Package tree physically moved; `grep -rn "com.example.experiment" src` clean
 - [ ] `studio.json` has real agentId / workspaceId / targetRepos[0].path
 - [ ] `experiment-config.yaml` has the real experimentName
@@ -240,7 +240,7 @@ These are the **verified** placeholder locations in the template. Work through e
 
 > **Scaffold fixtures note**: when the dataset's preconditions scaffold *fixture* projects (via `PreConditionBuilder` / bud-core `ProjectScaffolder`), their groupId is controlled by the system property `-Dexperiment.scaffold.groupId=...` (default `com.example`). This is the **fixture** project's coordinates, **not** the workspace's — leave it at the default **unless** a domain judge asserts on the generated package name, in which case set it explicitly when invoking.
 
-After replacements: `grep -rn "REPLACE\|com.example" {workspace} --include='*.java' --include='*.xml' --include='*.json' --include='*.yaml'` should return nothing (other than the deliberate scaffold-groupId default if you kept it).
+After replacements: `grep -rnE 'REPLACE[-_ ](WITH|with)|com\.example' {workspace} --include='*.java' --include='*.xml' --include='*.json' --include='*.yaml'` should return nothing (other than the deliberate scaffold-groupId default if you kept it). The pattern is deliberately precise: the template's prose guidance comments use `CUSTOMIZE:` (guidance, not placeholders — leave them), and `StandardCopyOption.REPLACE_EXISTING` is Java API; neither must trip the exit criterion.
 
 ### Phase 4: Domain Customization
 
@@ -266,7 +266,7 @@ Replace every `{{PLACEHOLDER}}` with real content per the eval-agent conventions
 - **DESIGN**: the Consumer Integration table (what the workspace provides vs. what the template/framework provides), the Judges table, convergence criteria, and the empirically-motivated variant table with `iteration` fields.
 - **ROADMAP**: eval-agent stages (Scaffolding → Control Baseline → Phase 0 state-taxonomy discovery → Forge variant → KB development → scale-up), per-step entry/exit criteria that read the prior step's learnings, stage-consolidation steps, and an archival step (GitHub release assets) at the end of each stage producing sweep data. **Step 1.2 of the ROADMAP must be the golden-path smoke check below** — a workspace is not eligible for eval waves until it passes.
 
-**Mechanical exit criterion** (like the Phase 3 `grep -rn "REPLACE"` check — not a judgment call):
+**Mechanical exit criterion** (like the Phase 3 placeholder grep — not a judgment call):
 
 ```bash
 grep -rln '{{' {workspace}/plans/   # MUST return nothing
@@ -334,7 +334,7 @@ git commit -m "Complete bootstrap: {workspace-name} (all BOOTSTRAP-CHECKLIST cri
 
 **Exit criteria** (mirrored in `plans/BOOTSTRAP-CHECKLIST.md`; all must hold):
 - [ ] `{workspace}` is a fresh git repo (template `.git/` excluded, `git init` run, Phase 2 first commit made)
-- [ ] `grep -rn "REPLACE" {workspace}` returns nothing (except the deliberate scaffold-groupId default)
+- [ ] `grep -rnE 'REPLACE[-_ ](WITH|with)' {workspace}` returns nothing (except the deliberate scaffold-groupId default)
 - [ ] `grep -rn "com.example.experiment" {workspace}/src` returns nothing; package tree physically moved to `{basePackage}`
 - [ ] `studio.json` has real agentId / workspaceId / targetRepos[0].path
 - [ ] `experiment-config.yaml` has the real `experimentName` and the variant ladder with `iteration` fields
