@@ -22,7 +22,8 @@ This is the one thing to internalize before anything else:
 | pom.xml | Authored from the canonical reference, dependency-by-dependency | Inherited verbatim from the template (agentworks BOM 1.5.0, bud-core 0.4.0, ACP) |
 | Invoker / runner / judges | Written per phase | Already present; you swap the *domain* judges, keep the framework wiring |
 | Golden-path instrumentation | Wired by hand, verified late | Pre-wired in `WorkflowAgentInvoker` (`Journal.configure` static init + `.traceDir`) |
-| Risk | Drift from the canonical scaffold | Drift from the template if you regenerate instead of replace |
+| VISION / DESIGN / ROADMAP | Authored early by necessity (no scaffold to copy — docs precede code) | Stubbed in Phase 2's FIRST commit (placeholders intact, plus `BOOTSTRAP-CHECKLIST.md`), filled in Phase 5 — working code appears in minutes here, so deferred docs must exist as visible on-disk debt or an interrupted bootstrap orphans them |
+| Risk | Drift from the canonical scaffold | Drift from the template if you regenerate instead of replace; orphaned docs if you skip the Phase 2 stubs |
 
 The template is the source of truth. The generic cousin builds file-by-file because there is no single working scaffold to copy; here there is, so **copy and replace** is strictly safer and faster. Treat any urge to "just rewrite it cleanly" as a bug.
 
@@ -129,7 +130,7 @@ Be conversational. If a brief was passed, confirm these rather than asking cold.
 
 5. **Where the workspace lives** — target path, private/community.
 
-### Phase 2: Copy the Template (Template-as-Factory) + git init
+### Phase 2: Copy the Template + Front-Load Doc Stubs + First Commit
 
 Copy the **complete** template into the target directory, excluding `.git/` and `target/`, then initialize a fresh repo:
 
@@ -146,10 +147,67 @@ rsync -a --exclude '.git/' --exclude 'target/' \
 cd {workspace} && git init
 ```
 
+**Front-load the forge doc stubs — immediately, placeholders intact.** A `{{PLACEHOLDER}}`-riddled VISION.md in the repo is honest, visible debt; an absent one is invisible debt. Copy the templates AS-IS; Phase 5 fills them in:
+
+```bash
+cp {agento-forge}/templates/VISION-TEMPLATE.md  {workspace}/plans/VISION.md
+cp {agento-forge}/templates/DESIGN-TEMPLATE.md  {workspace}/plans/DESIGN.md
+cp {agento-forge}/templates/ROADMAP-TEMPLATE.md {workspace}/plans/ROADMAP.md
+```
+
+**Write the exit checklist to disk** as `{workspace}/plans/BOOTSTRAP-CHECKLIST.md` — the Phase 7 exit criteria as unchecked boxes, grouped by phase. Each phase checks off its items as it completes; an interrupted bootstrap then leaves a file that screams what's left:
+
+```markdown
+# Bootstrap Checklist — {workspace-name}
+
+> Created by /forge-bud-eval-agent Phase 2. Each phase checks off its items as it
+> completes. The bootstrap-complete commit (Phase 7) requires EVERY box checked.
+> Unchecked boxes after an interrupted run are visible debt — repay before any eval wave.
+
+## Phase 2 — Copy + stubs + first commit
+- [ ] Template copied (no `.git/`, no `target/`); fresh `git init`
+- [ ] `plans/VISION.md` / `plans/DESIGN.md` / `plans/ROADMAP.md` stubs present (placeholders intact)
+- [ ] First commit made containing the stubs + this checklist
+
+## Phase 3 — Replacements
+- [ ] `grep -rn "REPLACE" .` clean (except deliberate scaffold-groupId default)
+- [ ] Package tree physically moved; `grep -rn "com.example.experiment" src` clean
+- [ ] `studio.json` has real agentId / workspaceId / targetRepos[0].path
+- [ ] `experiment-config.yaml` has the real experimentName
+
+## Phase 4 — Domain customization
+- [ ] Example judges replaced with domain judges; `JuryFactory` rewired
+- [ ] Variant ladder in `experiment-config.yaml` with `iteration` fields
+- [ ] Prompts externalized to `plans/prompts/` with runnable stopping conditions
+
+## Phase 5 — Docs filled and finalized
+- [ ] VISION.md / DESIGN.md / ROADMAP.md placeholders replaced with real content
+- [ ] `grep -rln '{{' plans/` returns nothing
+
+## Phase 6 — Golden-path smoke check
+- [ ] Compiles (`./mvnw compile -q`)
+- [ ] (a) JSONL traces exist with structured tool input
+- [ ] (b) Journal events written
+- [ ] (c) Multi-line Write survives the JSONL round-trip
+- [ ] (d) markov-agent-analysis loaders read the traces
+
+## Phase 7 — Bootstrap complete
+- [ ] All boxes above checked; bootstrap-complete commit made
+```
+
+**Then make the FIRST commit** — stubs and checklist included. This is what makes deferred work visible: if the bootstrap is interrupted at any later phase, the repo already carries the placeholder docs and the unchecked boxes.
+
+```bash
+cd {workspace}
+git add -A
+git commit -m "Scaffold from bud-agent-experiment-template (doc stubs + bootstrap checklist, placeholders intact)"
+```
+
 Notes:
 - `rsync -a` preserves the executable bit on `mvnw` (do not lose it).
 - The template ships `experiments/runs/.gitkeep` and `experiments/traces/.gitkeep` — keep them; that is where traces land.
 - The template `.gitignore` already ignores `results/`, `target/`, `.env`, `.campus/`. Do not regenerate it.
+- Do NOT fill the doc stubs here, even partially — Phase 2 is mechanical. Filling happens in Phase 5 with the domain knowledge from Phases 3–4 in hand. The stubs' job at this point is purely to exist and be committed.
 
 ### Phase 3: Mandatory Replacements (Exact Checklist)
 
@@ -198,18 +256,22 @@ The template ships **Spring-scaffolding** judges as worked examples. Replace the
 
 3. **Externalize prompts** to `plans/prompts/` (one `.txt` per variant: `v0-control.txt`, `v1-...txt`, …). Each prompt MUST carry a **domain-specific stopping condition** — a concrete runnable check the agent runs to confirm the task is done (not "verify your work"). For a Bud/Maven domain that is typically `./mvnw test` or `./mvnw verify` passing in the generated project.
 
-### Phase 5: VISION / DESIGN / ROADMAP
+### Phase 5: Fill and Finalize VISION / DESIGN / ROADMAP
 
-Same as the generic cousin — copy the forge templates and fill them in:
+The stubs already exist — Phase 2 copied them into `plans/` and committed them with placeholders intact. This phase **fills, it does not create**. If the stubs are missing, that is a Phase 2 failure: stop and repair (copy the templates, backfill the checklist) before continuing.
 
-- `{agento-forge}/templates/VISION-TEMPLATE.md` → `{workspace}/plans/VISION.md`
-- `{agento-forge}/templates/DESIGN-TEMPLATE.md` → `{workspace}/plans/DESIGN.md`
-- `{agento-forge}/templates/ROADMAP-TEMPLATE.md` → `{workspace}/plans/ROADMAP.md`
-
-Fill them per the eval-agent conventions:
+Replace every `{{PLACEHOLDER}}` with real content per the eval-agent conventions:
 - **VISION**: problem statement, measurable success criteria (reproduce baseline → exceed by Δ → reproducible), scope, unknowns, assumptions-as-risks.
 - **DESIGN**: the Consumer Integration table (what the workspace provides vs. what the template/framework provides), the Judges table, convergence criteria, and the empirically-motivated variant table with `iteration` fields.
 - **ROADMAP**: eval-agent stages (Scaffolding → Control Baseline → Phase 0 state-taxonomy discovery → Forge variant → KB development → scale-up), per-step entry/exit criteria that read the prior step's learnings, stage-consolidation steps, and an archival step (GitHub release assets) at the end of each stage producing sweep data. **Step 1.2 of the ROADMAP must be the golden-path smoke check below** — a workspace is not eligible for eval waves until it passes.
+
+**Mechanical exit criterion** (like the Phase 3 `grep -rn "REPLACE"` check — not a judgment call):
+
+```bash
+grep -rln '{{' {workspace}/plans/   # MUST return nothing
+```
+
+Any hit means a placeholder survived — the docs are not finalized. Check off the Phase 5 boxes in `plans/BOOTSTRAP-CHECKLIST.md` only when this grep comes back empty. Note: a `ROADMAP.md` later produced by some other route (e.g. `/plan-to-roadmap`) does NOT satisfy this phase — VISION and DESIGN must pass the same grep; one finished artifact must not mask two missing ones.
 
 ### Phase 6: Golden-Path Smoke Check — REQUIRED Before Any Eval Wave
 
@@ -255,25 +317,30 @@ This is what makes a scaffold a **verifiable** scaffold and not a one-off. Run i
 
 If (a)–(d) all pass, the golden path is intact: this is what the agent-journal 1.3.0 TraceWriter tool-input + control-char escaping fix (2026-06-03) exists to guarantee. Only now may the ROADMAP eval waves proceed.
 
-### Phase 7: Commit + Exit Checklist
+### Phase 7: Bootstrap-Complete Commit + Exit Checklist
 
-Commit the scaffolded workspace and confirm the exit criteria:
+The exit checklist lives **on disk** at `plans/BOOTSTRAP-CHECKLIST.md` (created in Phase 2) — this phase verifies it, it does not recite it from memory. Walk the file: every box from Phases 2–6 must already be checked, with each criterion actually verified (re-run the greps; do not check boxes on recollection). Then check the Phase 7 box and make the bootstrap-complete commit:
 
 ```bash
 cd {workspace}
+# Verify: no unchecked boxes may remain (other than Phase 7's own, checked in this commit)
+grep -n '\- \[ \]' plans/BOOTSTRAP-CHECKLIST.md
 git add -A
-git commit -m "Scaffold {workspace-name} from bud-agent-experiment-template"
+git commit -m "Complete bootstrap: {workspace-name} (all BOOTSTRAP-CHECKLIST criteria verified)"
 ```
 
-**Exit criteria** (all must hold):
-- [ ] `{workspace}` is a fresh git repo (template `.git/` excluded, `git init` run, first commit made)
+**The commit is gated on the checklist**: if any box is unchecked, the bootstrap is not complete — either finish the phase that owns the box, or stop and leave the unchecked boxes in place as visible debt. Never check a box to make the commit pass.
+
+**Exit criteria** (mirrored in `plans/BOOTSTRAP-CHECKLIST.md`; all must hold):
+- [ ] `{workspace}` is a fresh git repo (template `.git/` excluded, `git init` run, Phase 2 first commit made)
 - [ ] `grep -rn "REPLACE" {workspace}` returns nothing (except the deliberate scaffold-groupId default)
 - [ ] `grep -rn "com.example.experiment" {workspace}/src` returns nothing; package tree physically moved to `{basePackage}`
 - [ ] `studio.json` has real agentId / workspaceId / targetRepos[0].path
 - [ ] `experiment-config.yaml` has the real `experimentName` and the variant ladder with `iteration` fields
 - [ ] Example judges replaced with domain judges; `JuryFactory` rewired; prompts externalized to `plans/prompts/` with stopping conditions
-- [ ] VISION.md / DESIGN.md / ROADMAP.md filled from forge templates
+- [ ] VISION.md / DESIGN.md / ROADMAP.md filled (Phase 2 stubs finalized); `grep -rln '{{' plans/` returns nothing
 - [ ] **Golden-path smoke check (Phase 6) passed end to end** — compile + (a)/(b)/(c)/(d). This is the gate; do not skip it.
+- [ ] `plans/BOOTSTRAP-CHECKLIST.md` has every box checked
 
 ## Extraction Patterns
 
@@ -295,5 +362,5 @@ Be precise and empirical. The cardinal rule is **copy-then-replace, never regene
 - **Template currency**: `bud-agent-experiment-template` is current as of **agentworks BOM 1.5.0 / agent-journal 1.3.0** — the TraceWriter tool-input capture + control-character escaping fix (2026-06-03). The Phase 6 smoke check (a)/(c) exists specifically to verify that fix held: `tool_use` lines carry `"input": {...}` objects and multi-line `Write` content round-trips as valid JSONL.
 - **Known template gaps**:
   - **No bundled test suite** — the template ships the working main code but not a regression test harness. The Phase 6 golden-path smoke check compensates: it is the verification gate in lieu of a packaged test suite.
-  - **Reference contract**: the `TEMPLATE_CONTRACT.md` reference copy (the canonical description of the placeholder set and the workspace ⇄ template contract) lives in `~/projects/bud-spring-agent-workspace/`. Consult it if a placeholder location here looks stale against the template.
+  - **Reference contract**: the `TEMPLATE_CONTRACT.md` reference copy (the canonical description of the placeholder set and the workspace ⇄ template contract) lives at `~/projects/bud-eval/plans/TEMPLATE_CONTRACT.md`. Consult it if a placeholder location here looks stale against the template.
 - **Versus the generic cousin**: if you find yourself authoring pom XML inline or hand-wiring the invoker/journal, you are in the wrong command — that is `/forge-eval-agent`. Here, those already exist in the copied template.
