@@ -190,7 +190,7 @@ cp {agento-forge}/templates/ROADMAP-TEMPLATE.md {workspace}/plans/ROADMAP.md
 - [ ] (a) JSONL traces exist with structured tool input
 - [ ] (b) Journal events written
 - [ ] (c) Multi-line Write survives the JSONL round-trip
-- [ ] (d) markov-agent-analysis loaders read the traces
+- [ ] (d) agent-control-theory loaders read the traces
 
 ## Phase 7 — Bootstrap complete
 - [ ] All boxes above checked; bootstrap-complete commit made
@@ -308,13 +308,15 @@ This is what makes a scaffold a **verifiable** scaffold and not a one-off. Run i
    ```
    (Python equivalent: `python -c "import json,sys; [json.loads(l) for l in open(sys.argv[1])]"`.)
 
-   (d) **markov-agent-analysis loaders can read the traces**
+   (d) **agent-control-theory loaders can read the traces**
    ```bash
-   uv pip install -e ~/tuvium/projects/markov-agent-analysis/[all]
+   uv pip install -e ~/projects/agent-control-theory[all]
    # Load the JSONL via the TraceWriter loader and build a chain — must succeed, no parse errors:
-   python -c "from markov_agent_analysis import build_absorbing_chain_from_traces as b; \
+   python -c "from agent_control_theory import build_absorbing_chain_from_traces as b; \
      print(b(['{workspace}/experiments/traces']))"
    ```
+   (The library was renamed from markov-agent-analysis; `~/tuvium/projects/markov-agent-analysis`
+   no longer exists. A `markov_agent_analysis` back-compat shim still imports, but use the new name.)
 
 If (a)–(d) all pass, the golden path is intact: this is what the agent-journal 1.3.0 TraceWriter tool-input + control-char escaping fix (2026-06-03) exists to guarantee. Only now may the ROADMAP eval waves proceed.
 
@@ -345,7 +347,7 @@ git commit -m "Complete bootstrap: {workspace-name} (all BOOTSTRAP-CHECKLIST cri
 
 ## Review-Agent Variant
 
-The phases above assume the *generation*-agent shape (bud-core `ProjectScaffolder` fixtures, judges on generated-project artifacts). When the agent under evaluation **reviews a target repo and writes a report**, apply these deltas. Both live consumers (`~/projects/bud-ddd`, `~/projects/bud-spring-advisor`) derived all of this by hand — documented here so the third review agent does not re-derive it.
+The phases above assume the *generation*-agent shape (bud-core `ProjectScaffolder` fixtures, judges on generated-project artifacts). When the agent under evaluation **reviews a target repo and writes a report**, apply these deltas. The live review consumers (`~/projects/bud-ddd`, `~/projects/bud-spring-advisor`, and the newest, `~/projects/bud-spring-modernize`) derived all of this by hand — documented here so the next review agent does not re-derive it. **`bud-spring-modernize` is the current newest consumer** — prefer it as the copy source below.
 
 ### studio.json shape (Phase 3 delta)
 
@@ -369,7 +371,7 @@ Review targets are read, not written. The workspace also *ships* a KB, registere
 }
 ```
 
-Live examples: `~/projects/bud-ddd/studio.json`, `~/projects/bud-spring-advisor/studio.json`.
+Live examples: `~/projects/bud-spring-modernize/studio.json` (newest), `~/projects/bud-ddd/studio.json`, `~/projects/bud-spring-advisor/studio.json`.
 
 ### corpus/ and knowledge/ conventions
 
@@ -384,7 +386,7 @@ Review agents ship a `<name>-acp-server/` module serving the agent over ACP into
 ./mvnw -f <name>-acp-server/pom.xml package
 ```
 
-**Adaptation checklist** — copy the module from the **newest** consumer, then sweep the identity literals (~30 occurrences; this checklist exists until AgentSpec consolidation / `bud-review-core` extraction makes it obsolete — see `~/tuvium/projects/tuvium-research-conversation-agent/plans/inbox/bud-review-core-brief.md`):
+**Adaptation checklist** — copy the module from the **newest** consumer (currently `~/projects/bud-spring-modernize`), then sweep the identity literals (~30 occurrences; this checklist exists until AgentSpec consolidation / `bud-review-core` extraction makes it obsolete — see `~/tuvium/projects/tuvium-research-conversation-agent/plans/inbox/bud-review-core-brief.md`):
 
 | Literal family | Example (bud-ddd) | Where it hides |
 |---|---|---|

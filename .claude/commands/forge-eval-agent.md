@@ -29,7 +29,7 @@ agent-experiment (orchestration framework)
          │
     ┌────┴──────────────────┬──────────────────────┐
     │                       │                      │
- refactoring-agent    YOUR PROJECT           (future)
+ bud-spring-modernize  YOUR PROJECT          (future)
  (exemplar consumer)  (new consumer)
 ```
 
@@ -157,6 +157,8 @@ required path is missing.
 | `AGENTO_FORGE_HOME` | `$HOME/projects/agento-forge` | Root of the agento-forge checkout (forge methodology) |
 | `AGENT_EXPERIMENT_HOME` | *(required)* | Root of the agent-experiment checkout |
 | `AGENT_EXPERIMENT_TEMPLATE_HOME` | `$AGENT_EXPERIMENT_HOME/../agent-experiment-template` | Canonical consumer scaffold |
+| `AGENT_CONTROL_THEORY_HOME` | `$HOME/projects/agent-control-theory` | Installable Markov/Lyapunov/EXPLORE-quality analysis library (package `agent_control_theory`; renamed from markov-agent-analysis). Depend on it — do not copy analysis scripts. |
+| `EXEMPLAR_CONSUMER_HOME` | `$HOME/projects/bud-spring-modernize` | Current exemplar consumer to study (AgentInvoker incl. `AcpAgentInvoker`, the SpringBoot/Maven judge ladder, dataset wiring). NB also a Bud/ACP consumer (`bud-core`) — its ACP bits belong to the Bud variant, not this skill's default stack. The older `refactoring-agent` is retired. |
 
 **Workshop setup**:
 ```bash
@@ -164,12 +166,16 @@ required path is missing.
 export AGENTO_FORGE_HOME=$HOME/projects/agento-forge
 export AGENT_EXPERIMENT_HOME=$HOME/projects/agent-experiment
 export AGENT_EXPERIMENT_TEMPLATE_HOME=$HOME/projects/agent-experiment-template
+export AGENT_CONTROL_THEORY_HOME=$HOME/projects/agent-control-theory
+export EXEMPLAR_CONSUMER_HOME=$HOME/projects/bud-spring-modernize
 ```
 
 **Path references in this command use placeholders**:
 - `{agento-forge}` → `$AGENTO_FORGE_HOME`
 - `{agent-experiment}` → `$AGENT_EXPERIMENT_HOME`
 - `{template}` → `$AGENT_EXPERIMENT_TEMPLATE_HOME`
+- `{agent-control-theory}` → `$AGENT_CONTROL_THEORY_HOME`
+- `{exemplar-consumer}` → `$EXEMPLAR_CONSUMER_HOME`
 
 ## Instructions
 
@@ -211,8 +217,8 @@ Start by understanding the domain. Be conversational:
    - Check if the domain needs features that are designed but not yet built (diagnostic feedback, ComparisonEngine, non-Maven dataset support)
    - If there are gaps, document them as prerequisites
 
-5. **How does the exemplar consumer (refactoring-agent) work?** Read:
-   - `{refactoring-agent}/CLAUDE.md` for the consumer pattern
+5. **How does the exemplar consumer (bud-spring-modernize) work?** Read:
+   - `{exemplar-consumer}/CLAUDE.md` for the consumer pattern
    - Look at how it implements AgentInvoker, provides judges, wires datasets
    - This is the architectural template your new project follows
 
@@ -261,15 +267,31 @@ Copy templates from agento-forge:
 - `{agento-forge}/templates/DESIGN-TEMPLATE.md` → `{project}/plans/DESIGN.md`
 - `{agento-forge}/templates/ROADMAP-TEMPLATE.md` → `{project}/plans/ROADMAP.md`
 
-Copy analysis scripts from `~/projects/agent-experiment-template/scripts/`:
-- `load_results.py` — ETL: session JSON → 4 parquet tables (runs, item_results, tool_uses, judge_details)
-- `make_figures.py` — pass rate bars, cost/quality scatter, per-item breakdown
-- `make_markov_analysis.py` — Markov chain analysis; **CUSTOMIZE** `classify_state()` in Step 2.2
-- `requirements.txt`, `setup_venv.sh`
+**Analysis: depend on `agent-control-theory`, do not copy scripts.** The Markov / Lyapunov /
+EXPLORE-quality analysis is now a modular installable library (`{agent-control-theory}`, package
+`agent_control_theory`), not a pile of scripts copied into every experiment's `scripts/`. Install it
+into the experiment's venv and `import` it — nothing reusable gets duplicated into the codebase:
 
-The `make_markov_analysis.py` template has a `MARKOV_DISCOVERY` mode (see Step 2.2). Draft your
-domain states in `classify_state()` from workflow knowledge; use discovery mode to validate and
-catch unexpected edge cases (e.g. agent writes a helper script rather than the direct output).
+```bash
+uv pip install -e "{agent-control-theory}[all]"   # or: pip install -e "{agent-control-theory}[all]"
+```
+
+The library's public API provides everything the old template scripts used to: `load_trace_jsonl` /
+`tool_target` (ETL), `MarkovAnalysisPipeline` (full run), `build_absorbing_chain_from_traces`,
+`compute_fundamental_matrix`, `lyapunov_table` / `lyapunov_values` / `drift_check` (Lyapunov
+dynamics), the `explore_quality` functions, figures / diagrams / sankey, and `AgentControlJudge`
+(Java port under `{agent-control-theory}/java`, consumed via `agentworks-bom`).
+
+The ONLY analysis code that lives in the experiment is the thin domain glue:
+- `classify_state(tool_name, tool_target) -> str | None` — the per-experiment state taxonomy. It is
+  **injected**, not copied: `MarkovAnalysisPipeline(classify_fn=classify_state, ...)`.
+- a short driver in `scripts/` that wires it: `load_trace_jsonl(...)` →
+  `MarkovAnalysisPipeline(classify_fn=classify_state, ...).run()` → `lyapunov_table(...)` → figures.
+
+Draft your domain states in `classify_state` from workflow knowledge; validate them against real
+traces in Step 2.2 (catch edge cases like the agent writing a helper script rather than the direct
+output). The template's `load_results.py` / `make_figures.py` / `make_markov_analysis.py` are the
+LEGACY copy-in approach — prefer the library; fall back to copied scripts only if it is unavailable.
 
 Also create these experiment-specific files (not in the generic template):
 - `{project}/experiment-config.yaml` — variant definitions (prompt file path, KB files, model)
@@ -561,7 +583,7 @@ Key API facts (read source before writing — do NOT guess):
 - `ResultStore` has 4 methods: `save`, `load(id)`, `listByName`, `mostRecent`
 - `InMemorySessionStore` is in MAIN scope (can import); `InMemoryResultStore` must be inlined in test
 - Read API source from `~/projects/agent-experiment/experiment-core/src/main/java/`
-- Canonical wiring example: `~/projects/code-coverage-experiment/src/main/java/.../ExperimentApp.java`
+- Canonical wiring example: `~/projects/experiment-code-coverage-v3/src/main/java/io/tuvium/experiment/coverage/ExperimentApp.java` (+ `JuryFactory.java`)
 
 **Source repos for framework dependencies must match pom.xml versions**:
 ```bash
@@ -576,10 +598,13 @@ Key API facts (read source before writing — do NOT guess):
 - Step 2.1: Control run — item 1 (N=1)
 - Step 2.2: **Phase 0 — State Taxonomy Discovery** (6 substeps):
   1. Run control variant 3-5 times to generate tool-call data
-  2. Run discovery mode: `MARKOV_DISCOVERY=true python scripts/make_markov_analysis.py`
+  2. Dump the observed `(tool_name, tool_target)` pairs from the traces (`load_trace_jsonl` +
+     `tool_target` from `agent_control_theory`) to see what activities actually occur
   3. Inspect clusters — look for tool-call groups that represent coherent activities
   4. Define state taxonomy (5-12 states, verbs not nouns, each must have diagnostic value)
-  5. Configure `classify_state()` in `make_markov_analysis.py` and validate against real traces
+  5. Implement `classify_state()` in the experiment's analysis driver, inject it as the pipeline's
+     `classify_fn`, and validate against real traces — no stray `None`/UNKNOWN states;
+     `run_second_order_test` / `run_stationarity_test` from the library sanity-check the chain
   6. Define cluster groups (productive: WRITE/BUILD/VERIFY, friction: FIX/SEARCH, knowledge: READ_KB)
   Exit criteria: state taxonomy documented, classifier validated, cluster groups defined.
 - Step 2.3: Control run — item 2 (N=1); run Markov analysis (normal mode) for baseline matrices
@@ -636,7 +661,7 @@ Add an archival step at the end of each stage that produces sweep data:
 ### Step N.Z: Archive Results to GitHub Releases — ⬜ TODO
 
 ```bash
-# Create archive-run.sh (adapt from ~/projects/code-coverage-experiment/scripts/archive-run.sh)
+# Create archive-run.sh (adapt from ~/projects/experiment-code-coverage-v2/scripts/archive-run.sh)
 # Key changes: update RESULTS_DIR path, tarball naming prefix
 ./scripts/archive-run.sh <sweep-name> \
     --session <session-id-1> --session <session-id-2> ...
@@ -659,8 +684,8 @@ frozen-in-time snapshot for inclusion in papers/reports. Separate download keeps
 
 **Granularity**: one release per named sweep. Never one release per variant or per session.
 
-**Reference implementation**: `~/projects/code-coverage-experiment/scripts/archive-run.sh`
-and `~/projects/experiment-code-coverage-v2/scripts/archive-run.sh`.
+**Reference implementation**: `~/projects/experiment-code-coverage-v2/scripts/archive-run.sh`
+and `~/projects/experiment-code-coverage-v3/scripts/archive-run.sh`.
 
 ### Phase 5: Review and Refine
 
@@ -732,6 +757,6 @@ Iterate until satisfied.
 
 Be precise and empirical. Help the user define exactly what they're measuring, against what baseline, with what judges, and what "better" means quantitatively. Challenge vague success criteria.
 
-When designing the consumer integration, reference the exemplar (refactoring-agent) concretely. Show how it implements AgentInvoker, provides judges, wires datasets — then ask "how should yours differ?"
+When designing the consumer integration, reference the exemplar (bud-spring-modernize) concretely. Show how it implements AgentInvoker (incl. `AcpAgentInvoker`), provides judges, wires datasets — then ask "how should yours differ?"
 
 When identifying agent-experiment prerequisites, be honest about what's ready vs. what's still in progress. Don't assume infrastructure that isn't built yet.
