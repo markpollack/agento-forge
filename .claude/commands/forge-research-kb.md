@@ -109,6 +109,15 @@ Start conversationally. Research-partner KBs exist to serve other projects, so c
    - Project path (suggest `~/projects/{topic}-research/`)
    - Private or community visibility
 
+5. **Will this KB ingest ongoing conversations?** (ChatGPT exports, meeting notes, or other
+   text threads — distinct from the paper corpus)
+   - If **yes**: you will scaffold a conversation-intake corpus (`conversations/ongoing/`),
+     an intake contract (`conversations/INTAKE.md`), and an Intake Mode in CLAUDE.md so the
+     KB can absorb conversations via `/ingest-conversation`. Ask which **topic prefixes**,
+     **authority classes** (owner-conclusions vs external-reference), and **themes** apply —
+     these fill the contract.
+   - If **no**: skip the conversation-intake scaffolding below (steps marked *[conversations]*).
+
 ### Phase 2: Gather Materials and Extract Bibliography
 
 Same as `/forge-research` Phase 2, with one addition:
@@ -129,6 +138,14 @@ mkdir -p {project}/notebooks
 mkdir -p {project}/papers/summaries
 mkdir -p {project}/findings
 mkdir -p {project}/docs
+```
+
+*[conversations]* If this KB ingests ongoing conversations (Phase 1 Q5 = yes), also:
+
+```bash
+mkdir -p {project}/conversations/ongoing/inbox   # raw captures land here
+touch    {project}/conversations/ongoing/inbox/.gitkeep
+# add conversations/calls/inbox only if the KB will also take call transcripts
 ```
 
 #### 3.2: .gitignore
@@ -178,6 +195,16 @@ Answer research questions grounded in the corpus.
 5. Synthesize answer with citations to specific papers
 6. Write findings to `findings/` with grounded recommendations
 7. Note gaps — questions the corpus can't answer
+
+### Intake Mode (Conversations)   {include only if this KB ingests conversations — Phase 1 Q5}
+Absorb an ongoing conversation (ChatGPT export, meeting notes) into the KB.
+
+Run `/ingest-conversation` — the procedure is invariant; this KB's specifics
+(prefixes, authority classes, themes, target files, routing) are declared in
+`conversations/INTAKE.md`. Capture is dumb (a file dropped in
+`conversations/ongoing/inbox/`); intake assigns the prefix, renames, and synthesizes.
+Authority classes gate what a conversation may drive: owner-conclusions drive findings
+and action items; external-reference is indexed/tagged only.
 
 ## Source Material Routing
 | Document | Path | Key Content |
@@ -256,6 +283,29 @@ Research corpus for {topic} is at:
 |-------|-----------|------|
 {3-4 realistic example queries showing expected navigation}
 ```
+
+#### 3.5: conversations/INTAKE.md  *[conversations]*
+
+If this KB ingests ongoing conversations (Phase 1 Q5 = yes), write the **intake contract**
+that `/ingest-conversation` reads. This is the single declarative source of truth for the
+KB's intake variables — the ritual hardcodes none of them. Use the section schema:
+
+1. **Landing & naming** — `conversations/ongoing/inbox/` → `conversations/ongoing/`; filename
+   pattern `{Source}-{PREFIX}-{N}-{Title}.md`.
+2. **Authority classes** — what each source may drive. At minimum `conclusion` (owner's own
+   threads → findings + action items) and `external-ref` (3rd-party/news → indexed + tagged
+   only, never action items). Add `primary-evidence` if the KB takes call transcripts.
+3. **Prefix registry** — the KB's topic prefixes (3–6 chars), each with an authority class.
+   Seed from the Phase 1 interview; the ritual self-heals new prefixes later.
+4. **Themes + keyword map** — the KB's theme list and a keyword per theme for mapping.
+5. **Target files** — where synthesis lands (master summary, conversation index, theme docs,
+   action items, inventory, synthesis log). Use this KB's actual paths.
+6. **Routing exceptions** — calls/talks corpora with their own rituals, if any.
+7. **Synthesis log** — which file's header carries the dated freshness lines.
+
+A complete worked reference instance lives in the master research KB at
+`tuvium-research-conversation-agent/conversations/INTAKE.md` — copy its structure, replace
+the table contents.
 
 ### Phase 4: Draft VISION.md and Paper Tracker
 
@@ -472,6 +522,7 @@ The **Applicable to RQs** and **Implications for {consumer}** sections are what 
 Before declaring the bootstrap complete, verify:
 
 - [ ] CLAUDE.md has: Two Modes, External References, Not Covered, See Also
+- [ ] *[conversations]* CLAUDE.md has Intake Mode + `conversations/INTAKE.md` exists with all 7 sections filled (or conversation-intake explicitly out of scope)
 - [ ] PARTNER-QUERY-TEMPLATE.md exists and is self-contained
 - [ ] VISION.md has: Research Questions, Consumers table, Scope
 - [ ] paper-tracker.md has: RQ Coverage Map, Fetch Priority batches
