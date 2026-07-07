@@ -21,6 +21,7 @@
 | How do I bootstrap a project from saved AI conversations? | `conversation-bootstrapping.md` |
 | What documentation types exist (tutorial, how-to, reference, explanation)? | `documentation-taxonomy.md` |
 | How do I collect and aggregate status across multiple projects? | `hierarchical-reporting.md` |
+| How do I continue development across cleared sessions (or dispatch work to another repo's session)? | `session-handoff.md` |
 | How do I batch-ingest research results into an existing KB? | `../guides/curator-intake.md` |
 | How do I scout and collect references to bootstrap a new KB domain? | `../guides/reference-harvest.md` |
 | How does the iterative improvement loop work for agent systems? | `improvement-flywheel.md` |
@@ -46,6 +47,7 @@
 | `documentation-taxonomy.md` | Diataxis framework (tutorial/how-to/reference/explanation) | You're writing docs and need to classify content type |
 | `hierarchical-reporting.md` | Status collection and aggregation across projects | You're managing multiple agent-driven projects |
 | `improvement-flywheel.md` | Loss-driven iterative improvement for agent systems | You're improving an agent through measured behavioral deltas and experiments |
+| `session-handoff.md` | Sessions are disposable, the repo is the memory: work-order handoffs for succession and satellite dispatch | Work outgrows one session, or a coordinator dispatches steps to other repos |
 
 ## Not Covered
 

@@ -62,6 +62,15 @@ The modes are not mutually exclusive. Eval-agent projects that generate code (Ja
 
 Both modes use the same roadmap structure, the same learnings capture, and the same phase review gates. They differ only in how "done" is measured.
 
+## Session Boundaries (Handoffs)
+
+Phase 4 execution routinely outlives a single AI session. Treat sessions as disposable and the repo as the
+memory: when a session ends (context clear, step boundary), it performs the **closing ritual** — doc
+currency pass (roadmap boxes, CLAUDE.md status, learnings) → a dated work order in `plans/inbox/` (from
+`templates/HANDOFF-TEMPLATE.md`) → the standard two-line launcher for its successor. The same work-order
+shape dispatches steps to satellite sessions in other repos. Consumed handoffs are superseded, never left
+for a fresh session to grab stale. See `concepts/session-handoff.md`.
+
 ## Exit Criteria
 
 - All roadmap steps completed (exit criteria met for each)

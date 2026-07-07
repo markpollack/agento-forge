@@ -35,8 +35,8 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Phase 3: Roadmap | `phases/03-roadmap.md` | Implementable steps with entry/exit criteria |
 | Phase 4: Learning Loop | `phases/04-learning-loop.md` | Iterative execution with variant-specific feedback |
 | Phase 5: Documentation | `phases/05-documentation.md` | User-facing docs, Diataxis taxonomy |
-| Core concepts (14 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns, improvement flywheel |
-| Templates (11 docs) | `templates/` | Fill-in templates for every phase output |
+| Core concepts (15 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns, improvement flywheel |
+| Templates (12 docs) | `templates/` | Fill-in templates for every phase output |
 | Getting started | `guides/getting-started.md` | Step-by-step walkthrough of applying Forge |
 | Methodology comparisons & research | `inbox/` | BMAD-METHOD comparison, AGENTS.md standard, PLANS.md convergence (staging area) |
 
