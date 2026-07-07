@@ -35,6 +35,7 @@ claude --add-dir ~/agento-studio
 | `/forge-kb` | Structure a document corpus for JIT context Q&A |
 | `/plan-to-roadmap` | Convert a plan into a Forge methodology roadmap |
 | `/collect-status` | Produce a timestamped status report |
+| `/prepare-handoff` | Close a session: doc currency pass + a work-order handoff for the successor |
 
 ## Choose Your Variant
 

@@ -36,6 +36,8 @@ re-decides things the previous session already settled.
 
 ## The Closing Ritual
 
+*(Automated as `/prepare-handoff` — `.claude/commands/prepare-handoff.md`.)*
+
 When a session is ending (the human says "prepare the handoff," or a step boundary is reached):
 
 1. **Doc currency pass** — bring the durable state up to truth: CLAUDE.md's current-status/next-action

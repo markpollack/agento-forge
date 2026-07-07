@@ -34,6 +34,7 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Phase 2: Design | `phases/02-design.md` | Technical specification, decisions with rationale |
 | Phase 3: Roadmap | `phases/03-roadmap.md` | Implementable steps with entry/exit criteria |
 | Phase 4: Learning Loop | `phases/04-learning-loop.md` | Iterative execution with variant-specific feedback |
+| Session handoffs | `concepts/session-handoff.md` + `.claude/commands/prepare-handoff.md` | `/prepare-handoff` — the closing ritual: currency pass → inbox work order → launcher |
 | Phase 5: Documentation | `phases/05-documentation.md` | User-facing docs, Diataxis taxonomy |
 | Core concepts (15 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns, improvement flywheel |
 | Templates (12 docs) | `templates/` | Fill-in templates for every phase output |
