@@ -477,8 +477,16 @@ Download and summarize the {N} P0 papers. Corpus: 0/{total} summarized.
 - Update paper-tracker.md header
 - Note new papers discovered via citations
 - Note RQ coverage gaps after Batch 1
+- Run `/prepare-kb-handoff` — regenerate this file for the next batch
 - Commit
 ```
+
+This file is a **standing order**, not a one-shot: you are writing only the *first* one.
+Every subsequent KB session closes with `/prepare-kb-handoff`
+(`.claude/commands/prepare-kb-handoff.md`), which re-runs the corpus currency pass and
+regenerates `HANDOFF-FORAGE.md` from current tracker state (template:
+`{agento-forge}/templates/HANDOFF-KB-TEMPLATE.md`). See `variants/kb.md` ("Session
+Handoff: the Standing Forage Order").
 
 #### 6.6: Commit and push federation changes
 

@@ -36,6 +36,7 @@ claude --add-dir ~/agento-studio
 | `/plan-to-roadmap` | Convert a plan into a Forge methodology roadmap |
 | `/collect-status` | Produce a timestamped status report |
 | `/prepare-handoff` | Close a session: doc currency pass + a work-order handoff for the successor |
+| `/prepare-kb-handoff` | Close a KB session: corpus-truth currency pass + regenerate the standing forage order |
 
 ## Choose Your Variant
 

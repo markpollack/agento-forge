@@ -342,6 +342,10 @@ After documents are finalized, define the foraging mission and suggest next step
    - Per-paper workflow steps (download → read → summarize → update tracker)
    - "After All Done" checklist (update tracker, note citations, note gaps, commit)
 
+   This is the *first* standing forage order — subsequent sessions close with
+   `/prepare-kb-handoff` (works for research projects too, minus the federation step),
+   which regenerates `HANDOFF-FORAGE.md` from current tracker state.
+
 ## Extraction Patterns
 
 ### Research Element Extraction

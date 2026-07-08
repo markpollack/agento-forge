@@ -148,6 +148,32 @@ federation's freshness bookkeeping stays green — the catalog holding both trut
 routing readers to the stale one. Entry points are cached routing judgments; without a
 ritual that invalidates them, they rot.
 
+## Session Handoff: the Standing Forage Order
+
+*(Automated as `/prepare-kb-handoff` —
+[versioned copy](../.claude/commands/prepare-kb-handoff.md); template:
+[`HANDOFF-KB-TEMPLATE.md`](../templates/HANDOFF-KB-TEMPLATE.md). The general practice is
+[Session Handoff](../concepts/session-handoff.md); this section is its KB specialization.)*
+
+KB work is session-shaped like development work — forage sessions fill the corpus,
+partner sessions drain questions from consumers — but its next step is a **queue derived
+from the tracker**, not a roadmap step. That inverts one piece of the handoff protocol:
+
+- **`HANDOFF-FORAGE.md` at the repo root is a standing order**, regenerated in place at
+  every session close. The bootstrap commands (`/forge-kb`, `/forge-research-kb`) write
+  the first one; `/prepare-kb-handoff` rewrites it from current tracker state thereafter.
+  Superseding is automatic; git history preserves the sequence. Never two forage orders
+  at once.
+- **Dated `plans/inbox/handoff-*.md` orders remain for non-forage work** — a
+  partner-mode answer to deliver, a consolidation sweep, an intake backlog — exactly per
+  the base ritual.
+- **The currency pass checks corpus truth, not build truth**: tracker statuses advance
+  only with the artifact on disk; every acquisition has a manifest row; VISION unknowns
+  and the conversation synthesis log are current; and — the federation tie-in — the
+  **freshness row advances as part of the closing ritual**, which is how a federated KB
+  actually meets the consolidation-date obligation above rather than deferring it to a
+  sweep that may be months away.
+
 ## Anti-Patterns
 
 ### Premature Formalization
@@ -172,12 +198,20 @@ rots. Route to a maintained operational doc paired with status reports instead.
 Copying counts, dates, or file lists into routing tables. Route with invariants and
 pointers; let the target files own their own state.
 
+### Status Without Artifact
+A tracker row marked `Downloaded` or `Summarized` while the file was never on disk (or
+the summary never written). Bookkeeping that outruns the corpus is worse than an honest
+`Unread`, because the lie is discovered by a *future* session that trusted it. The
+closing ritual's grounding spot-check exists to catch this at the session boundary.
+
 ## Concepts
 
 - [Knowledge Base Architecture](../concepts/knowledge-base-architecture.md) — two KB
   types, librarian layer, federation (union catalog pattern), scale thresholds
 - [Research Agent](../concepts/research-agent.md) — Forage/Partner modes that
   research-partner KBs operate in
+- [Session Handoff](../concepts/session-handoff.md) — the general closing ritual this
+  variant's standing forage order specializes
 - [Steward Agent](../concepts/steward-agent.md) — the curator role, for project-local
   KBs maintained as part of stewardship
 - [Documentation Taxonomy](../concepts/documentation-taxonomy.md) — what content types

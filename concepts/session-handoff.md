@@ -36,7 +36,9 @@ re-decides things the previous session already settled.
 
 ## The Closing Ritual
 
-*(Automated as `/prepare-handoff` — `.claude/commands/prepare-handoff.md`.)*
+*(Automated as `/prepare-handoff` — `.claude/commands/prepare-handoff.md`. For knowledge-base
+sessions, the specialization below is automated as `/prepare-kb-handoff` —
+`.claude/commands/prepare-kb-handoff.md`.)*
 
 When a session is ending (the human says "prepare the handoff," or a step boundary is reached):
 
@@ -70,6 +72,29 @@ The template carries seven sections; the non-obvious design choices:
 - **Human-gates, surfaced not decided** — decisions that belong to the human are listed explicitly so the
   next session raises them instead of silently resolving them.
 
+## The KB Specialization: Standing Orders
+
+Knowledge-base sessions (forage, partner-mode Q&A, intake, consolidation — see
+`variants/kb.md`) run the same protocol with three substitutions, because a KB's next work is a
+**queue derived from the tracker**, not a roadmap step:
+
+- **The standing forage order replaces dated succession handoffs.** `HANDOFF-FORAGE.md` at the
+  repo root is *regenerated in place* at each close — the tracker is authoritative and the order
+  is derived state, so superseding is automatic and git history preserves the sequence. Dated
+  `plans/inbox/` orders remain for non-forage work (an answer to deliver, a consolidation sweep).
+  `/forge-kb` and `/forge-research-kb` write the *first* standing order at bootstrap; every
+  session after that regenerates it at close.
+- **Currency means corpus truth, not build truth.** The pass checks tracker-matches-disk (a
+  status advances only with the artifact present), the acquisition manifest, VISION unknowns, the
+  conversation synthesis log, and — for a federated KB — the federation freshness row. The
+  "verify the build" step becomes a grounding spot-check on rows whose status changed.
+- **The mission is a goal condition in RQ terms**, not a count. "After this batch the corpus
+  answers RQ2 end-to-end" tells the successor what done means; "summarize 5 sources" doesn't.
+
+Template: `templates/HANDOFF-KB-TEMPLATE.md`. The failure mode this specialization prevents: a
+tracker that says `Downloaded` while nothing is on disk — bookkeeping that outruns the corpus,
+discovered only by the future session that trusted it.
+
 ## Hygiene Rules
 
 - **The ending session writes the next handoff** — it knows the state best. Never ask the human to
@@ -88,6 +113,8 @@ The template carries seven sections; the non-obvious design choices:
 - `execution-pipeline.md` / Phase 4 — the handoff ritual is the session-boundary instance of the learning
   loop's exit discipline: state is only real once it's in the repo.
 - `steward-agent.md` — a steward is effectively a standing succession of handoffs on a maintenance cadence.
+- `../variants/kb.md` — the KB variant's session-close ritual (`/prepare-kb-handoff`): the standing forage
+  order, corpus-truth currency, and the federation freshness row as part of the closing pass.
 
 ## Provenance
 
