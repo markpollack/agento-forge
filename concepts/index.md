@@ -16,12 +16,15 @@
 | How do I automate Phase 1 research with hierarchical RAG? | `research-agent.md` |
 | What is a steward agent and when do I need one? | `steward-agent.md` |
 | How do I review discovery artifacts before committing to a roadmap? | `conversational-review.md` |
+| What review lenses exist, and which catch what? (personas, gap-hunts, cold second implementations, byte vectors) | `review-lenses.md` |
+| How does a recorded decision stay true after the session that made it is cleared? | `decision-enforcement.md` |
 | What quality tooling should I set up in the first roadmap stage? | `quality-infrastructure.md` |
 | What are prerequisite designs and when do they emerge? | `prerequisite-designs.md` |
 | How do I bootstrap a project from saved AI conversations? | `conversation-bootstrapping.md` |
 | What documentation types exist (tutorial, how-to, reference, explanation)? | `documentation-taxonomy.md` |
 | How do I collect and aggregate status across multiple projects? | `hierarchical-reporting.md` |
 | How do I continue development across cleared sessions (or dispatch work to another repo's session)? | `session-handoff.md` |
+| How is a project's working knowledge organized (learnings/journal/research/inbox)? Where do decisions vs discoveries go? How does the inbox receive messages? | `project-knowledge-layout.md` |
 | How do I batch-ingest research results into an existing KB? | `../guides/curator-intake.md` |
 | How do I scout and collect references to bootstrap a new KB domain? | `../guides/reference-harvest.md` |
 | How does the iterative improvement loop work for agent systems? | `improvement-flywheel.md` |
@@ -42,12 +45,15 @@
 | `research-agent.md` | Hierarchical agentic RAG for Phase 1 | You're automating literature review and synthesis |
 | `steward-agent.md` | Persistent project custodian (curator + developer) | You're setting up ongoing project maintenance |
 | `conversational-review.md` | Using AI to review discovery artifacts | You're checking artifact quality before roadmap |
+| `review-lenses.md` | The 9-lens stakeholder-view catalog for design/contract review (Views-and-Beyond + ATAM lineage, extended with gap-hunts, producer-coverage, persona-verb matrices, cold second implementations, conformance vectors, decision journaling) | You're gating a design or freezing a contract and need review coverage beyond requirement-validation |
+| `decision-enforcement.md` | The design ↔ test contract: a roadmap exit criterion names the decision it defends, so undefended decisions are visible by absence (**PROVISIONAL** — one project, 2026-07) | You're recording a design decision and want it to survive the people who made it |
 | `conversation-bootstrapping.md` | Starting from saved AI conversations | You're beginning a project from prior chat sessions |
 | `prerequisite-designs.md` | Lightweight designs for tooling/data prerequisites | Research revealed you need a tool before the main project |
 | `documentation-taxonomy.md` | Diataxis framework (tutorial/how-to/reference/explanation) | You're writing docs and need to classify content type |
 | `hierarchical-reporting.md` | Status collection and aggregation across projects | You're managing multiple agent-driven projects |
 | `improvement-flywheel.md` | Loss-driven iterative improvement for agent systems | You're improving an agent through measured behavioral deltas and experiments |
 | `session-handoff.md` | Sessions are disposable, the repo is the memory: work-order handoffs for succession and satellite dispatch | Work outgrows one session, or a coordinator dispatches steps to other repos |
+| `project-knowledge-layout.md` | The `plans/` working-memory tree: learnings (discovery) / journal (decisions) / research (reference) / inbox (intake, delivered by gitmaildir) / archive | You're organizing a project's working knowledge, or wondering where a decision vs a discovery belongs |
 
 ## Not Covered
 

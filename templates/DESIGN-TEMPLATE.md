@@ -102,6 +102,8 @@ One-paragraph summary of the technical approach.
 
 **Rationale**: {{WHY_THIS_APPROACH}}
 
+> **Phrasing**: state the decision as a **predicate over artifacts** where you can — something an observation could contradict — rather than as a state of the world or of a reader's understanding. That is what decides whether a roadmap step can ever defend it (`concepts/decision-enforcement.md`). Postures and regimes legitimately have no such form; leave them as prose.
+
 ---
 
 ## Error Handling Strategy
@@ -152,6 +154,15 @@ loss = 1 - weighted_sum(judge_scores) / max_score
 - **Framework**: {{TRACKING_FRAMEWORK}} (e.g., tracking-core, custom)
 - **Per-iteration**: {{ITERATION_METRICS}} (e.g., tokens, cost, duration, cases attempted/passed)
 - **Per-execution**: {{EXECUTION_METRICS}} (e.g., total iterations, total cost, final state, termination reason)
+
+## Requirements Traceability
+
+Each binding requirement → the design decision that satisfies it, **cited** (a requirement satisfied
+without a citation is paper-only until proven otherwise). Re-verify at every design-gate review.
+
+| # | Requirement (source) | Satisfied by | Note |
+|---|---------------------|--------------|------|
+| 1 | {{REQUIREMENT}} ({{SOURCE_DOC}}) | {{DECISION_ID / SECTION}} | |
 
 ## Open Questions
 

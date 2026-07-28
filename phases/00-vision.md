@@ -34,6 +34,7 @@ Define what to build, why it matters, and what success looks like. The vision do
 ## Exit Criteria
 
 - Vision document exists with problem statement, success criteria, scope, unknowns, and assumptions
+- **Stakeholders/personas enumerated — including the brief-less ones** (operator, administrator, security reviewer — the personas who never show up to ask; see [review-lenses](../concepts/review-lenses.md) lens 5: *a stakeholder without a view has concerns that are silently unmet*, and consumer-driven artifacts encode the silence of unnamed personas)
 - At least one research question identified for Phase 1
 - No obvious contradictions between success criteria and scope
 

@@ -27,7 +27,8 @@ Deep investigation of the problem space. Collect reference implementations, pape
 ## Exit Criteria
 
 - All research questions from VISION.md have answers (or are explicitly marked as unanswerable with current information)
-- At least one reference implementation analyzed in depth
+- At least one reference implementation analyzed in depth (teardown lens: steal/avoid verdicts, findings classified **(a) validates / (b) additive / (c) would-touch-design** — [review-lenses](../concepts/review-lenses.md) lens 2 + the governing protocol)
+- **Every validation-framed research pass is paired with an inverted pass** before Phase 1 closes ("enumerate their machinery; interrogate our silence" — lens 3; validation-framed research cannot certify completeness, it only grades what was asked)
 - Findings documented in a format the Design phase can consume
 - No remaining questions that would change the fundamental approach
 

@@ -30,6 +30,8 @@ The review produces findings at three severity levels:
 
 MUST FIX items block stage completion. SHOULD FIX items are addressed before the next phase starts. CONSIDER items are logged as learnings.
 
+**Lens selection (do this before writing the review prompt).** Severity is one axis; *coverage* is the other. Pick the applicable lenses from [`concepts/review-lenses.md`](../concepts/review-lenses.md) for this gate — requirements-traceability and adversarial fidelity always; producer-coverage + persona-verb matrix for any contract/interface gate; a cold second-implementation spike before any freeze; the inverted gap-hunt whenever the review would otherwise be purely validation-framed (validation certifies what was asked; it is silent about what wasn't). Findings additionally carry the **(a) validates / (b) additive / (c) would-touch-approved-design** classification — only (c) reopens settled decisions, at a high bar. A gate that runs only the validation lens should say so explicitly, as a known coverage gap.
+
 ---
 
 ## Generic Review Prompt Template

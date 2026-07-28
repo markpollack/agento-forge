@@ -12,6 +12,19 @@ What specific problem does this project solve? Who has this problem? How do they
 
 {{PROBLEM_DESCRIPTION}}
 
+## Stakeholders and Personas
+
+Everyone who will touch the system in year one — **especially the personas who won't show up to ask**
+(operator, administrator, security reviewer). A persona without a row here gets no requirements, no
+verbs, and no view — silently. (See `concepts/review-lenses.md`, lens 5.)
+
+| Persona | Top concerns | What they must be able to DO |
+|---------|--------------|------------------------------|
+| {{PERSONA_1}} | {{CONCERNS}} | {{VERBS}} |
+| {{PERSONA_2}} | {{CONCERNS}} | {{VERBS}} |
+| Operator (on-call) | {{CONCERNS}} | {{VERBS — cancel? retry? re-drive? inspect?}} |
+| Administrator | {{CONCERNS}} | {{VERBS — retention? policy? access?}} |
+
 ## Success Criteria
 
 Measurable outcomes that determine if the project succeeded. Not features — outcomes.

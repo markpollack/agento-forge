@@ -298,10 +298,12 @@ plans/
 ├── ROADMAP.md                # This file — step-by-step execution plan
 ├── DESIGN.md                 # Architecture decisions
 ├── VISION.md                 # Product vision
-├── inbox/                    # Unprocessed ideas, research briefs, handoff notes
+├── inbox/                    # Unprocessed ideas, briefs, handoff notes (gitmaildir delivers here)
 │   └── (items arrive here during development)
 ├── research/                 # Active reference material informing upcoming stages
 │   └── (promoted from inbox when linked to roadmap steps)
+├── journal/                  # Ratified decisions: YYYY-MM-DD-<slug>.md (why X; supersession trail)
+│   └── (durable — never compacted, unlike learnings/)
 ├── archive/                  # Completed/superseded items (provenance, not consulted)
 │   └── (demoted from inbox when work is done)
 └── learnings/                # Per-step and compacted learnings
@@ -311,7 +313,7 @@ plans/
     └── stage1-qa-review.md   # Stage review findings
 ```
 
-**Inbox lifecycle**: At stage boundaries (consolidation steps), triage `inbox/` — promote active research to `research/`, archive completed items, incorporate actionable items into the roadmap. Delete `inbox/` when empty. See [Phase 3: Roadmap](../phases/03-roadmap.md) for details.
+**Inbox lifecycle**: At stage boundaries (consolidation steps), triage `inbox/` — promote active research to `research/`, archive completed items, incorporate actionable items into the roadmap. Delete `inbox/` when empty. **`journal/`** is separate: dated decision records (choice + rationale + rejected alternatives), durable and never compacted — a decision goes there when a future session would ask "why is it this way?" and the code doesn't answer. Full layout incl. the gitmaildir intake binding: [Project Knowledge Layout](../concepts/project-knowledge-layout.md); lifecycle detail: [Phase 3: Roadmap](../phases/03-roadmap.md).
 
 ---
 
@@ -339,6 +341,8 @@ Every step's entry criteria must include (in addition to step-specific criteria)
 ### Step Exit Criteria Convention
 
 Every step's exit criteria must include these items (in addition to step-specific criteria):
+
+**Naming the decision a check defends (optional, one parenthetical).** Where an exit criterion exists to hold a design decision true, name it: `- [ ] VERIFY node ids survive an unrelated upstream insertion (defends DD-23)`. This links DESIGN (what's true) → ROADMAP (which step proves it) → the test (the proof), and makes undefended decisions visible by absence. Many decisions are postures with no predicate over any artifact and will never be named here — that is a legitimate state, and seeing it is the point. See `concepts/decision-enforcement.md`.
 
 ```markdown
 - [ ] All tests pass: `./mvnw test` (or `./mvnw verify` if integration tests)

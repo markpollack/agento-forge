@@ -26,6 +26,8 @@ Break the stable design into an ordered sequence of implementable steps, each wi
 
 - Every design component has at least one roadmap step
 - Stage 1 includes design review, project scaffolding, quality infrastructure, and test infrastructure steps
+- **Freeze/contract gates schedule their lenses as steps BEFORE the freeze step** (the pre-freeze window is when fixes are naming-level; after, they are versioned migration events): the cold second-implementation spike, producer-coverage + persona-matrix runs, and conformance-vector attestation all precede the freeze — and the gate step re-runs lenses 4/5 as standing dimensions ([review-lenses](../concepts/review-lenses.md))
+- **Mid-execution research arrivals route through the (a)/(b)/(c) classification protocol** — only class-(c) findings may reopen approved design, at a high bar; (b) findings land in a named Deferred list, never silently
 - Steps are ordered with no circular dependencies
 - Each step has entry criteria, exit criteria, and expected deliverables
 - The first step can start immediately (no unmet entry criteria)
@@ -55,8 +57,9 @@ During execution, the `plans/` directory accumulates more than just learnings. R
 plans/
 ├── ROADMAP.md           # Execution plan
 ├── DESIGN.md            # Architecture decisions
-├── inbox/               # Unprocessed: ideas, research briefs, handoff notes
+├── inbox/               # Unprocessed: ideas, research briefs, handoff notes (gitmaildir delivers here)
 ├── research/            # Active: reference material informing upcoming stages
+├── journal/             # Ratified decisions (dated, durable): why we chose X; supersession trail
 ├── archive/             # Completed/superseded: kept for provenance, not consulted
 └── learnings/           # Per-step and compacted learnings
 ```
@@ -68,7 +71,9 @@ plans/
 
 When `inbox/` is empty, delete it. The goal is zero inbox at each wave boundary.
 
-This pattern emerged from building Loopy — research notes, gap analyses, and design briefs accumulated in inbox during Waves 1-2, then were triaged into research (active reference for Stage 7 steps) and archive (completed Wave 1 handoffs) when the wave completed.
+**`journal/` is not part of the inbox lifecycle** — it is the durable decision record (dated `YYYY-MM-DD-<slug>.md` entries: the choice, the rationale, the rejected alternatives; a later entry *supersedes* an earlier one by explicit pointer, and both are kept). A decision goes here when a future session would ask "why is it this way?" and the code/roadmap doesn't answer. Journal entries are never compacted away, unlike `learnings/`.
+
+This inbox pattern emerged from building Loopy — research notes, gap analyses, and design briefs accumulated in inbox during Waves 1-2, then were triaged into research (active reference for Stage 7 steps) and archive (completed Wave 1 handoffs) when the wave completed. The full layout — including `journal/` and the gitmaildir intake binding — is described in [Project Knowledge Layout](../concepts/project-knowledge-layout.md).
 
 ## Anti-Patterns
 

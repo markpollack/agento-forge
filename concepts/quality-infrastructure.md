@@ -66,6 +66,8 @@ Quality infrastructure and stage reviews are complementary, not redundant:
 
 A stage review that consistently finds coverage gaps or architecture violations is a sign that quality infrastructure is misconfigured or missing.
 
+> **A check must be demonstrated to fail before it is trusted.** Run it against a fixture carrying each defect class it claims to catch, plus controls that must *not* fire. A check never shown to fail is a decoration, and worse than none: it converts "unenforced" into "falsely believed enforced".
+
 ## Anti-Patterns
 
 - **Deferring quality setup** — "We'll add coverage tracking later." Later never comes, or it reveals a mountain of gaps.
