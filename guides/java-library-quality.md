@@ -2,6 +2,14 @@
 
 This document captures the standard "finishing touches" applied to production-ready Java libraries. Use this as a checklist when polishing repositories.
 
+> **This is the canonical Java engineering standard — edit it here.** Originally GP-9
+> `java-library-finishing-touches.md` (grand-plan v2, January 2026). Two frozen snapshots of that
+> original survive and must not be edited: `~/tuvium/projects/grand-plan/v2/architecture/` (the
+> original, in a repo declared not-maintained) and the research KB's ingest snapshot at
+> `~/tuvium/projects/tuvium-research-conversation-agent/conversations/archive/grand-plan-v2/architecture/`.
+> Both carry pointers back here. Projects citing "the research-KB Java standard" (agent-workflow's
+> standing directive, 2026-07-23) mean this file.
+
 ---
 
 ## 1. Code Coverage with JaCoCo
@@ -278,6 +286,151 @@ public interface Repository {
 List<String> getItems();  // Returns Collections.emptyList() if none
 ```
 
+#### 7. JSpecify is a specification, not an enforcer — wire a checker or the annotations are prose
+
+**JSpecify ships only annotations.** `@NullMarked`/`@Nullable` carry no checking of any kind: javac
+compiles a `@NullMarked` package whose methods return null against non-null declarations without a
+murmur. An unchecked `@NullMarked` is worse than none — it is a **false claim** readers and tools
+will trust. (Measured in the field, 2026-07-30: a public method in a `@NullMarked` package declared
+non-null and returned null on its *ordinary* code path; the annotations had been in place for weeks,
+verified by nothing.)
+
+Enforcement is a separate tool, chosen and wired deliberately:
+
+| Layer | What it gives | Enforcement? |
+|---|---|---|
+| JSpecify annotations | the vocabulary (which nulls are meaningful) | **none** |
+| IDE (IntelliJ) inspections | squiggles while editing | advisory only |
+| **NullAway** (Error Prone plugin) | fast build-breaking consistency check | **yes — at ERROR in the build** |
+| Checker Framework | sound, exhaustive analysis | yes, heavier; rarely worth it for app/library code |
+
+**What NullAway checks — and deliberately does not.** It enforces *consistency between declaration
+and use*: passing/returning null where the declaration says non-null → error; dereferencing a
+`@Nullable` without a check → error. **Meaningful nulls are fully supported** — `@Nullable` *is* the
+spelling for "absence is legal here", and NullAway then forces every reader to handle it. What no
+nullness checker can flag: a `@Nullable` slot that is *always* null across the whole program (a
+dead capability rather than an illegal null) — that is a data-flow/usage question needing a custom
+Error Prone `BugChecker` or value analysis, not a nullness tool.
+
+##### Wiring NullAway into the Maven build
+
+Error Prone and NullAway are annotation-processor paths on `maven-compiler-plugin`, not dependencies.
+This configuration is in production use (agent-workflow `workflow-spec`/`workflow-flows`, JDK 21):
+
+```xml
+<properties>
+    <jspecify.version>1.0.0</jspecify.version>
+    <errorprone.version>2.50.0</errorprone.version>
+    <nullaway.version>0.13.8</nullaway.version>
+</properties>
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <executions>
+        <execution>
+            <!-- default-compile only: main sources, NOT tests (see below) -->
+            <id>default-compile</id>
+            <configuration>
+                <compilerArgs>
+                    <arg>-XDcompilePolicy=simple</arg>
+                    <arg>--should-stop=ifError=FLOW</arg>
+                    <!-- Required on JDK 21; without it Error Prone fails and says so -->
+                    <arg>-XDaddTypeAnnotationsToSymbol=true</arg>
+                    <arg>-Xplugin:ErrorProne -XepDisableAllChecks -Xep:NullAway:ERROR -XepOpt:NullAway:JSpecifyMode=true -XepOpt:NullAway:OnlyNullMarked=true</arg>
+                </compilerArgs>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>com.google.errorprone</groupId>
+                        <artifactId>error_prone_core</artifactId>
+                        <version>${errorprone.version}</version>
+                    </path>
+                    <path>
+                        <groupId>com.uber.nullaway</groupId>
+                        <artifactId>nullaway</artifactId>
+                        <version>${nullaway.version}</version>
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Error Prone needs javac internals opened. Put this in `.mvn/jvm.config` (one line per flag):
+
+```
+--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+--add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+--add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED
+```
+
+Four decisions in that config, each with a measured reason:
+
+| Setting | Why |
+|---|---|
+| `-XepDisableAllChecks` + `-Xep:NullAway:ERROR` | This act enforces **nullness**, not lint. Stock Error Prone checks scope to a *module*, not to `@NullMarked` packages, so enabling them lands lint on legacy/parked code that was never in scope |
+| `OnlyNullMarked=true` (+ `JSpecifyMode=true`) | Scopes the check to `@NullMarked` packages — adoption is per-package, not per-module |
+| Bound to `default-compile` | Test sources are deliberately **unchecked**: tests sit in the same package names and inherit `@NullMarked`, and checking them reported 72 sites in one repo, essentially all one shape (a test navigating a legitimately-absent chain where the surrounding assertion is the proof and NullAway cannot see through AssertJ). Annotation churn, no defect signal |
+| Never `<fork>true</fork>` | compiler-plugin 3.14.0 then swallows every diagnostic and reports a bare "Compilation failure" |
+
+Two failure modes worth recognizing: a missing `com.sun.tools.javac.processing` export fails as an
+`IllegalAccessError` rather than a missing-flag message; and on JDK 21 a missing
+`-XDaddTypeAnnotationsToSymbol=true` fails inside Error Prone itself.
+
+**Adoption is never "just config."** Turning NullAway on at ERROR over an existing `@NullMarked`
+codebase surfaces every place the annotations and the code disagree (measured: 33 sites in ~20
+files of well-reviewed code). Budget a triage pass — each site is one of: the **annotation** is
+wrong (add `@Nullable`), the **code** is wrong (fix the bug), or a known checker blind spot
+(suppress *with a written reason*). The triage list is the point: it is the diff between what the
+package claims and what it does.
+
+Two things that measurement taught, worth expecting:
+
+- **The denominator moves as you fix.** Correcting an annotation-wrong site *reveals* what its false
+  claim was masking (a subtype's accessor surfaced the moment the base stopped claiming non-null), so
+  the initial count is a floor, not a total.
+- **Checker-limited sites usually mean the invariant is invisible, not absent.** Every one in that
+  run closed by making it *visible* — a superclass field made `final` and constructor-injected, a
+  `requireX` helper returning the value so the check and the use cannot separate twenty lines apart —
+  or *asserted with its reason*. Zero needed `@SuppressWarnings`. Reach for suppression last.
+
+**`Optional<T>` vs `@Nullable` — classify by what the caller can DO, not by position.**
+
+> **The test: can the caller act on the absence?**
+> **Yes** — there is a different, meaningful path (a fallback, a retry, a distinct result) →
+> `Optional`, which forces the caller to confront it.
+> **No** — absence just flows onward as absence → `@Nullable`, which documents it with no wrapper,
+> no allocation, and no unwrap at the call site.
+
+A *positional* rule ("Optional for behavioral returns, `@Nullable` for record components") is a
+proxy that usually correlates and fails at the edges. Measured counterexample (2026-07-31): a
+public method returning provenance had exactly **one** caller, whose value's destiny was a
+`@Nullable` wire component one line later — an `Optional` would have been constructed and unwrapped
+adjacently, doing documentation work while pretending to do control-flow work. `@Nullable` was
+correct despite being a behavioral return.
+
+Two rules that *are* positional and do hold: never `Optional` for parameters or fields; never
+nullable collections (return empty — §4.6 above). And note **why the choice is about API reading
+rather than protection**: with NullAway at ERROR, a caller who ignores a `@Nullable` return breaks
+the build exactly as surely as one who ignores an `Optional`.
+
+**Also not the answer: throwing.** If absence is the *contract's normal case* — most artifacts lack
+the value, and a test asserts success without it — an exception is wrong however rare it feels. The
+question to ask is not "how often?" but **"is there a recovery to write?"** When every cause is
+environmental and the caller can only catch-and-ignore, the throw is a worse spelling of absence.
+
+**Falsify before trusting.** A checker that is silent is indistinguishable from a checker that is
+off. Prove it runs: plant a null into a non-null component and confirm the build goes **RED**, then
+confirm the legal-absence paths stay **green**. Only then is a silence a measurement.
+
 ---
 
 ## 5. OWASP Dependency-Check
@@ -422,7 +575,7 @@ public record Issue(
 Structured quality gate at the end of each roadmap stage during Phase 4 (Learning Loop). Combines API design review, code quality review, grammar/documentation review, and design conformance review into a single compound evaluation.
 
 ### Template
-See [phase-review-template.md](phase-review-template.md) for the full parameterized prompt template and operational workflow.
+See [phase-review-template.md](../phases/phase-review-template.md) for the full parameterized prompt template and operational workflow.
 
 ### How It Works (Current)
 The implementation agent generates a populated review prompt file (`plans/prompts/phaseN-review-prompt.md`). The developer copies this to a separate Claude Code session (the QA agent), which reads all listed files and returns findings. Findings are fed back to the implementation agent for resolution. The loop repeats until zero MUST FIX findings remain. See "Operational Workflow" in the template for details.
@@ -451,9 +604,10 @@ When finishing a Java library project:
 - [ ] **ArchUnit** - Architecture rule enforcement
 - [ ] **Oracle Review** - AI code smell detection
 - [ ] **JSpecify** - Null safety with `@NullMarked` packages
+- [ ] **NullAway at ERROR** - JSpecify has no enforcement; unchecked annotations are false claims. Budget the adoption triage (§4.7)
 - [ ] **OWASP** - Dependency vulnerability scanning
 - [ ] **Javadoc** - Public API documentation
-- [ ] **Phase Review** - API design + code quality + grammar + design conformance review ([template](phase-review-template.md))
+- [ ] **Phase Review** - API design + code quality + grammar + design conformance review ([template](../phases/phase-review-template.md))
 - [ ] **Dependency Audit** - Remove/replace heavy dependencies with CVEs
 
 ### Quick Commands

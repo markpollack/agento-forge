@@ -21,6 +21,9 @@
 | What is a steward and when do I need one? | `concepts/steward-agent.md` then `variants/steward.md` |
 | How do I review my design artifacts before implementation? | `concepts/conversational-review.md` |
 | What quality tools should I set up first? | `concepts/quality-infrastructure.md` |
+| What is our Java quality bar? (JaCoCo, ArchUnit, JSpecify, OWASP, Javadoc) | `guides/java-library-quality.md` — **the canonical standard**, formerly GP-9 `java-library-finishing-touches.md` |
+| How do I make `@NullMarked` actually mean something? | `guides/java-library-quality.md` §4.7 (JSpecify ships annotations only — NullAway at ERROR is the enforcer; wiring, config decisions, adoption triage) |
+| `Optional<T>` or `@Nullable` for this return? | `guides/java-library-quality.md` §4.7 (the criterion is *can the caller act on the absence?*, not method-vs-field) |
 | How does Forge compare to other AI methodologies? | `inbox/bmad-vs-forge-comparison.md`, `inbox/another-ai-methodology.md` |
 | How does AGENTS.md relate to Forge? | `inbox/agents-md-and-plans-directory.md` |
 | How does OpenAI's PLANS.md compare to Forge? | `inbox/plans-md-convergence.md` |
@@ -36,7 +39,7 @@
 | Phase definitions | `phases/` | Phase 0-5 detailed descriptions, exit criteria, anti-patterns |
 | Templates | `templates/` | Fill-in templates for vision, research, design, roadmap, learnings, reviews |
 | Project variants | `variants/` | Agent, project, research, steward, kb — when to use each, key differences |
-| Guides | `guides/` | Getting started, Java quality checklist, research project structure |
+| Guides | `guides/` | Getting started, **the canonical Java quality standard** (`java-library-quality.md` — the single home; the `grand-plan/v2` and research-KB `conversations/archive/` copies are frozen snapshots), research project structure |
 | Examples | `examples/` | Minimal directory structure examples for each variant |
 | Unsorted | `inbox/` | Methodology comparisons, AGENTS.md/PLANS.md convergence research (staging area) |
 
