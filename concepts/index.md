@@ -25,6 +25,7 @@
 | How do I collect and aggregate status across multiple projects? | `hierarchical-reporting.md` |
 | How do I continue development across cleared sessions (or dispatch work to another repo's session)? | `session-handoff.md` |
 | How is a project's working knowledge organized (learnings/journal/research/inbox)? Where do decisions vs discoveries go? How does the inbox receive messages? | `project-knowledge-layout.md` |
+| A delivery step hit an open question too big to absorb and too load-bearing to defer. How do I spend real effort on it without losing the roadmap? | `research-diversion.md` |
 | How do I batch-ingest research results into an existing KB? | `../guides/curator-intake.md` |
 | How do I scout and collect references to bootstrap a new KB domain? | `../guides/reference-harvest.md` |
 | How does the iterative improvement loop work for agent systems? | `improvement-flywheel.md` |
@@ -54,6 +55,7 @@
 | `improvement-flywheel.md` | Loss-driven iterative improvement for agent systems | You're improving an agent through measured behavioral deltas and experiments |
 | `session-handoff.md` | Sessions are disposable, the repo is the memory: work-order handoffs for succession and satellite dispatch | Work outgrows one session, or a coordinator dispatches steps to other repos |
 | `project-knowledge-layout.md` | The `plans/` working-memory tree: learnings (discovery) / journal (decisions) / research (reference) / inbox (intake, delivered by gitmaildir) / archive | You're organizing a project's working knowledge, or wondering where a decision vs a discovery belongs |
+| `research-diversion.md` | Bounded parallel investigation mid-delivery: presumed-correct-not-frozen framework, open questions in one file, spike before research, adoption optional, terminates by scheduling mechanisms into the delivery roadmap | A step found something the plan can't absorb — a circular measurement, a borrowed-from-the-wrong-field analogy, a claim nobody can state precisely |
 
 ## Not Covered
 
