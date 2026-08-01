@@ -81,6 +81,37 @@ This unifies two things the methodology otherwise treated separately:
 
 Keeping the transport's payload as git files (rather than a database row or a queue message) preserves the Forge property that *the repo is the memory*: intake is inspectable, versioned, and survives session clears with no external dependency to reconstruct. gitmaildir is the reference implementation; the binding at the methodology level is simply **"the message transport delivers into `inbox/` as files."**
 
+## Records discipline: a record is appended to, never rewritten
+
+The tree above is only worth keeping if what is in it can be trusted. One rule covers that, and it is
+absolute: **a record is never rewritten to match what is now true.** It is superseded, corrected beside
+its original words, or left alone.
+
+Four mechanics, each closing a way the record silently becomes false:
+
+- **Supersede banners, not edits.** A revised document is a *new* document; the prior revision keeps its
+  original text and gains a header saying what superseded it and when. The mechanical reason is that
+  every review finding, cross-reference and decision that cites the prior revision cites it **by line** —
+  editing it in place makes all of those citations lie, invisibly and permanently.
+- **Corrections sit beside the original words, dated.** When a record turns out to be wrong, the fix is
+  an annotation — *"corrected 2026-08-01: the count was 227, not 378; see the arithmetic below"* — not a
+  replacement. The trail of how the understanding changed is often more valuable than the corrected
+  fact, and it is the only thing that tells a future reader whether to trust the *rest* of the document.
+- **Received evidence is filed verbatim.** A review's findings, an owner's words, a reply from another
+  team, an external specification quote. It is stored as received and stays that way — including its
+  formatting quirks and its terminology, which will not match the house style six weeks later. A
+  vocabulary sweep that re-spells a quotation has manufactured a false record (see
+  [`vocabulary-law.md`](vocabulary-law.md)).
+- **A record correction is its own act.** Never bundled into a decision act, because a correction that
+  rides along with a decision is reviewed as part of that decision — by people reading for something
+  else. Time it to the evidence that makes it strong: a correction landed with its exhibit is settled;
+  a correction landed on reasoning invites the same argument again.
+
+The cost is a tree that grows and contains superseded material. That is the intended trade: `archive/`
+exists precisely so provenance can be kept without being consulted. The failure this prevents — a
+confidently-worded document that has been quietly edited into agreement with the present — is not
+recoverable, because nothing in the working tree signals that it happened.
+
 ## Boundaries with adjacent layers
 
 - **Not published documentation.** `plans/` is working memory; the shipped tutorials/how-to/reference/explanation are Phase-5 output governed by the [documentation taxonomy](documentation-taxonomy.md) (Diataxis). A `journal/` entry explains a decision to *the team*; a published Explanation doc explains the system to *users*.
@@ -94,3 +125,5 @@ Keeping the transport's payload as git files (rather than a database row or a qu
 - [Session handoff](session-handoff.md) — how handoff notes (an inbox arrival) drive succession across cleared sessions
 - [Review lenses](review-lenses.md) — *decision journaling* is a review lens; the `journal/` is where its output lives
 - [Documentation taxonomy](documentation-taxonomy.md) — the published-docs axis, distinct from working memory
+- [The act pipeline](act-pipeline.md) — where supersede banners are load-bearing: a fix round's prior revision keeps the line numbers a review cited
+- [Vocabulary law](vocabulary-law.md) — why a sweep must classify senses before it edits, and never touch a quotation

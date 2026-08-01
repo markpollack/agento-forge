@@ -95,6 +95,51 @@ Template: `templates/HANDOFF-KB-TEMPLATE.md`. The failure mode this specializati
 tracker that says `Downloaded` while nothing is on disk — bookkeeping that outruns the corpus,
 discovered only by the future session that trusted it.
 
+## The Supervisor Pattern
+
+Dispatch scales into a standing role. **One session coordinates; fresh sessions execute.** The
+supervisor holds the program's shape — the plan documents, the lane assignments, what is blocked on
+what — and never does the work itself, because doing the work is what fills a context window and
+destroys the shape.
+
+**Work orders are self-contained prompt files.** Each carries three things beyond the task:
+
+- **Restricted inputs** — the exact artifacts the session may read, listed. This is not only a budget
+  measure. A session restricted to the contract reads it the way an outsider will, and the gap between
+  that reading and the author's is the finding (see
+  [`act-pipeline.md`](act-pipeline.md) and
+  [`../guides/second-implementation-protocol.md`](../guides/second-implementation-protocol.md)).
+- **An explicit "out of scope" list** — stated *"so nothing folds in."* An unstated boundary is an
+  invitation; a session that finds an adjacent defect will fix it, and the act becomes unreviewable
+  because it now contains two changes reviewed as one.
+- **A STOP condition and a report-back format.** As in any work order.
+
+**The supervisor independently verifies every returned report before accepting it.** Not a skim — a
+re-run. The report is a claim, and claims from a session with no memory of being wrong are exactly the
+ones to check.
+
+> **Which claims to re-run first: a report's claims about its *own discipline*.** "Every refusal was
+> watched failing", "the sweep ran after the fixes", "all citations re-verified", "the build is green".
+> These are the claims a session is most likely to state from intent rather than observation, they are
+> the cheapest to check, and they are the ones everything else in the report rests on.
+
+**Plan documents are the single source of truth, and a row carries the obligation, not the
+implementation.** The roadmap says *what must be true at the end of the step*; it does not say how, and
+it is not updated to describe what was built. The consequence worth stating: when a returned report and
+a plan row disagree, the row wins until an act changes it — otherwise the plan degrades into a
+description of whatever happened.
+
+**A program board tracks lanes.** For parallel work across repos or areas, one document holds
+lane → current step → blocked-on → last report. It is the supervisor's own working memory and the
+thing a *successor supervisor* inherits.
+
+**Stale dispatch information is absorbed at boot, not prevented.** A work order written on Monday
+describes Monday's tree. Rather than trying to keep every order current, make every executing session
+**verify repo state before acting** — branch, HEAD, whether the named files still exist, whether the
+build is green. The order says what to do; the tree says what is there; the session reconciles them and
+reports the drift. This is far cheaper than a supervisor re-issuing orders, and it catches drift the
+supervisor did not know about.
+
 ## Hygiene Rules
 
 - **The ending session writes the next handoff** — it knows the state best. Never ask the human to
@@ -115,6 +160,10 @@ discovered only by the future session that trusted it.
 - `steward-agent.md` — a steward is effectively a standing succession of handoffs on a maintenance cadence.
 - `../variants/kb.md` — the KB variant's session-close ritual (`/prepare-kb-handoff`): the standing forage
   order, corpus-truth currency, and the federation freshness row as part of the closing pass.
+- `act-pipeline.md` — each review stage in that pipeline is a dispatched work order with restricted
+  inputs; the supervisor assembles the packs and folds the findings.
+- `registers-of-absence.md` — what a returned report's findings must end as, so a supervisor's
+  acceptance does not quietly become a drop.
 
 ## Provenance
 

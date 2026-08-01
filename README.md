@@ -100,6 +100,9 @@ See [concepts/knowledge-base-architecture.md](concepts/knowledge-base-architectu
 - **[Judges and Evaluation](concepts/judges-and-evaluation.md)** — Deterministic + AI judges
 - **[Knowledge Base Architecture](concepts/knowledge-base-architecture.md)** — Two KB types, librarian layer, federation
 - **[Conversation Bootstrapping](concepts/conversation-bootstrapping.md)** — Starting projects from saved AI conversations
+- **[Review Lenses](concepts/review-lenses.md)** — Nine viewpoints, each catching a failure class the others structurally cannot
+- **[Refutation by Counterexample](concepts/refutation-by-counterexample.md)** — Findings are exhibits, non-findings are recorded searches
+- **[The Act Pipeline](concepts/act-pipeline.md)** — Reviewing and ratifying a change to something already decided
 
 ## Scripts
 

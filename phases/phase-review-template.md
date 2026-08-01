@@ -30,7 +30,55 @@ The review produces findings at three severity levels:
 
 MUST FIX items block stage completion. SHOULD FIX items are addressed before the next phase starts. CONSIDER items are logged as learnings.
 
-**Lens selection (do this before writing the review prompt).** Severity is one axis; *coverage* is the other. Pick the applicable lenses from [`concepts/review-lenses.md`](../concepts/review-lenses.md) for this gate — requirements-traceability and adversarial fidelity always; producer-coverage + persona-verb matrix for any contract/interface gate; a cold second-implementation spike before any freeze; the inverted gap-hunt whenever the review would otherwise be purely validation-framed (validation certifies what was asked; it is silent about what wasn't). Findings additionally carry the **(a) validates / (b) additive / (c) would-touch-approved-design** classification — only (c) reopens settled decisions, at a high bar. A gate that runs only the validation lens should say so explicitly, as a known coverage gap.
+**Lens selection (do this before writing the review prompt).** Severity is one axis; *coverage* is the other. Pick the applicable lenses from [`concepts/review-lenses.md`](../concepts/review-lenses.md) for this gate — requirements-traceability and adversarial fidelity always; producer-coverage + persona-verb matrix for any contract/interface gate; a cold second-implementation spike before any freeze ([protocol](../guides/second-implementation-protocol.md)); the inverted gap-hunt whenever the review would otherwise be purely validation-framed (validation certifies what was asked; it is silent about what wasn't). Findings additionally carry the **(a) validates / (b) additive / (c) would-touch-approved-design** classification — only (c) reopens settled decisions, at a high bar. A gate that runs only the validation lens should say so explicitly, as a known coverage gap.
+
+**Scope note: this template gates a stage of implementation work.** A change to something already *decided* — a frozen contract, a ratified design decision, a published API — runs the heavier [act pipeline](../concepts/act-pipeline.md) instead: cold machine review → fix round → team review of the post-fix artifact → ratification as one lockstep change.
+
+---
+
+## Gate Exit Is a Measured Report, Not a Claim of Completeness
+
+A stage gate produces **a measurement with a denominator**, and exits on that measurement — never on a sentence saying the work is complete. The difference is not rhetorical. "Complete" is unfalsifiable and decays the moment anything moves; "200 of 265 reached, 65 registered with a reason" stays true or visibly stops being true.
+
+Three rules make a gate report worth its cost.
+
+### 1. Census over two instruments, because a coverage check is blind to the direction it does not walk
+
+Any single coverage instrument measures one axis and reports clean on everything off it. Two instruments over the same body of work, walking different axes, catch what either alone structurally cannot.
+
+Two measured instances, both from gates that reported clean under one instrument:
+
+- A census over *element kinds* left the document structure around them unwalked — five field paths, two of them use sites of a rule the gate existed to enforce.
+- A coverage ledger built from a canonical pattern catalogue reported complete, while the largest untouched family in the corpus (157 cases) sat outside the catalogue entirely. The ledger had no row for it, so every check running against the ledger agreed there was nothing to find.
+
+The second is the sharper lesson: **the instrument's own structure decides what can be missing.** Pick the second instrument for its *different shape* — walk the artifact where the first walked the plan, walk the corpus where the first walked the specification — not for a second pass over the same axis.
+
+### 2. Denominators come from the rule's blast radius, not the corpus's obvious shape
+
+Before measuring, ask what the rule under test *could* apply to, and use that as the denominator. The convenient denominator — the files in this directory, the cases in this table, the members of this class — is the one that produces a flattering number and hides everything the rule reaches that the collection does not contain.
+
+Where the denominator can be computed from the artifact itself (reflection over public members, a glob over a schema, the set of declared rules), compute it. A maintained list drifts; a derived one cannot. One inventory of "the five places this is enforced" was read wrong once and corrected by machine — the machine was right.
+
+### 3. Every gap is fixed on an exhibit, or parked with a live citation
+
+The report enumerates what it did **not** reach, and each entry is terminal: fixed (with the exhibit committed), refuted (with evidence), filed with a named owner, or parked with a trigger. See [`concepts/registers-of-absence.md`](../concepts/registers-of-absence.md).
+
+Two disciplines that keep the report honest:
+
+- **A row flips only on an exhibit.** Re-measuring a status table is a measurement, not a re-assessment. No cell moves on reasoning.
+- **A negative claim names the method that could have found the thing.** "No fixture contains this shape" is worth nothing without the search that looked; on record, a claim of that exact form fell twice, each time to a found instance.
+
+**Corpus coverage is enforced at family granularity.** Requiring an exhibit for every case makes gates unpassable and pushes teams toward exclusions; requiring one per *family* catches gross omissions, which is what a gate is for. Edge cases within a covered family are deferred **with triggers**, not waved through.
+
+### What a passing gate says
+
+> Two instruments, N and M reached out of their respective denominators, K gaps each terminal, every negative claim carrying its method.
+
+Not:
+
+> The contract is complete.
+
+A gate that has just declared something complete is, on the evidence, about to receive a defect report — and the defects will be found by someone *building* on it, not by someone reviewing it again.
 
 ---
 

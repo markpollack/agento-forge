@@ -37,9 +37,12 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Session handoffs | `concepts/session-handoff.md` + `.claude/commands/prepare-handoff.md` | `/prepare-handoff` — the closing ritual: currency pass → inbox work order → launcher |
 | KB session handoffs | `variants/kb.md` ("Session Handoff") + `.claude/commands/prepare-kb-handoff.md` | `/prepare-kb-handoff` — the KB closing ritual: corpus-truth currency pass → regenerate the standing forage order (`HANDOFF-FORAGE.md`) → launcher; template `templates/HANDOFF-KB-TEMPLATE.md` |
 | Phase 5: Documentation | `phases/05-documentation.md` | User-facing docs, Diataxis taxonomy |
-| Core concepts (15 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns, improvement flywheel |
+| Changing a decided artifact | `concepts/act-pipeline.md` | Cold machine review → fix round → team review of the post-fix artifact → lockstep ratification |
+| Review evidence standard | `concepts/refutation-by-counterexample.md` | Findings are exhibits, non-findings are recorded searches |
+| Core concepts (24 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns, improvement flywheel, review lenses, act pipeline, registers of absence, vocabulary law |
 | Templates (12 docs) | `templates/` | Fill-in templates for every phase output |
 | Getting started | `guides/getting-started.md` | Step-by-step walkthrough of applying Forge |
+| Engineering standards | `guides/java-library-quality.md`, `guides/authoring-surface-quality.md`, `guides/second-implementation-protocol.md` | The Java quality bar; refuse-don't-default for surfaces people author against; the cold-second-implementation protocol |
 | Methodology comparisons & research | `inbox/` | BMAD-METHOD comparison, AGENTS.md standard, PLANS.md convergence (staging area) |
 
 ## Corpus Layout
@@ -50,26 +53,36 @@ forge-methodology/
 ├── index.md               # Root routing table
 ├── README.md              # Methodology overview and entry point
 ├── concepts/
-│   ├── index.md           # Concept routing table
-│   ├── discovery-loop.md
-│   ├── execution-pipeline.md
+│   ├── index.md                       # Concept routing table
+│   ├── discovery-loop.md              # phases 0-2 iterate
+│   ├── execution-pipeline.md          # phases 3-5 are sequential
 │   ├── research-loop.md
+│   ├── research-diversion.md          # bounded parallel investigation mid-delivery
 │   ├── judges-and-evaluation.md
 │   ├── oracle-learning-loop.md
 │   ├── knowledge-base-architecture.md
 │   ├── research-agent.md
 │   ├── steward-agent.md
-│   ├── conversational-review.md
+│   ├── conversational-review.md       # discovery-phase artifact review (light)
+│   ├── review-lenses.md               # the 9-lens catalog
+│   ├── act-pipeline.md                # changing a DECIDED artifact (heavy)
+│   ├── refutation-by-counterexample.md  # the evidence standard
+│   ├── registers-of-absence.md        # known gaps + terminal finding states
+│   ├── vocabulary-law.md              # one meaning per word
+│   ├── decision-enforcement.md
 │   ├── conversation-bootstrapping.md
 │   ├── prerequisite-designs.md
-│   ├── quality-infrastructure.md
+│   ├── quality-infrastructure.md      # checks that catch; the graduation rule
 │   ├── documentation-taxonomy.md
 │   ├── hierarchical-reporting.md
+│   ├── session-handoff.md             # work orders; the supervisor pattern
+│   ├── project-knowledge-layout.md    # plans/ tree; records discipline
 │   └── improvement-flywheel.md
-├── phases/                # Phase 0-5 definitions
+├── phases/                # Phase 0-5 definitions + the stage-gate review template
 ├── templates/             # Fill-in templates for phase outputs
 ├── variants/              # Agent, project, research, steward, kb variants
-├── guides/                # Getting started, Java quality, research structure
+├── guides/                # Getting started, Java quality, authoring-surface quality,
+│                          #   second-implementation protocol, research structure
 ├── examples/              # Minimal project structure examples
 ├── inbox/                 # Unsorted staging (comparisons, raw research)
 └── plans/                 # Status reports
@@ -83,6 +96,8 @@ forge-methodology/
 - **Knowledge Base Architecture** — Two KB types: Code-Agent (task-driven, faceted, two-agent curator/navigator) and Research-Partner (question-driven, single session bridge). Both use routing tables for ≤3-hop navigation.
 - **Steward** — A Level 1 cognitive-altitude agent that combines curator (KB maintenance) and developer (project evolution) roles. The natural successor to a completed build phase.
 - **Improvement Flywheel** — A loss-driven iterative improvement method for agent systems. Five levers (prompt, knowledge, execution structure, model, rubric), seven loss dimensions, loop type classification, and the deterministic-over-exploratory principle. Uses journals, Markov analysis, and variant progression. See [concepts/improvement-flywheel.md](concepts/improvement-flywheel.md).
+- **Findings are exhibits** — A review finding is a counterexample (a document that validates when it shouldn't, a program that compiles into the wrong graph), never an assessment; a non-finding is a recorded search. This is the evidence standard under every review lens, gate and pipeline stage. See [concepts/refutation-by-counterexample.md](concepts/refutation-by-counterexample.md).
+- **Two review weights** — [Phase reviews](phases/phase-review-template.md) gate a stage of implementation work; the [act pipeline](concepts/act-pipeline.md) gates a change to something already decided (contract, ratified decision, public API), with humans reviewing the post-fix artifact and never a draft.
 
 ## Not Covered
 

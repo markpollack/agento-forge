@@ -66,7 +66,36 @@ Quality infrastructure and stage reviews are complementary, not redundant:
 
 A stage review that consistently finds coverage gaps or architecture violations is a sign that quality infrastructure is misconfigured or missing.
 
+## Checks That Catch, Not Checks That Pass
+
 > **A check must be demonstrated to fail before it is trusted.** Run it against a fixture carrying each defect class it claims to catch, plus controls that must *not* fire. A check never shown to fail is a decoration, and worse than none: it converts "unenforced" into "falsely believed enforced".
+
+A green check reports one of two things and does not distinguish them: *the defect is absent*, or *the check cannot see it*. Four practices close the gap, in ascending order of how much they cost:
+
+**1. Watch it fail on a replica of the motivating defect.** Before trusting a new check, reproduce the exact defect that motivated it and confirm the check goes red. Not a similar defect — that one. The cheapest version is a revert: apply the check to the commit before the fix.
+
+**2. Sabotage tables for sweeps.** When a check runs across many targets, a single red is weak evidence. Disable the check (or break one target deliberately) and assert **exactly** the expected set of failures — no more, no fewer — while the controls stay green. A sweep that fires on everything and a sweep that fires on the right things look identical from a passing build.
+
+**3. Instrument walks against vacuity.** A check that iterates — over files, fixtures, rules, members — must report its **denominator**. "Clean" from a loop that ran zero times is the most convincing false result available, and it arrives silently when a glob stops matching, a directory moves, or a filter tightens. Make the count part of the output, and assert it is non-zero.
+
+**4. Self-tests that seed a defect.** For a check complex enough to have its own bugs, commit a fixture carrying each defect class plus controls, and run the check against them as part of the build. The check is then itself under test, and the fixtures are a permanent record of what it claims to catch.
+
+The unifying idea: a sabotage is a [counterexample](refutation-by-counterexample.md) aimed at the check. The check is a claim ("this defect class cannot survive here"), and claims are settled by exhibits.
+
+## The Graduation Rule
+
+> **Twice is a practice.** A lesson that bites twice graduates from prose to a script, a probe, or a test.
+
+The first occurrence is bad luck and belongs in a learnings file. The second is evidence of a *class*, and a class deserves a mechanism. Continuing to trust the habit after the second occurrence is a decision to pay for it a third time.
+
+Two rules make the graduation stick:
+
+- **Each rule carries the mistake that produced it.** A check whose failure message explains only *what* is wrong gets suppressed by the next person who does not know *why* it exists. One sentence naming the original defect is the difference between a rule people respect and a rule people route around.
+- **The lesson lands in the harness, not in one instance.** Fixing the project you noticed it in leaves every sibling project to rediscover it. The graduation target is the thing that future instances inherit: the template, the scaffolding command, the shared build configuration, the methodology page. A learnings entry that improves only its own project has been filed, not graduated.
+
+This generalizes past code. A **UI exit criterion that is a sentence about the running product** ("the panel stays responsive while the job runs") gets a committed probe, because a sentence is not a gate. A prose convention that has been violated twice — a citation format, a doc cross-reference, an embedded example that must stay valid — becomes a script in the build. Both of those started as things reviewers were trusted to notice, and both were graduated after the second miss.
+
+**Watch the graduated check fail before trusting it**, per the section above. A rule promoted from prose to a script inherits none of the prose's credibility; it is a new claim.
 
 ## Anti-Patterns
 
@@ -75,3 +104,13 @@ A stage review that consistently finds coverage gaps or architecture violations 
 - **No architecture rules** — Relying on code review to catch layer violations. Humans miss these; tools don't.
 - **Ignoring vulnerability scans** — Suppressing all findings instead of addressing them. Each suppression should have a documented rationale.
 - **Quality tools without quality culture** — Tools report problems; someone has to fix them. If findings are routinely ignored, the tools become noise.
+- **Trusting a check that has never been red** — See above. It reports the absence of evidence and gets read as evidence of absence.
+- **A walk with no denominator** — "Clean" from an empty loop, which is the failure mode that survives longest because nothing about it looks wrong.
+- **Paying for the same lesson a third time** — The second occurrence was the signal to graduate it.
+
+## Related
+
+- [Checks and exhibits](refutation-by-counterexample.md) — why a sabotage settles a question that an argument about the check cannot
+- [Registers of absence](registers-of-absence.md) — the inverse instrument: a check that passes *because* something is missing, and fails when it arrives
+- [Decision enforcement](decision-enforcement.md) — naming the design decision a check defends
+- [Authoring-surface quality](../guides/authoring-surface-quality.md) — the diagnostics-and-conduct standard for surfaces people write into, which ordinary quality tooling does not grade

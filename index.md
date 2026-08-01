@@ -20,7 +20,15 @@
 | How do judges and evaluation work? | `concepts/judges-and-evaluation.md` |
 | What is a steward and when do I need one? | `concepts/steward-agent.md` then `variants/steward.md` |
 | How do I review my design artifacts before implementation? | `concepts/conversational-review.md` |
+| I need to change a frozen contract / ratified decision / public API. What's the pipeline? | `concepts/act-pipeline.md` |
+| What makes a review finding worth acting on? | `concepts/refutation-by-counterexample.md` |
+| How do I keep a deferred gap from being silently dropped? | `concepts/registers-of-absence.md` |
+| Two things are fighting over one name / a rename keeps being re-argued | `concepts/vocabulary-law.md` |
 | What quality tools should I set up first? | `concepts/quality-infrastructure.md` |
+| How do I know a check actually catches anything? | `concepts/quality-infrastructure.md` (Checks That Catch) |
+| How do I design a DSL / fluent API / CLI so author mistakes get real diagnostics? | `guides/authoring-surface-quality.md` |
+| How do I run an independent second implementation against my own contract? | `guides/second-implementation-protocol.md` |
+| What should a stage gate's exit report actually say? | `phases/phase-review-template.md` (Gate Exit Is a Measured Report) |
 | What is our Java quality bar? (JaCoCo, ArchUnit, JSpecify, OWASP, Javadoc) | `guides/java-library-quality.md` — **the canonical standard**, formerly GP-9 `java-library-finishing-touches.md` |
 | How do I make `@NullMarked` actually mean something? | `guides/java-library-quality.md` §4.7 (JSpecify ships annotations only — NullAway at ERROR is the enforcer; wiring, config decisions, adoption triage) |
 | `Optional<T>` or `@Nullable` for this return? | `guides/java-library-quality.md` §4.7 (the criterion is *can the caller act on the absence?*, not method-vs-field) |
@@ -35,11 +43,11 @@
 
 | Topic | Location | Contains |
 |-------|----------|----------|
-| Core concepts | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, research patterns |
+| Core concepts | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, research patterns, review lenses and the act pipeline, evidence standards, registers of absence, vocabulary law |
 | Phase definitions | `phases/` | Phase 0-5 detailed descriptions, exit criteria, anti-patterns |
 | Templates | `templates/` | Fill-in templates for vision, research, design, roadmap, learnings, reviews |
 | Project variants | `variants/` | Agent, project, research, steward, kb — when to use each, key differences |
-| Guides | `guides/` | Getting started, **the canonical Java quality standard** (`java-library-quality.md` — the single home; the `grand-plan/v2` and research-KB `conversations/archive/` copies are frozen snapshots), research project structure |
+| Guides | `guides/` | Getting started, **the canonical Java quality standard** (`java-library-quality.md` — the single home; the `grand-plan/v2` and research-KB `conversations/archive/` copies are frozen snapshots), authoring-surface quality, the second-implementation protocol, research project structure |
 | Examples | `examples/` | Minimal directory structure examples for each variant |
 | Unsorted | `inbox/` | Methodology comparisons, AGENTS.md/PLANS.md convergence research (staging area) |
 
