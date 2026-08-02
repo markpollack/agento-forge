@@ -31,7 +31,7 @@ Synthesize vision and research into a technical specification. Make and document
 - Every significant decision has a recorded rationale; **decisions whose *reasoning* must survive re-litigation get a decision-journal entry** (lens 9)
 - Interfaces are specified enough to write against (method signatures, data models, error handling)
 - **If the design defines a contract/wire interface**: the **producer-coverage audit** (every state/event has a producer, an internal marking, or a reserved owner — lens 4) and the **persona-verb matrix** (each persona's year-one verb set closed — lens 5) pass; a **cold second-implementation spike** is scheduled pre-freeze (lens 6); byte-semantic corners (hashing/canonicalization) get committed conformance vectors (lens 8)
-- The design gate runs as an **adversarial review** (fidelity framing — lens 7), not a self-assessment
+- The design gate runs as an **adversarial review** (fidelity framing — lens 7), not a self-assessment — in a session that has *none* of your accumulated context, asked for criticism rather than confirmation ([conversational review](../concepts/conversational-review.md))
 - No remaining design questions that would block implementation planning
 - Build coordinates defined (if producing build artifacts): group/artifact IDs, module structure, dependencies
 - Design is consistent with research findings

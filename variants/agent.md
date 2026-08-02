@@ -155,8 +155,7 @@ Eval-agent documentation includes:
 
 - [Improvement Flywheel](../concepts/improvement-flywheel.md) — Loss-driven iterative improvement using journals, Markov analysis, and variant progression
 - [Judges and Evaluation](../concepts/judges-and-evaluation.md) — How to design judges and compute loss
-- [Discovery Loop](../concepts/discovery-loop.md) — When to exit the iterative discovery phases
-- [Execution Pipeline](../concepts/execution-pipeline.md) — How feedback flows in phases 3-5
+- [The Two Loops](../concepts/discovery-loop.md) — When to exit discovery; how feedback flows in phases 3-5
 - [Hierarchical Reporting](../concepts/hierarchical-reporting.md) — Status reports with experiment results, judge performance, and measurement gaps
 
 ## Example

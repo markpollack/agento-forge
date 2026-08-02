@@ -111,8 +111,7 @@ Document for users:
 ## Concepts
 
 - [Quality Infrastructure](../concepts/quality-infrastructure.md) — Automated checks running on every build
-- [Discovery Loop](../concepts/discovery-loop.md) — When to exit the iterative discovery phases
-- [Execution Pipeline](../concepts/execution-pipeline.md) — How feedback flows in phases 3-5
+- [The Two Loops](../concepts/discovery-loop.md) — When to exit discovery; how feedback flows in phases 3-5
 - [Conversational Review](../concepts/conversational-review.md) — Using AI to review discovery artifacts
 - [Hierarchical Reporting](../concepts/hierarchical-reporting.md) — Status reports with phase progress and blocking issues
 

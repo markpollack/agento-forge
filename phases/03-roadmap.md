@@ -37,7 +37,7 @@ Break the stable design into an ordered sequence of implementable steps, each wi
 
 - **Consumes Phase 2** — translates design into implementation order
 - **Feeds Phase 4** — the roadmap is what the learning loop executes
-- First phase of the [Execution Pipeline](../concepts/execution-pipeline.md) — no more iteration with discovery phases
+- First phase of the [Execution Pipeline](../concepts/discovery-loop.md#part-2-the-execution-pipeline-phases-3-5) — no more iteration with discovery phases
 
 ## Model Capability Considerations
 

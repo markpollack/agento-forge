@@ -96,5 +96,5 @@ v10    0             Plan complete for this task type
 
 - [Learning Loop (Phase 4)](../phases/04-learning-loop.md) — The execution loop this pattern enhances
 - [Judges and Evaluation](judges-and-evaluation.md) — How verdicts complement oracle signals
-- [Execution Pipeline](execution-pipeline.md) — Where the agent runs
+- [The Two Loops](discovery-loop.md) — Where the agent runs (Phase 4, inside the execution pipeline)
 - [Research Agent](research-agent.md) — Hierarchical agentic RAG that could power the oracle's KB lookup

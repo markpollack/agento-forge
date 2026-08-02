@@ -64,7 +64,7 @@ Phase 4: Execution → Iterative work with feedback
 Phase 5: Docs      → User-facing documentation or publication
 ```
 
-The [Discovery Loop](../concepts/discovery-loop.md) (Phases 0-2) and [Execution Pipeline](../concepts/execution-pipeline.md) (Phases 3-5) apply to the finite variants. The Steward variant enters at Phase 4 (its health monitoring loop) after inheriting context from a completed build phase. The KB variant compresses Phases 0-3 into its bootstrap commands (`/forge-kb`, `/forge-research-kb`) and then lives in Phase 4 (its navigation quality loop). The templates and feedback mechanisms differ per variant.
+The Discovery Loop (Phases 0-2) and Execution Pipeline (Phases 3-5) — [one page, both loops](../concepts/discovery-loop.md) — apply to the finite variants. The Steward variant enters at Phase 4 (its health monitoring loop) after inheriting context from a completed build phase. The KB variant compresses Phases 0-3 into its bootstrap commands (`/forge-kb`, `/forge-research-kb`) and then lives in Phase 4 (its navigation quality loop). The templates and feedback mechanisms differ per variant.
 
 ## Quick Start by Variant
 

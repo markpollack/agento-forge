@@ -213,7 +213,7 @@ A steward's CLAUDE.md augments the existing project CLAUDE.md with these section
 
 - [Knowledge Base Architecture](../concepts/knowledge-base-architecture.md) — KB structure, librarian layer, federation
 - [Steward Agent](../concepts/steward-agent.md) — Origin, design philosophy, lifecycle arc
-- [Execution Pipeline](../concepts/execution-pipeline.md) — How feedback flows (steward enters at Phase 4)
+- [The Two Loops](../concepts/discovery-loop.md) — How feedback flows (steward enters at Phase 4)
 - [Hierarchical Reporting](../concepts/hierarchical-reporting.md) — Status report format, variant-specific data collection, automated aggregation
 
 ## Example

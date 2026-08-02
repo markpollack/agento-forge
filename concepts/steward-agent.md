@@ -82,6 +82,6 @@ Treating every change as a multi-phase project. Stewardship is lighter-weight th
 ## Relationship to Other Concepts
 
 - **[Knowledge Base Architecture](knowledge-base-architecture.md)** — The steward is the Curator agent for a Code-Agent KB. It owns the KB lifecycle: create, maintain, cross-reference, prune.
-- **[Execution Pipeline](execution-pipeline.md)** — The steward enters at Phase 4 (its health monitoring loop), inheriting the roadmap and quality infrastructure from the build phase.
+- **[The Two Loops](discovery-loop.md)** — The steward enters at Phase 4 (its health monitoring loop), inheriting the roadmap and quality infrastructure from the build phase.
 - **[Documentation Taxonomy](documentation-taxonomy.md)** — The steward's KB prioritizes Reference + How-to content (highest agent value), with Explanation content added as the domain matures.
 - **[Hierarchical Reporting](hierarchical-reporting.md)** — Stewards produce status reports consumed by an orchestrator agent. Status reporting is step 5 of the health monitoring loop. See that doc for the universal status format, variant-specific sections, and aggregation patterns.

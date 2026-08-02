@@ -74,3 +74,5 @@ What are you assuming to be true? Each assumption is a risk if wrong.
 | {{DATETIME}} | Initial draft | — |
 
 > **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`. These documents are living artifacts — inline revision history avoids needing to check git for change context.
+
+> **Records discipline**: a record is appended to, never rewritten to agree with the present. Add a row above; keep a superseded revision under a banner rather than editing it (findings and cross-references cite it *by line*); put corrections **beside** the original words, dated; file received evidence — a review's findings, a quoted specification, someone else's words — verbatim. See `concepts/project-knowledge-layout.md`.

@@ -155,7 +155,7 @@ supervisor did not know about.
 
 - `hierarchical-reporting.md` — status flows *up* from satellites; work orders flow *down* and *forward*.
   Together they form the coordination loop for multi-session, multi-repo programs.
-- `execution-pipeline.md` / Phase 4 — the handoff ritual is the session-boundary instance of the learning
+- `discovery-loop.md` (the two loops) / Phase 4 — the handoff ritual is the session-boundary instance of the learning
   loop's exit discipline: state is only real once it's in the repo.
 - `steward-agent.md` — a steward is effectively a standing succession of handoffs on a maintenance cadence.
 - `../variants/kb.md` — the KB variant's session-close ritual (`/prepare-kb-handoff`): the standing forage

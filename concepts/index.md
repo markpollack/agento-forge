@@ -1,81 +1,94 @@
-# Forge Concepts
+# The Concepts Register
 
-> Core ideas and patterns that underpin the Forge methodology.
+> **None of this is required reading.** To run Forge you need your project's trio (VISION / DESIGN /
+> ROADMAP) and the phase you are in. The concepts are **case law**: why a rule is what it is, and the
+> evidence behind it. Every rule that is needed *to act* has been distilled into the templates and phase
+> docs already.
+>
+> **How to use this page**: read the rules column. Each rule is complete on its own — you can act on it
+> without opening anything. Open a page only when its *read this when* row describes the situation you
+> are actually in. Rows are grouped by the moment the rule bites, not alphabetically.
+>
+> **If acting correctly ever requires reading one of these pages, that is a defect** — the rule has not
+> been distilled into the template where the session meets it. Report it as one.
 
-## Question Routing
+---
 
-| Question | Read |
-|----------|------|
-| How do phases 0-2 iterate? When do I exit? | `discovery-loop.md` |
-| How do phases 3-5 work sequentially? | `execution-pipeline.md` |
-| What's the difference between the four variants? | `../variants/README.md` |
-| How do judges and loss functions work in Phase 4? | `judges-and-evaluation.md` |
-| How should I structure a knowledge base for agents? | `knowledge-base-architecture.md` |
-| What is the oracle pattern and how does it reduce KB gaps? | `oracle-learning-loop.md` |
-| How does the research variant iterate on claims and evidence? | `research-loop.md` |
-| How do I automate Phase 1 research with hierarchical RAG? | `research-agent.md` |
-| What is a steward agent and when do I need one? | `steward-agent.md` |
-| How do I review discovery artifacts before committing to a roadmap? | `conversational-review.md` |
-| What review lenses exist, and which catch what? (personas, gap-hunts, cold second implementations, byte vectors) | `review-lenses.md` |
-| What makes a review finding worth acting on? Why do my reviews return opinions instead of defects? | `refutation-by-counterexample.md` |
-| I need to change something already decided (a frozen contract, a ratified decision, a public API). What's the review pipeline? | `act-pipeline.md` |
-| When do humans review, and what are they for in a pipeline that already runs AI reviews? | `act-pipeline.md` (Team review) |
-| How do I keep a known gap from silently closing — or silently never closing? What are a finding's terminal states? | `registers-of-absence.md` |
-| Two things in my project are called the same word / a rename keeps being argued about / a find-and-replace broke something | `vocabulary-law.md` |
-| How does a recorded decision stay true after the session that made it is cleared? | `decision-enforcement.md` |
-| How do I know a check actually catches anything? When does a prose rule become a script? | `quality-infrastructure.md` (Checks That Catch; The Graduation Rule) |
-| How does a coordinating session dispatch and verify work done by other sessions? | `session-handoff.md` (The Supervisor Pattern) |
-| How do I keep the project record trustworthy — supersessions, corrections, quoted evidence? | `project-knowledge-layout.md` (Records discipline) |
-| How should a stage gate exit — what does a gate report actually say? | `../phases/phase-review-template.md` (Gate Exit Is a Measured Report) |
-| How do I design a surface people author against (DSL, fluent API, CLI) so mistakes get diagnostics? | `../guides/authoring-surface-quality.md` |
-| How do I run a cold second implementation against my own contract without it cheating? | `../guides/second-implementation-protocol.md` |
-| What quality tooling should I set up in the first roadmap stage? | `quality-infrastructure.md` |
-| What are prerequisite designs and when do they emerge? | `prerequisite-designs.md` |
-| How do I bootstrap a project from saved AI conversations? | `conversation-bootstrapping.md` |
-| What documentation types exist (tutorial, how-to, reference, explanation)? | `documentation-taxonomy.md` |
-| How do I collect and aggregate status across multiple projects? | `hierarchical-reporting.md` |
-| How do I continue development across cleared sessions (or dispatch work to another repo's session)? | `session-handoff.md` |
-| How is a project's working knowledge organized (learnings/journal/research/inbox)? Where do decisions vs discoveries go? How does the inbox receive messages? | `project-knowledge-layout.md` |
-| A delivery step hit an open question too big to absorb and too load-bearing to defer. How do I spend real effort on it without losing the roadmap? | `research-diversion.md` |
-| How do I batch-ingest research results into an existing KB? | `../guides/curator-intake.md` |
-| How do I scout and collect references to bootstrap a new KB domain? | `../guides/reference-harvest.md` |
-| How does the iterative improvement loop work for agent systems? | `improvement-flywheel.md` |
-| What are the five levers for improving agent behavior? | `improvement-flywheel.md` (Intervention Levers) |
-| How do I build a state taxonomy for Markov analysis? | `improvement-flywheel.md` (Phase 0: State Taxonomy Discovery) |
+## A. You're starting an effort (Phases 0-2)
 
-## Contents
+| The rule | Read this when | Page |
+|---|---|---|
+| Iterate vision → research → design until all three tell the same story, then commit and stop iterating; once you have committed, run roadmap → build → docs in order, and when execution proves the design wrong go back to discovery rather than pushing forward. | You have been round the loop once and cannot tell whether to go again or start a roadmap — or a roadmap step has turned out to be impossible as designed. | [discovery-loop.md](discovery-loop.md) — *the two loops* |
+| Save the conversations the project started in, cite them by file and section, and distill them into vision and research — don't reconstruct them from memory. | The project began as chat, not as a document. | [conversation-bootstrapping.md](conversation-bootstrapping.md) |
+| Give working knowledge four homes — `learnings/` (what a step taught), `journal/` (what we decided and why), `research/` (what we're drawing on), `inbox/` (what arrived) — and never rewrite a record to agree with the present: supersede it, or correct it beside its original words. | You're filing something and don't know where it goes; or a document you wrote has turned out to be wrong. | [project-knowledge-layout.md](project-knowledge-layout.md) |
+| A tool the main design depends on gets its own lightweight design *first* — its output format becomes an input contract for the project. | Research revealed you must build or mine something before you can design the real thing. | [prerequisite-designs.md](prerequisite-designs.md) |
+| A claim is ready when external validity, reproducibility and methodological honesty are each **bounded and documented** — never when they reach zero. | Research variant: deciding whether a claim is ready to defend. | [research-loop.md](research-loop.md) |
+| Navigate a paper corpus through a hierarchy of summaries (overview → cluster → paper → full text); don't chunk and embed. | Phase 1 has more sources than you can read and you are about to reach for a vector store. *(This page is a design proposal for unbuilt tooling — read it for the navigation argument, not as a spec.)* | [research-agent.md](research-agent.md) |
 
-| File | Purpose | Read when... |
-|------|---------|--------------|
-| `discovery-loop.md` | Why phases 0-2 iterate and exit criteria | You need to understand the iterative discovery process |
-| `execution-pipeline.md` | Why phases 3-5 are sequential | You need to understand post-discovery execution |
-| `research-loop.md` | Vision-Research iteration for research projects | You're working on a research variant project |
-| `judges-and-evaluation.md` | Deterministic + AI judges, loss computation | You're building eval-agent feedback loops |
-| `oracle-learning-loop.md` | Oracle calls as KB gap indicators | You're optimizing agent autonomy over iterations |
-| `quality-infrastructure.md` | Automated quality checks set up early | You're planning the first roadmap stage |
-| `knowledge-base-architecture.md` | Two KB types, librarian layer, federation | You're designing a knowledge base for agents |
-| `research-agent.md` | Hierarchical agentic RAG for Phase 1 | You're automating literature review and synthesis |
-| `steward-agent.md` | Persistent project custodian (curator + developer) | You're setting up ongoing project maintenance |
-| `conversational-review.md` | Using AI to review discovery artifacts | You're checking artifact quality before roadmap |
-| `review-lenses.md` | The 9-lens stakeholder-view catalog for design/contract review (Views-and-Beyond + ATAM lineage, extended with gap-hunts, producer-coverage, persona-verb matrices, cold second implementations, conformance vectors, decision journaling) | You're gating a design or freezing a contract and need review coverage beyond requirement-validation |
-| `decision-enforcement.md` | The design ↔ test contract: a roadmap exit criterion names the decision it defends, so undefended decisions are visible by absence (**PROVISIONAL** — one project, 2026-07) | You're recording a design decision and want it to survive the people who made it |
-| `conversation-bootstrapping.md` | Starting from saved AI conversations | You're beginning a project from prior chat sessions |
-| `prerequisite-designs.md` | Lightweight designs for tooling/data prerequisites | Research revealed you need a tool before the main project |
-| `documentation-taxonomy.md` | Diataxis framework (tutorial/how-to/reference/explanation) | You're writing docs and need to classify content type |
-| `hierarchical-reporting.md` | Status collection and aggregation across projects | You're managing multiple agent-driven projects |
-| `improvement-flywheel.md` | Loss-driven iterative improvement for agent systems | You're improving an agent through measured behavioral deltas and experiments |
-| `session-handoff.md` | Sessions are disposable, the repo is the memory: work-order handoffs for succession and satellite dispatch | Work outgrows one session, or a coordinator dispatches steps to other repos |
-| `project-knowledge-layout.md` | The `plans/` working-memory tree: learnings (discovery) / journal (decisions) / research (reference) / inbox (intake, delivered by gitmaildir) / archive | You're organizing a project's working knowledge, or wondering where a decision vs a discovery belongs |
-| `research-diversion.md` | Bounded parallel investigation mid-delivery: presumed-correct-not-frozen framework, open questions in one file, spike before research, adoption optional, terminates by scheduling mechanisms into the delivery roadmap | A step found something the plan can't absorb — a circular measurement, a borrowed-from-the-wrong-field analogy, a claim nobody can state precisely |
-| `refutation-by-counterexample.md` | The evidence standard: findings are exhibits, non-findings are recorded searches; a MUST without its breaking case is not a MUST; fund the counterexample search rather than the proof | You're writing a review prompt, grading findings, or about to claim something is complete |
-| `act-pipeline.md` | Changing a decided artifact: design → cold machine review (restricted inputs) → fix round (revisions retained) → team review of the post-fix artifact → lockstep ratification; and the owner's place inside the system | A frozen contract, ratified decision, or public API has to move |
-| `registers-of-absence.md` | A known gap is a test written to FAIL when the gap closes; honest closure has three shapes; every finding ends fixed / refuted / filed-with-owner / parked-with-trigger | You're deferring something, or disposing of review findings |
-| `vocabulary-law.md` | One meaning per word; stated translations at context boundaries; the fluency test decides renames; reserve-by-name at cross-act seams; counting occurrences without classifying senses is a defect | Two constructs are competing for a name, or a rename/sweep is being planned |
+## B. You're deciding something (Phase 2)
 
-## Not Covered
+| The rule | Read this when | Page |
+|---|---|---|
+| State a decision as a **predicate over artifacts** — something an observation could contradict — and name it in the exit criterion that defends it (`defends DD-23`); a decision no criterion names is undefended, and you can see that without a taxonomy. | You're writing a design decision, or writing the step that is supposed to keep it true. | [decision-enforcement.md](decision-enforcement.md) |
+| One word, one meaning, within one context — and where two contexts legitimately differ, write the translation where they meet. Classify occurrences by *sense* before any sweep, and never re-spell a word inside a quotation. | Two constructs are competing for a name, a rename keeps being re-argued, or someone is about to find-and-replace. | [vocabulary-law.md](vocabulary-law.md) |
+| Decide during design what a verdict is: deterministic judges for what must be true, AI judges for what resists automation — and write every manual review as if a program would run it. | You're specifying the Phase-4 feedback loop for an agent or a project. | [judges-and-evaluation.md](judges-and-evaluation.md) |
+| Build a knowledge base so any file is reachable in **≤3 hops** from a routing table, and state in every index what the KB does *not* cover. | You're designing knowledge an agent will read at runtime, or a KB has outgrown its index. *(Federation and the curator/navigator split are the second half of this page.)* | [knowledge-base-architecture.md](knowledge-base-architecture.md) |
+
+## C. You're building (Phases 3-4)
+
+| The rule | Read this when | Page |
+|---|---|---|
+| A check is trusted only after you have **watched it go red** on the defect it claims to catch; and a lesson that bites twice graduates from prose into the harness — the template, the scaffolding, the shared build — not into one project. | You're adding a check; a sweep reports clean; or you're about to write "be careful about X" in a learnings file for the second time. | [quality-infrastructure.md](quality-infrastructure.md) |
+| End every session with a written work order — reading order, do-this-now, run mechanics, guardrails, a STOP condition — because sessions are disposable and the repo is the memory. A dispatched report is a claim: re-run it before accepting it, starting with its claims about its own discipline. | A session is ending, or you're dispatching a step to another repo's session. *(§ The Supervisor Pattern for the coordinator role.)* | [session-handoff.md](session-handoff.md) |
+| When a step hits a question too big to absorb and too load-bearing to defer, run a **bounded parallel effort** whose deliverable is work items scheduled into the delivery roadmap — and write "adopt nothing" in as a legitimate outcome, in those words. | Delivery is going fine and a step just found something the plan cannot absorb: a circular measurement, an analogy borrowed from the wrong field, a claim nobody can state precisely. | [research-diversion.md](research-diversion.md) |
+| Run → measure → diagnose which loss dimension dominates → pull the one lever that fits it (prompt, knowledge, execution structure, model, rubric) → verify the delta *and* check for regressions. Knowledge cannot fix a reasoning gap. | An agent is underperforming and you are choosing what to change next. | [improvement-flywheel.md](improvement-flywheel.md) |
+| Give the agent an escape hatch and log every call to it: each call is a knowledge gap, and the metric that matters is calls-per-run falling to zero. | An agent finishes its tasks, but only with hand-holding, and you want to know what it's missing. | [oracle-learning-loop.md](oracle-learning-loop.md) |
+
+## D. You're reviewing — or disposing of what a review found
+
+| The rule | Read this when | Page |
+|---|---|---|
+| A finding is an **exhibit the receiver can run**, not an assessment; a non-finding is a **recorded search** that states the method which could have found the thing. A MUST without its breaking case is a SHOULD. | You're writing a review prompt, grading findings, or about to claim something is complete. | [refutation-by-counterexample.md](refutation-by-counterexample.md) |
+| A review is a stack of viewpoints, each catching a failure class the others structurally cannot — so pair every validating lens with an inverting one, because validation is silent about what was never asked. | You're gating a design or freezing a contract and choosing review coverage. | [review-lenses.md](review-lenses.md) |
+| Before committing to a roadmap, hand the trio to a fresh session that has none of your context and ask it for **criticism, not confirmation**. | You think discovery is done. | [conversational-review.md](conversational-review.md) |
+| To change something already decided: proposal → cold machine review on **restricted inputs** → fix round with prior revisions retained under supersede banners → humans on the **post-fix artifact only** → one lockstep ratification. | A frozen contract, a ratified decision, or a public API has to move. *(§ Team review for what humans are actually for here.)* | [act-pipeline.md](act-pipeline.md) |
+| Write a known gap as a check that **passes because the thing is missing and fails the moment it exists**, naming its owning step; and end every finding in one of four states — fixed with the exhibit committed, refuted with evidence, filed with a named owner, or parked with a trigger. | You're deferring something, or disposing of a review's findings. | [registers-of-absence.md](registers-of-absence.md) |
+
+## E. You're shipping, or maintaining what shipped (Phase 5 and after)
+
+| The rule | Read this when | Page |
+|---|---|---|
+| Every document is a tutorial, a how-to, a reference, or an explanation — one per document, and split it when it drifts. Agents get most of their value from reference and how-to, and almost none from tutorials. | You're writing Phase-5 docs, or laying out a corpus an agent will read. | [documentation-taxonomy.md](documentation-taxonomy.md) |
+| After the build, one agent owns the project — curator and developer in one role, because neither works alone — and proposes rather than silently implements anything significant. | The build phase is finished and the project has users or ongoing change. | [steward-agent.md](steward-agent.md) |
+| Each project writes its own dated status report by probing what it actually has; one orchestrator aggregates them, so the human is not the integration point. | You are running more projects than you can hold in your head. | [hierarchical-reporting.md](hierarchical-reporting.md) |
+
+---
+
+## Nearby, not in this register
+
+These carry rules too, but they are instruments and standards rather than concepts:
+
+| If you need... | Go to |
+|---|---|
+| The Phase-4 stage gate — its checklist, and what a gate exit report must say | [`../phases/phase-review-template.md`](../phases/phase-review-template.md) (§ Gate Exit Is a Measured Report) |
+| To run a cold second implementation against your own contract without it cheating | [`../guides/second-implementation-protocol.md`](../guides/second-implementation-protocol.md) |
+| To design a surface people author against (DSL, fluent API, CLI) so mistakes get real diagnostics | [`../guides/authoring-surface-quality.md`](../guides/authoring-surface-quality.md) |
+| The Java quality bar (JaCoCo, ArchUnit, JSpecify/NullAway, OWASP, Javadoc) | [`../guides/java-library-quality.md`](../guides/java-library-quality.md) |
+| To batch-ingest research results into an existing KB, or scout references for a new one | [`../guides/curator-intake.md`](../guides/curator-intake.md) · [`../guides/reference-harvest.md`](../guides/reference-harvest.md) |
+| Which variant to use, and how Phase 4 differs across them | [`../variants/README.md`](../variants/README.md) |
+
+## Not covered
 
 This section does **not** include:
 - Implementation details for specific languages or frameworks (see `guides/`)
 - Fill-in templates for phase outputs (see `templates/`)
 - Variant-specific workflows (see `variants/`)
 - Example project structures (see `examples/`)
+
+## Status of these pages
+
+Several pages carry **`Status: PROVISIONAL`** — one project, written down because the practice converged
+under adversarial review, not because it has been run twice. They are marked in their own headers:
+`act-pipeline`, `registers-of-absence`, `refutation-by-counterexample`, `vocabulary-law`,
+`decision-enforcement`, `research-diversion`. The trigger for promoting any of them is a **second** effort
+running the practice — the graduation rule pointed at this corpus's own pages.

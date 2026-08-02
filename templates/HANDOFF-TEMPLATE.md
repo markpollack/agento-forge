@@ -36,6 +36,19 @@ way.}
 classify-don't-guess policies · repo visibility constraints · anything the project's CLAUDE.md enforces
 that is easy to violate mid-flow.}
 
+> **If this session receives reports from other sessions**, a returned report is a *claim*, not a result:
+> verify it independently before accepting it — a re-run, not a skim. Check first the claims a report
+> makes about its **own discipline** ("the build is green", "every check was watched failing", "the sweep
+> ran after the fixes", "all citations re-verified"). Those are the cheapest to check, the likeliest to
+> have been written from intent rather than observation, and everything else in the report rests on them.
+> When a returned report and a plan row disagree, **the row wins** until an act changes it — otherwise
+> the plan degrades into a description of whatever happened. See `concepts/session-handoff.md`
+> § The Supervisor Pattern.
+
+> **Verify the tree before acting on this order.** It describes the repo as it was when it was written:
+> check the branch, HEAD, that the named files still exist, and that the build is green — then reconcile
+> and report the drift. The order says what to do; the tree says what is there.
+
 ## Human-gates (surface only — never decide)
 {Decisions reserved for the human, with enough context that the session can RAISE them crisply when they
 become load-bearing.}

@@ -261,7 +261,7 @@ Across KBs, the federation index adds one level: federation → KB root → doma
 - **[Documentation Taxonomy](documentation-taxonomy.md)** — Code-Agent KBs prioritize Reference + How-to content (highest agent value). Research-Partner KBs prioritize Explanation content.
 - **[Research Agent](research-agent.md)** — The hierarchical agentic RAG concept (L0-L3) applies to both KB types. Code-Agent KBs: L3=root index, L2=domain index, L1=detail, L0=n/a. Research KBs: L3=MASTER-SUMMARY, L2=theme docs, L1=per-paper summaries, L0=raw papers.
 - **[Research Loop](research-loop.md)** — Research-Partner KBs emerge during the Vision↔Research loop as conversation synthesis accumulates.
-- **[Execution Pipeline](execution-pipeline.md)** — Code-Agent KBs emerge during Phase 4 as domain knowledge crystallizes from iterative implementation.
+- **[The Two Loops](discovery-loop.md)** — Code-Agent KBs emerge during Phase 4 as domain knowledge crystallizes from iterative implementation.
 
 ## Provenance
 

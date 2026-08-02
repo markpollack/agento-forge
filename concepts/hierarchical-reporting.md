@@ -177,4 +177,4 @@ The StorageProvider API enables orchestrator agents to query job history: "When 
 - **[Steward Agent](steward-agent.md)** — Stewards are one type of status producer. Their health monitoring loop (step 5: "Report gaps and recommendations") is the status reporting step.
 - **[Knowledge Base Architecture](knowledge-base-architecture.md)** — Status reports reference KB state (freshness, coverage). The orchestrator's KB (federation) routes to individual project KBs.
 - **[Research Loop](research-loop.md)** — Research projects report hypothesis status and corpus state alongside standard status sections.
-- **[Execution Pipeline](execution-pipeline.md)** — Project and eval-agent variants report phase progress and experiment results.
+- **[The Two Loops](discovery-loop.md)** — Project and eval-agent variants report phase progress and experiment results.

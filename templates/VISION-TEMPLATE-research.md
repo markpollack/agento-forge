@@ -148,6 +148,10 @@ Current position in the [Vision↔Research Loop](../concepts/research-loop.md):
 - **L₂ (Reproducibility)**: {{BOUNDED / UNBOUNDED}} — {{BRIEF_STATUS}}
 - **L₃ (Methodological honesty)**: {{BOUNDED / UNBOUNDED}} — {{BRIEF_STATUS}}
 
+> **Bounded ≠ zero.** A claim is ready when each term is *acknowledged, quantified where possible, and
+> the claim's scope hedged to match* — not when the limitation is gone. Waiting for zero is how a
+> research loop never exits.
+
 ### Threats to Validity (Draft)
 
 Preliminary list of validity threats. Refine during Vision↔Research iteration.

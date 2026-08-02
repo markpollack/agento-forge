@@ -40,6 +40,14 @@ Mistakes made during implementation that future steps should avoid:
 
 1. **{{PITFALL}}** — {{WHAT_HAPPENED_AND_HOW_TO_AVOID}}
 
+> **Twice is a practice.** The first occurrence is bad luck and belongs here, as prose. The second is
+> evidence of a *class*, and a class gets a mechanism — a script, a probe, a test — which then lands in
+> the thing future work inherits (the template, the scaffolding command, the shared build config), not
+> only in this project. Each mechanism carries the mistake that produced it, or the next person
+> suppresses a rule they cannot see the reason for. An entry that improves only its own project has been
+> filed, not graduated. Watch the new check fail before trusting it. See
+> `concepts/quality-infrastructure.md`.
+
 ## Phase Review Summaries
 
 | Phase | Iteration 1 | Iteration 2 | Final Status |
@@ -64,3 +72,8 @@ Mistakes made during implementation that future steps should avoid:
 | {{DATETIME}} | Initial draft | — |
 
 > **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.
+
+> **Records discipline**: a record is appended to, never rewritten to agree with the present. Compaction
+> summarizes per-step files; it does not revise what they said. Put corrections **beside** the original
+> words, dated, and file received evidence — review findings, quoted specifications, someone else's
+> words — verbatim. See `concepts/project-knowledge-layout.md`.

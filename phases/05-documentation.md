@@ -146,7 +146,7 @@ The mix varies by project variant:
 ## Relationship to Other Phases
 
 - **Consumes Phase 4** — documents the working implementation
-- Final phase of the [Execution Pipeline](../concepts/execution-pipeline.md)
+- Final phase of the [Execution Pipeline](../concepts/discovery-loop.md#part-2-the-execution-pipeline-phases-3-5)
 - **Benefits from learnings** — common pitfalls discovered in Phase 4 become how-to guides or warning boxes in tutorials
 - **Benefits from design** — DESIGN.md decision records feed directly into explanation documents
 

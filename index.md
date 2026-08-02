@@ -2,6 +2,20 @@
 
 > A six-phase methodology for building AI agents, software projects, and conducting research — structured as a queryable knowledge base.
 
+## The reading contract
+
+**To use Forge: read your project's trio — VISION.md, DESIGN.md, ROADMAP.md — and the template for the
+phase you are in.** That is the whole obligation. A session can run a phase correctly having read only
+those.
+
+**Everything under `concepts/` is reference.** It is case law: why a rule is what it is, and the evidence
+behind it. The [concepts register](concepts/index.md) states each concept's rule in one line and tells
+you the situation that makes the full page worth opening — read the register, open a page only when its
+row describes where you actually are.
+
+If acting correctly ever requires reading a concept page, that is a defect: the rule has not been
+distilled into the template where the session meets it.
+
 ## Question Routing
 
 | Question | Read |
@@ -10,7 +24,8 @@
 | Which variant should I use for my project? | `variants/README.md` |
 | How do I get started with Forge? | `guides/getting-started.md` |
 | What are the six phases? | `README.md` (The Six Phases table) |
-| How does the discovery loop work? | `concepts/discovery-loop.md` |
+| Which concept page is worth my time right now? | `concepts/index.md` (the register — rules + read-this-when) |
+| How does the discovery loop work? When does execution go back to it? | `concepts/discovery-loop.md` (both loops) |
 | How does Phase 4 differ across variants? | `phases/04-learning-loop.md` (Primary Feedback Modes) then `variants/` |
 | How do I develop or maintain a forge command? | `guides/command-development.md` |
 | How do I structure a knowledge base for agents? | `concepts/knowledge-base-architecture.md` |
@@ -43,7 +58,7 @@
 
 | Topic | Location | Contains |
 |-------|----------|----------|
-| Core concepts | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, research patterns, review lenses and the act pipeline, evidence standards, registers of absence, vocabulary law |
+| Core concepts | `concepts/index.md` — **the register** | 23 concepts as one-line rules with a *read this when*, grouped by the moment each bites. The two loops, KB architecture, judges, steward, research patterns, review lenses and the act pipeline, evidence standards, registers of absence, vocabulary law |
 | Phase definitions | `phases/` | Phase 0-5 detailed descriptions, exit criteria, anti-patterns |
 | Templates | `templates/` | Fill-in templates for vision, research, design, roadmap, learnings, reviews |
 | Project variants | `variants/` | Agent, project, research, steward, kb — when to use each, key differences |
@@ -58,7 +73,7 @@
 | How do I set up a research project end-to-end? | `variants/research.md` | `templates/VISION-TEMPLATE-research.md`, `guides/research-project-structure.md` |
 | What happens after a project is built? | `concepts/steward-agent.md` | `variants/steward.md` |
 | How do I build the evaluation system for an agent? | `variants/agent.md` | `concepts/judges-and-evaluation.md`, `concepts/oracle-learning-loop.md` |
-| How do discovery and execution connect? | `concepts/discovery-loop.md` | `concepts/execution-pipeline.md` |
+| How do discovery and execution connect? | `concepts/discovery-loop.md` (both loops, one page) | `phases/03-roadmap.md` |
 
 ## Not Covered
 

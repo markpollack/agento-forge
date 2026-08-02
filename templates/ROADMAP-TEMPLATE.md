@@ -76,10 +76,18 @@
 - [ ] CONFIGURE dependency vulnerability scanning
 - [ ] CONFIGURE code formatting
 - [ ] VERIFY all quality checks pass on scaffold project
+- [ ] VERIFY each check by watching it go **RED**: seed the defect it claims to catch, confirm it fires, revert
 - [ ] DOCUMENT quality thresholds in `CLAUDE.md`
+
+> **A check never shown to fail is a decoration**, and worse than none — it converts *unenforced* into
+> *falsely believed enforced*. A green build reports either "the defect is absent" or "the check cannot
+> see it", and does not distinguish them. Checks that iterate (over files, rules, members) must also
+> report their **denominator**: "clean" from a loop that ran zero times is the most convincing false
+> result available. See `concepts/quality-infrastructure.md`.
 
 **Exit criteria**:
 - [ ] Build runs with all quality tools enabled
+- [ ] Every configured check has been **watched failing** on a seeded defect, not merely watched passing
 - [ ] Coverage reporting works (baseline established)
 - [ ] Architecture rules enforced (even if no production classes yet)
 - [ ] Create: `plans/learnings/step-1.2-quality-infrastructure.md`
@@ -344,6 +352,13 @@ Every step's exit criteria must include these items (in addition to step-specifi
 
 **Naming the decision a check defends (optional, one parenthetical).** Where an exit criterion exists to hold a design decision true, name it: `- [ ] VERIFY node ids survive an unrelated upstream insertion (defends DD-23)`. This links DESIGN (what's true) → ROADMAP (which step proves it) → the test (the proof), and makes undefended decisions visible by absence. Many decisions are postures with no predicate over any artifact and will never be named here — that is a legitimate state, and seeing it is the point. See `concepts/decision-enforcement.md`.
 
+**Deferring something is an entry, not a sentence.** When a step ships a known gap, write it as a check
+that **passes today because the thing is missing and fails the moment it exists**, and name the step that
+owns it — so the act that closes the gap must delete its own entry, and bookkeeping becomes a build
+dependency rather than a discipline. If no step owns it, say *that*: an unowned gap is a real state and a
+different one. Prose deferrals fail two silent ways — the gap closes and nobody notices, or it never
+closes and nobody notices that either. See `concepts/registers-of-absence.md`.
+
 ```markdown
 - [ ] All tests pass: `./mvnw test` (or `./mvnw verify` if integration tests)
 - [ ] Create: `plans/learnings/step-X.Y-topic.md`
@@ -383,3 +398,5 @@ The **first step of Stage N (N > 1)** must have these entry criteria in addition
 | {{DATETIME}} | Initial draft | — |
 
 > **Timestamp format**: ISO 8601 with minutes and timezone, e.g., `2026-02-12T16:22-05:00`.
+
+> **Records discipline**: a record is appended to, never rewritten to agree with the present. Add a row above; keep a superseded revision under a banner rather than editing it (findings and cross-references cite it *by line*); put corrections **beside** the original words, dated; file received evidence — a review's findings, a quoted specification, someone else's words — verbatim. See `concepts/project-knowledge-layout.md`.

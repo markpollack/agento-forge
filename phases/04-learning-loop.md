@@ -26,7 +26,16 @@ Execute the roadmap iteratively with structured feedback. This is where implemen
 
 ## The Improvement Flywheel
 
-Phase 4 applies the [Improvement Flywheel](../concepts/improvement-flywheel.md): run the agent, measure the loss signal, diagnose the dominant loss dimension, intervene with the correct lever, and verify the delta. The flywheel is the methodology's answer to "how do I know what to change next?" — it converts observed behavioral gaps into targeted interventions.
+Phase 4 applies the [Improvement Flywheel](../concepts/improvement-flywheel.md): run the agent, measure the loss signal, diagnose the dominant loss dimension, intervene with the correct lever, and verify the delta. The flywheel is the methodology's answer to "how do I know what to change next?" — it converts observed behavioral gaps into targeted interventions. Diagnose before reaching for a lever: knowledge cannot fix a reasoning gap, and a bigger model fixes neither.
+
+Where the agent has an escape hatch — an oracle it calls when stuck — **log every call and treat each as a knowledge gap, not as a success**. Calls-per-run trending to zero is the leading indicator; tool count, cost and verdict scores are lagging ones ([oracle learning loop](../concepts/oracle-learning-loop.md)).
+
+## When Execution Says the Design Is Wrong
+
+Two situations in Phase 4 are not implementation problems, and treating them as such is how a stage slips:
+
+- **Go back to discovery** when a roadmap step is impossible given the design, or when stage reviews keep failing on *design-level* rather than implementation-level issues. Returning costs less than pushing forward on a broken design — that is the methodology working, not failing ([the two loops](../concepts/discovery-loop.md)).
+- **Divert, bounded**, when a step finds a question too large for a work item and too load-bearing to defer. Run it as a parallel effort with its own exit conditions, whose deliverable is *work items scheduled into this roadmap* rather than a document set — and write "adopt nothing" in as a legitimate outcome, or the diversion acquires an obligation to justify itself ([research diversion](../concepts/research-diversion.md)).
 
 ## Primary Feedback Modes
 

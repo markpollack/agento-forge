@@ -2,6 +2,14 @@
 
 A six-phase methodology for building AI agents, software projects, and conducting research. Forge separates discovery (iterative phases 0-2) from execution (sequential phases 3-5), treats evaluation as first-class, and produces learnings as a primary artifact alongside code.
 
+## The reading contract
+
+**To use Forge: read the project's trio (VISION / DESIGN / ROADMAP) and the template for the phase you
+are in.** Everything under `concepts/` is reference — case law, not instructions. The [concepts
+register](concepts/index.md) states each concept's rule in one line and names the situation that makes
+the page worth opening. If acting correctly ever requires opening a concept page, that is a defect: the
+rule has not been distilled into the template where the session meets it.
+
 ## Partner Mode (Q&A)
 
 Answer questions grounded in this corpus. Navigate using routing tables, not brute-force search.
@@ -39,7 +47,8 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Phase 5: Documentation | `phases/05-documentation.md` | User-facing docs, Diataxis taxonomy |
 | Changing a decided artifact | `concepts/act-pipeline.md` | Cold machine review → fix round → team review of the post-fix artifact → lockstep ratification |
 | Review evidence standard | `concepts/refutation-by-counterexample.md` | Findings are exhibits, non-findings are recorded searches |
-| Core concepts (24 docs) | `concepts/` | Discovery loop, execution pipeline, KB architecture, judges, steward, oracles, research patterns, improvement flywheel, review lenses, act pipeline, registers of absence, vocabulary law |
+| **Concepts register** | `concepts/index.md` | 23 concepts as one-line rules + read-this-when, grouped by the moment each bites (starting · deciding · building · reviewing · shipping). **Start here for anything under `concepts/`** — the rules are self-sufficient; open a page only when its row describes your situation |
+| Core concepts (23 docs) | `concepts/` | The two loops, KB architecture, judges, steward, oracles, research patterns, improvement flywheel, review lenses, act pipeline, registers of absence, vocabulary law |
 | Templates (12 docs) | `templates/` | Fill-in templates for every phase output |
 | Getting started | `guides/getting-started.md` | Step-by-step walkthrough of applying Forge |
 | Engineering standards | `guides/java-library-quality.md`, `guides/authoring-surface-quality.md`, `guides/second-implementation-protocol.md` | The Java quality bar; refuse-don't-default for surfaces people author against; the cold-second-implementation protocol |
@@ -53,9 +62,9 @@ forge-methodology/
 ├── index.md               # Root routing table
 ├── README.md              # Methodology overview and entry point
 ├── concepts/
-│   ├── index.md                       # Concept routing table
-│   ├── discovery-loop.md              # phases 0-2 iterate
-│   ├── execution-pipeline.md          # phases 3-5 are sequential
+│   ├── index.md                       # THE REGISTER — one rule per concept + read-this-when
+│   ├── discovery-loop.md              # the two loops: 0-2 iterate, 3-5 run in order
+│   ├── execution-pipeline.md          # (redirect stub → discovery-loop.md, merged 2026-08-02)
 │   ├── research-loop.md
 │   ├── research-diversion.md          # bounded parallel investigation mid-delivery
 │   ├── judges-and-evaluation.md
@@ -90,7 +99,7 @@ forge-methodology/
 
 ## Key Concepts
 
-- **Discovery Loop vs Execution Pipeline** — Phases 0-2 iterate freely until stable; phases 3-5 execute sequentially. The transition is the highest-leverage review point.
+- **The Two Loops** — Phases 0-2 iterate freely until stable; phases 3-5 execute sequentially. The transition is the highest-leverage review point. One page: [concepts/discovery-loop.md](concepts/discovery-loop.md).
 - **Five Variants** — Agent (loss optimization), Project (QA review), Research (hypothesis-evidence iteration), Steward (ongoing health monitoring), KB (navigation quality + graduation ladder). Same six phases, different Phase 4 feedback loops.
 - **Judges** — Deterministic (test suites, linters) and AI judges that produce verdicts. Judges drive the Phase 4 feedback loop for eval-agent projects.
 - **Knowledge Base Architecture** — Two KB types: Code-Agent (task-driven, faceted, two-agent curator/navigator) and Research-Partner (question-driven, single session bridge). Both use routing tables for ≤3-hop navigation.

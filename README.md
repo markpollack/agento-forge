@@ -94,8 +94,7 @@ See [concepts/knowledge-base-architecture.md](concepts/knowledge-base-architectu
 
 ## Key Concepts
 
-- **[Discovery Loop](concepts/discovery-loop.md)** — Why phases 0-2 iterate and when to exit
-- **[Execution Pipeline](concepts/execution-pipeline.md)** — Why phases 3-5 are sequential
+- **[The Two Loops](concepts/discovery-loop.md)** — Why phases 0-2 iterate and when to exit; why 3-5 are sequential and when to go back
 - **[Research Loop](concepts/research-loop.md)** — Vision↔Research iteration (L₁/L₂/L₃ loss)
 - **[Judges and Evaluation](concepts/judges-and-evaluation.md)** — Deterministic + AI judges
 - **[Knowledge Base Architecture](concepts/knowledge-base-architecture.md)** — Two KB types, librarian layer, federation

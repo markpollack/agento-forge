@@ -145,7 +145,7 @@ Review all markdown files and all Javadoc/code comments for:
 1. **Spelling errors**
 2. **Grammar mistakes** (subject-verb agreement, tense consistency, dangling modifiers)
 3. **Unclear or ambiguous phrasing**
-4. **Inconsistent terminology** (e.g., mixing "field" and "column", "PR" and "pull request", "load" and "parse")
+4. **Inconsistent terminology** (e.g., mixing "field" and "column", "PR" and "pull request", "load" and "parse"). **Report senses, not counts.** Before proposing a sweep, classify each occurrence: the sense you mean to change · a *protected* sense (the word used correctly, elsewhere, meaning something else) · occurrences **inside quotations**, which stay verbatim — re-spelling a quoted review finding, an owner's words, or an external specification manufactures a false record. A word too expensive to classify is doing too much work, and *that* is the finding. See [`concepts/vocabulary-law.md`](../concepts/vocabulary-law.md).
 5. **Incorrect technical claims** (wrong version numbers, inaccurate API descriptions, outdated information)
 6. **Missing or broken cross-references** between documents
 
@@ -163,9 +163,19 @@ Compare the implementation against the design doc and roadmap:
 
 #### Output Format
 
+**Every finding is an exhibit, not an assessment.** Give the thing that breaks — the input that produces
+the wrong output, the two lines that contradict each other quoted, the case the code does not handle —
+so the receiver can check it without trusting you. And **a MUST without its breaking case is not a
+MUST**: a reviewer who cannot produce the case has found a SHOULD or a CONSIDER and should file it as
+one. That bar is what keeps MUST scarce enough to mean something. Where you looked and found nothing,
+say what you looked *for* and how — "I sought X by enumerating Y, and found none constructible" — because
+"I could not construct one" and "one does not exist" are different claims. See
+[`concepts/refutation-by-counterexample.md`](../concepts/refutation-by-counterexample.md).
+
 Organize findings by severity:
 
-**MUST FIX** — Bugs, incorrect behavior, or violations of the design contract. These block phase completion.
+**MUST FIX** — Bugs, incorrect behavior, or violations of the design contract, **each with the case that
+exhibits it**. These block phase completion.
 
 **SHOULD FIX** — API design issues, naming problems, missing tests, or documentation errors that will cause confusion in later phases.
 
@@ -174,6 +184,7 @@ Organize findings by severity:
 For each finding, include:
 - File path and line number(s)
 - What the issue is
+- The exhibit — the concrete case where it bites (required for MUST FIX)
 - Suggested fix (if applicable)
 
 ---
@@ -344,9 +355,14 @@ Pass the populated prompt to a QA agent (a separate Claude session or dedicated 
 
 | Severity | Action | Blocks Phase? |
 |----------|--------|---------------|
-| MUST FIX | Fix before proceeding | Yes |
+| MUST FIX | Fix before proceeding — or refute it with evidence, which is the better discharge when the finding is wrong | Yes |
 | SHOULD FIX | Fix before next phase starts | No |
-| CONSIDER | Log in learnings doc, decide later | No |
+| CONSIDER | Log in learnings — **filed with a named owner** (a person or a step) or **parked with a trigger** (the observable condition that reopens it). Never "later" | No |
+
+Every finding ends in one of four terminal states — **fixed** (with the exhibit committed), **refuted**
+(with evidence), **filed** (with a named owner), **parked** (with a trigger). Silence is not a fifth
+option, and neither is "addressed in passing". See
+[`concepts/registers-of-absence.md`](../concepts/registers-of-absence.md).
 
 ### 5. Record in Learnings
 
