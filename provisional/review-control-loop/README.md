@@ -1,0 +1,92 @@
+# Review Control Loop Experiment
+
+> **Status:** PROVISIONAL — dogfood before promotion into Forge
+> **Started:** 2026-08-06
+> **Experiment owner:** Agento Forge
+> **Pilot order:** Agent Judge, then Agent Workflow
+
+This directory preserves an experimental method for making AI-authored planning reliable without
+pretending that either the author or a second AI is an oracle. It is the overall tracking home for the
+experiment. The Agent Judge and Agent Workflow steward repositories contain each project's actual
+planning state and pilot evidence.
+
+Nothing here is normative Forge doctrine yet. Existing Forge concepts remain authoritative. This
+experiment combines and tests several of them—cold review, review lenses, exhibits, adjudication,
+terminal finding states, and records discipline—together with a new one-project/one-steward-repository
+boundary.
+
+## Hypothesis
+
+Planning reliability improves when review is operated as a bounded feedback-control loop:
+
+```text
+                    reference
+              VISION / DESIGN / rules
+                         |
+                         v
+author policy -> candidate artifact -> sensors / reviewers
+      ^                   |                    |
+      |                   |                    v
+      |                   +------------ evidence ledger
+      |                                        |
+      |                                        v
+      +--- bounded correction <- controller <- adjudication
+```
+
+- The **author** proposes a candidate; authorship does not confer correctness.
+- A **reviewer** is a fallible sensor. A review finding is a measurement, not authority.
+- **Adjudication** reproduces, refutes, files, or parks every finding against evidence and standing
+  decisions.
+- The **controller** applies only accepted, bounded corrections. It does not maximize for reviewer
+  satisfaction or zero comments.
+- A **verification reviewer** examines the corrected, frozen candidate for new structural blockers.
+- The human receives a compact decision brief plus reproducible exhibits, not a pile of opinions.
+
+## Repository experiment
+
+Each public project is paired 1:1 with a private steward repository.
+
+| Project repository | Private steward repository | Boundary |
+|---|---|---|
+| `agent-judge` | `agent-judge-steward` | First full pilot |
+| `agent-workflow` | `agent-workflow-steward` | Second pilot after Agent Judge closes |
+
+The project repository owns code, tests, builds, releases, public documentation, and accepted
+implementation commits. The private steward repository owns VISION, DESIGN, ROADMAP, journals,
+learnings, review records, work orders, and private research. Cross-repository work is expressed as a
+named dependency or work order; it is not copied into ad hoc handoff prose.
+
+## Experiment questions
+
+1. Does the private steward boundary eliminate ignored authoritative files and accidental competing
+   sources of truth?
+2. Can a cold AI reviewer find defects without gaining authority to rewrite settled decisions?
+3. Does adjudication prevent excessive controller gain—accepting every suggestion and causing document
+   oscillation?
+4. Do immutable candidates plus human-readable numbered records give enough provenance without making
+   Git history noisy or inaccessible?
+5. Can handoffs become pointers to decisions and roadmap steps instead of restatements that drift?
+6. What minimum review lenses and coverage denominators produce useful confidence at acceptable cost?
+
+## Promotion gate
+
+The method may be proposed for Forge only after both pilots record:
+
+- candidate and correction cycle counts;
+- findings by severity and terminal disposition;
+- reproduced versus refuted findings;
+- structural blockers first found by verification;
+- document oscillation or reopened settled decisions;
+- stale or duplicate authorities removed;
+- human time required for adjudication and ratification;
+- failures and exceptions, not only successes.
+
+Promotion is a separate reviewed change. Pilot success does not silently make this directory normative.
+
+## Contents
+
+- [PROTOCOL.md](PROTOCOL.md) — the operating protocol being tested
+- [PILOTS.md](PILOTS.md) — cross-pilot status and observations
+- [ANTECEDENTS.md](ANTECEDENTS.md) — bounded comparison with configuration management, IV&V,
+  scenario-based review, and current SDD
+- [templates/ADJUDICATION-TEMPLATE.md](templates/ADJUDICATION-TEMPLATE.md) — terminal finding ledger
