@@ -9,7 +9,7 @@
 | Effort | Agent Judge 0.14 closure and Agent Workflow adoption readiness |
 | Initial candidate | Private steward commit `a7ea488`, tag `review/aj-014-closure/candidate-01`; reviewed trio at project HEAD `8f8391b` plus recorded working-tree state |
 | Initial sensor output | `roadmap-readiness-review-2026-08-06`, 16 findings |
-| Current phase | READY FOR ADJUDICATION |
+| Current phase | CANDIDATE 02 FROZEN — READY FOR VERIFICATION |
 | Ratification state | Not ratified |
 
 ### Initial observations
@@ -25,9 +25,10 @@
 
 ### Next experiment action
 
-Execute the filled `work-order-adjudication-01.md` in the private steward. Adjudicate all 16 findings
-against Candidate 01 before changing the active trio. Record reproductions, refutations, owners, and
-triggers. Produce Candidate 02 only from accepted corrections.
+Run an independent verification against private steward tag
+`review/aj-014-closure/candidate-02`. Verify all 16 adjudicated dispositions and the corrected active
+trio without editing the candidate. Present the front-loaded checkpoint for human ratification before
+any Agent Judge implementation begins.
 
 ## Agent Workflow — Pilot 2
 
@@ -53,3 +54,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Add `accepted-open`; `fixed` is valid only after correction exists | Dogfood correction |
 | 2026-08-08 | Use proportional evidence: coordinates for released dependencies; digests only when byte identity is disputed | Dogfood correction |
 | 2026-08-08 | Front-load a plain-language human checkpoint and replace ambiguous `CORRECT` with `CORRECTIONS REQUIRED` | Dogfood correction |
+| 2026-08-08 | Add a distinct verification work-order contract with `READY TO RATIFY` as its positive control state | Dogfood correction |

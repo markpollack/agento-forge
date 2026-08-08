@@ -181,6 +181,14 @@ plans/reviews/<review-id>/work-order-adjudication-01.md
           |
           v
 plans/reviews/<review-id>/adjudication-01.md
+
+templates/VERIFICATION-WORK-ORDER-TEMPLATE.md
+          |
+          v
+plans/reviews/<review-id>/work-order-verification-02.md
+          |
+          v
+plans/reviews/<review-id>/verification-02.md
 ```
 
 The first is the reusable session contract, the second is a filled immutable dispatch record, and the
@@ -192,7 +200,7 @@ Use progressive extraction rather than immediately building an orchestrator:
 
 | Level | Mechanism | Promotion evidence |
 |---|---|---|
-| 1 — current | Fill a Markdown work-order template | Agent Judge completes one adjudication without prompt repair |
+| 1 — current | Fill Markdown adjudication and verification work-order templates | Agent Judge completes one full candidate-review-adjudication-correction-verification loop without prompt repair |
 | 2 | Deterministic generator from candidate/review metadata | Agent Workflow needs the same fields with only values changed |
 | 3 | Forge command or skill with preflight validation | At least three clean uses establish stable inputs and stop rules |
 | 4 | Automated review controller | Pilot measurements show orchestration, rather than judgment, is the recurring bottleneck |
