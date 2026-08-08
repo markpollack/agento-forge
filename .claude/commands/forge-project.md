@@ -5,7 +5,7 @@ description: "Bootstrap a software project (Forge: Vision + Design + Roadmap wit
 
 # Forge Project — Bootstrap a Software Project
 
-You are helping bootstrap a new software project using the Forge methodology's project variant. This skill handles the full lifecycle: understanding the problem, surveying existing solutions and reusable infrastructure, scaffolding the project structure, drafting VISION.md, DESIGN.md, and ROADMAP.md, creating a CLAUDE.md session bridge, and defining the first build stage.
+You are helping bootstrap a new software project using the Forge methodology's project variant. This skill handles the full lifecycle: understanding the problem, surveying existing solutions and reusable infrastructure, scaffolding the project structure, drafting VISION.md, DESIGN.md, and ROADMAP.md, creating canonical AGENTS.md instructions plus a CLAUDE.md compatibility bridge, and defining the first build stage.
 
 ## When to Use
 
@@ -114,7 +114,8 @@ Start by understanding what they're building. Be conversational:
    - Prior prototypes or design discussions
 
 3. **What infrastructure can you build on?** This is critical — don't reinvent:
-   - Read CLAUDE.md files of related projects in the workspace
+   - Read AGENTS.md files of related projects in the workspace; read CLAUDE.md as a compatibility
+     source when a project has not yet adopted AGENTS.md
    - Look for shared libraries, utilities, or frameworks already available
    - Check for community projects (open source) vs private projects
    - Identify interfaces or contracts this project should implement or consume
@@ -130,7 +131,7 @@ Start by understanding what they're building. Be conversational:
 Before designing, understand what's available. This prevents building from scratch when reusable components exist.
 
 1. **Read related projects** identified in Phase 1:
-   - Read their CLAUDE.md for scope and architecture
+   - Read their AGENTS.md for scope and architecture, falling back to CLAUDE.md only when necessary
    - Read their DESIGN.md for interfaces and data models
    - Identify what can be depended on vs. what should be copied vs. what's irrelevant
 
@@ -150,7 +151,7 @@ Before designing, understand what's available. This prevents building from scrat
    - For every Java project, read `{agento-forge}/guides/java-library-quality.md`; it is the
      canonical Java quality standard, not optional background reading.
    - Carry its applicable rules into DESIGN, ROADMAP quality-infrastructure work, and the generated
-     CLAUDE.md by reference rather than copying a soon-stale checklist.
+     AGENTS.md by reference rather than copying a soon-stale checklist.
    - In particular, JSpecify annotations alone are not null-safety enforcement: when adopting
      `@NullMarked`, configure a build-breaking checker such as NullAway at `ERROR`, scope adoption
      deliberately, budget the initial triage, and watch a deliberate violation make the build fail.
@@ -175,9 +176,10 @@ Create build file (pom.xml, build.gradle, etc.) with dependencies identified in 
 
 Create `.gitignore` appropriate for the technology.
 
-#### Create CLAUDE.md Session Bridge
+#### Create AGENTS.md Instructions and CLAUDE.md Bridge
 
-Create `{project}/CLAUDE.md` defining:
+Create `{project}/AGENTS.md` as the canonical agent instruction and current-action entry point,
+defining:
 
 1. **Project scope and mission** — What this project does, who uses it
 2. **Build commands** — How to compile, test, format, verify
@@ -197,6 +199,10 @@ Create `{project}/CLAUDE.md` defining:
    annotations without enforcement must not be described as null safety.
 7. **Not Covered** — Explicit exclusions
 8. **Session behavior** — Follow ROADMAP steps, write tests before implementation, create learnings after each step
+
+Create `{project}/CLAUDE.md` as a minimal Claude Code compatibility bridge that instructs Claude to
+read and follow `AGENTS.md`. Do not duplicate the project decisions or current work order in both
+files; duplicated instructions will drift.
 
 ### Phase 4: Draft VISION.md, DESIGN.md, and ROADMAP.md
 
@@ -241,7 +247,8 @@ Use ROADMAP-TEMPLATE.md. Standard stages:
 - API reference
 - At least one tutorial
 
-Each step ends with: run tests → create learnings → update CLAUDE.md → update ROADMAP checkboxes → commit.
+Each step ends with: run tests → create learnings → update AGENTS.md when durable instructions or the
+current action changed → update ROADMAP checkboxes → commit.
 
 ### Phase 5: Review and Refine
 
@@ -266,7 +273,7 @@ Iterate until satisfied.
 
 4. **Session handoff** — Write `HANDOFF-BUILD.md`:
    - Mission (implement Stage 1 of ROADMAP.md)
-   - "Before You Start" checklist (read CLAUDE.md, VISION.md, DESIGN.md, ROADMAP.md)
+   - "Before You Start" checklist (read AGENTS.md, VISION.md, DESIGN.md, ROADMAP.md)
    - First roadmap step with entry/exit criteria
    - Key integration context (which projects to reference, which interfaces to implement)
    - "After Each Step" checklist (run tests, update learnings, commit)
@@ -297,9 +304,9 @@ When surveying existing projects:
 |---------|-----------|
 | Interface definitions in DESIGN.md | Contracts to implement |
 | Data models in shared libraries | Models to depend on (not duplicate) |
-| Build patterns in pom.xml / CLAUDE.md | Conventions to follow |
-| Quality thresholds in CLAUDE.md | Standards to match |
-| "Not Covered" sections in CLAUDE.md | Integration boundaries |
+| Build patterns in pom.xml / AGENTS.md | Conventions to follow |
+| Quality thresholds in AGENTS.md | Standards to match |
+| "Not Covered" sections in AGENTS.md | Integration boundaries |
 
 ## Tone
 
