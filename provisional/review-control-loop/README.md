@@ -89,4 +89,6 @@ Promotion is a separate reviewed change. Pilot success does not silently make th
 - [PILOTS.md](PILOTS.md) — cross-pilot status and observations
 - [ANTECEDENTS.md](ANTECEDENTS.md) — bounded comparison with configuration management, IV&V,
   scenario-based review, and current SDD
-- [templates/ADJUDICATION-TEMPLATE.md](templates/ADJUDICATION-TEMPLATE.md) — terminal finding ledger
+- [templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md](templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md) —
+  fill-in instructions for a fresh adjudication session
+- [templates/ADJUDICATION-TEMPLATE.md](templates/ADJUDICATION-TEMPLATE.md) — adjudication output ledger

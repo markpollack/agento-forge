@@ -15,9 +15,11 @@
 
 ## Finding ledger
 
-| ID | Claimed severity | Reproduced? | Decision class | Disposition | Exhibit / owner / trigger | Candidate-02 change |
+| ID | Claimed severity | Adjudication result | Decision class | Closure state | Exhibit / owner / trigger | Next-candidate change |
 |---|---|---|---|---|---|---|
-| | | yes / no / partial | validates / additive / reopens | fixed / refuted / filed / parked | | |
+| | | reproduced / partial / refuted / owner decision | validates / additive / reopens | accepted-open / fixed / refuted / filed / parked | | |
+
+`Accepted-open` is non-terminal and must become fixed, filed, parked, or refuted before ratification.
 
 ## Lens coverage
 
@@ -34,4 +36,3 @@ design work.
 
 Name the immutable corrected candidate, restricted inputs, lenses, denominators, and the structural
 blockers the verification reviewer must attempt to construct.
-

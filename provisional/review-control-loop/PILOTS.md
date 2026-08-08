@@ -25,8 +25,9 @@
 
 ### Next experiment action
 
-Adjudicate all 16 findings against Candidate 01 before changing the active trio. Record reproductions,
-refutations, owners, and triggers. Produce Candidate 02 only from accepted corrections.
+Execute the filled `work-order-adjudication-01.md` in the private steward. Adjudicate all 16 findings
+against Candidate 01 before changing the active trio. Record reproductions, refutations, owners, and
+triggers. Produce Candidate 02 only from accepted corrections.
 
 ## Agent Workflow — Pilot 2
 
@@ -48,3 +49,5 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-06 | Use Git integrity plus numbered human-readable candidate/review records | Pilot decision |
 | 2026-08-06 | Treat AI review as sensor output requiring adjudication | Pilot decision |
 | 2026-08-06 | Keep this method provisional through both pilots | Owner decision |
+| 2026-08-08 | Separate reusable work-order instructions from the adjudication output ledger | Pilot decision |
+| 2026-08-08 | Add `accepted-open`; `fixed` is valid only after correction exists | Dogfood correction |

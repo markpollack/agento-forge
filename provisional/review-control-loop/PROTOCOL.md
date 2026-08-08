@@ -47,7 +47,15 @@ Severity is not authority. A MUST without a breaking case is downgraded until it
 ## 4. Adjudicate before correcting
 
 The author or a separate adjudicator reproduces every finding against the frozen candidate and standing
-decisions. Every item reaches exactly one terminal state:
+decisions. Keep two states separate:
+
+- **Adjudication result**: reproduced, partially reproduced, refuted, or owner decision required.
+- **Closure state**: accepted-open, fixed, refuted, filed, or parked.
+
+`Accepted-open` is deliberately non-terminal. It means the defect was reproduced and admitted to the
+bounded correction round. Calling it `fixed` before the next candidate exists would make the ledger
+claim an intervention that has not happened. After correction and verification, every item reaches
+exactly one terminal state:
 
 | State | Required evidence |
 |---|---|
@@ -114,3 +122,46 @@ records the dependency. Neither repository silently claims it can satisfy the ot
 - Code changes occur in the project repository. Steward commits may update planning, evidence, and work
   orders, but never masquerade as implementation commits.
 
+## 9. Reusable work orders
+
+The reusable unit is a **work-order contract**, not a copied project prompt. It has four stable parts:
+
+1. **Input contract** — ordered authoritative inputs and the immutable candidate identity.
+2. **Authority contract** — settled decisions, reopening rule, and evidence ownership.
+3. **Mutation contract** — allowed evidence roots, the one output that may change, and explicit
+   exclusions.
+4. **Completion contract** — required ledger fields, coverage denominators, stop conditions, and the
+   decision brief.
+
+The work order points to project decisions; it never restates them. Project-specific facts belong in
+the binding, candidate manifest, and active documents. The work order may name a protected decision by
+identifier and say what evidence can reopen it, but it must not paraphrase the decision's substance.
+
+Keep instructions separate from results:
+
+```text
+templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md
+          |
+          v
+plans/reviews/<review-id>/work-order-adjudication-01.md
+          |
+          v
+plans/reviews/<review-id>/adjudication-01.md
+```
+
+The first is the reusable session contract, the second is a filled immutable dispatch record, and the
+third is the evolving output until it is committed complete.
+
+### Automation maturity
+
+Use progressive extraction rather than immediately building an orchestrator:
+
+| Level | Mechanism | Promotion evidence |
+|---|---|---|
+| 1 — current | Fill a Markdown work-order template | Agent Judge completes one adjudication without prompt repair |
+| 2 | Deterministic generator from candidate/review metadata | Agent Workflow needs the same fields with only values changed |
+| 3 | Forge command or skill with preflight validation | At least three clean uses establish stable inputs and stop rules |
+| 4 | Automated review controller | Pilot measurements show orchestration, rather than judgment, is the recurring bottleneck |
+
+Do not encode project judgment into a generator. Automation may verify paths, hashes, mutation
+boundaries, required fields, and lifecycle transitions; adjudication remains evidence-bearing work.
