@@ -86,6 +86,22 @@ Adjudication distinguishes measurement from intervention. It may downgrade sever
 remedy while accepting the defect, or identify that a finding belongs to another repository. Silence,
 "handled," and "later" are not dispositions.
 
+### Human checkpoint before correction
+
+Adjudication is a control seam, so its output begins with a short human checkpoint before detailed
+evidence. The checkpoint states current state, why work stopped, established facts, owner decisions
+with recommended defaults, what changed and did not, review coverage in plain counts, and the next
+authorized action.
+
+This is a view into the adjudication ledger, not a second authority. It points to detailed findings and
+does not restate project decisions. Method records may call the total inventory a *denominator*;
+human-facing checkpoints translate it as, for example, `122/122 roadmap clauses examined`. The count
+describes the declared space walked, not how many items passed and not proof that an open-ended search
+found every possible issue.
+
+Use unambiguous control states: `CORRECTIONS REQUIRED`, `HOLD`, or `READY FOR VERIFICATION`. Do not use
+`CORRECT`, which can be misread as either an instruction or a claim that the candidate is correct.
+
 ## 5. Apply bounded correction
 
 Correct only accepted findings and consequences required for coherence. Do not opportunistically reopen

@@ -90,17 +90,27 @@ Selected lenses:
 
 - {{lens-and-denominator-or-scenario-family}}
 
-## Required decision brief
+## Required front-loaded human checkpoint
 
-End the ledger with:
+Immediately after the ledger's identity/status metadata—and before candidate-integrity details or other
+evidence—write a concise human checkpoint containing:
 
+- current state and why work stopped;
+- what was established in plain language;
 - reproduced blocking findings;
 - refuted or downgraded findings;
-- owner decisions required;
+- owner decisions required, each with a recommended default and consequence of deferral;
 - the exact next-candidate correction boundary;
 - explicit exclusions;
 - residual risks; and
-- recommendation: `CORRECT`, `HOLD`, or `READY TO VERIFY`.
+- what changed and did not change;
+- review coverage as plain counts (for example, `122/122 roadmap clauses examined`); and
+- next authorized action.
+
+Use `CORRECTIONS REQUIRED`, `HOLD`, or `READY FOR VERIFICATION` as the control recommendation. Do not
+use the ambiguous imperative `CORRECT`. Keep detailed exhibits and method-level denominator accounting
+later in the ledger; the human must not have to read the evidence appendix to discover a pending owner
+decision.
 
 ## Stop conditions
 
