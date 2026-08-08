@@ -61,6 +61,11 @@ Ratification, execution authorization, worker selection, and implementation acce
 events. The controller records and dispatches them; conversational glue such as “I would then…” is not
 an adequate project artifact.
 
+The dispatch is intentionally thin. VISION/DESIGN/ROADMAP remain the source of truth; the work order
+adds only authorization, mutation, evidence-destination, and stopping metadata that is specific to one
+fresh session. Repeating roadmap or design content in a handoff creates another authority and is a
+method defect.
+
 ## Repository experiment
 
 Each public project is paired 1:1 with a private steward repository.

@@ -175,9 +175,10 @@ After verification reports `READY TO RATIFY`, the controller performs this seque
 3. Record that decision in `ratification-NN.md`, naming the candidate tag and verification record.
    Record execution authorization separately as `NOT AUTHORIZED` or as one exact roadmap step.
 4. If an execution step is authorized, instantiate one bounded implementation work order from
-   `templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md`. It points to the ratified candidate, roadmap
-   step, decisions, mutation roots, evidence obligations, and stopping checkpoint; it does not restate
-   their substance.
+   `templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md`. It is a thin dispatch envelope pointing to the
+   ratified candidate, exact roadmap step, mutation roots, evidence destination, and stopping
+   checkpoint. It does not restate design semantics, roadmap work items, exit criteria, or the human
+   decision.
 5. Update canonical `AGENTS.md` so its current-action section points to that work order. Tool-specific
    files such as `CLAUDE.md` remain minimal bridges to `AGENTS.md` and do not duplicate the dispatch.
 6. Commit the ratification, work order, and current-action pointer as controller state. Report that no
@@ -205,6 +206,13 @@ FROZEN CANDIDATE
 A handoff points; it does not restate.
 
 > Read decision `D-17` in DESIGN and execute ROADMAP Step `2.3`.
+
+An implementation work order follows the same rule. Its normal size is one readable page. It contains
+only transient dispatch facts that do not belong in standing authorities: authorization identity,
+exact step pointer, execution planning view, mutation boundary, known working-tree exception, evidence
+destination, and stop point. If a worker needs substantive behavior, sequence, or completion criteria
+that the roadmap/design does not provide, correct the authoritative document before dispatch; do not
+hide the missing specification in the work order.
 
 An incoming handoff is triaged once:
 
@@ -244,6 +252,18 @@ The work order points to project decisions; it never restates them. Project-spec
 the binding, candidate-bundle README, and active documents. The work order may name a protected
 decision by identifier and say what evidence can reopen it, but it must not paraphrase the decision's
 substance.
+
+For implementation dispatch, the four contracts remain compact:
+
+- **Input:** exact ratification, planning view, and roadmap-step pointers;
+- **Authority:** authority order and stop-on-conflict rule, without semantic restatement;
+- **Mutation:** permitted repositories/path families plus transient dirty-state exceptions;
+- **Completion:** evidence destination and stop point, by reference to the roadmap exits.
+
+Duplicating roadmap bullets, design truth tables, human authorization prose, generic Git procedure,
+or an independent completion checklist is a dispatch defect because it creates a second plan that can
+drift. `AGENTS.md` points to the dispatch; it does not cause the dispatch to absorb `AGENTS.md`, the
+ratification record, or the roadmap.
 
 Keep instructions separate from results:
 

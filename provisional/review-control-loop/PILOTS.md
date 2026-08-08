@@ -38,6 +38,14 @@ history comparisons. Integrity held, but the human-readable-numbered-record obje
 candidates default to materialized bundles; Git remains the backing integrity boundary rather than the
 reviewer's document-reading interface.
 
+### Implementation-dispatch observation
+
+The first Step 1.0 implementation work order expanded to 173 lines by repeating ratification, M5
+semantics, roadmap work items, exit evidence, generic Git procedure, and stopping rules. Although
+bounded, it became a second roadmap and violated the pointer-only handoff rule. Future implementation
+work orders are thin, normally one-page dispatch envelopes; missing substantive instruction is fixed
+in DESIGN or ROADMAP rather than copied into the dispatch.
+
 ## Agent Workflow — Pilot 2
 
 | Field | State |
@@ -65,3 +73,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Add a distinct verification work-order contract with `READY TO RATIFY` as its positive control state | Dogfood correction |
 | 2026-08-08 | Require materialized numbered candidate bundles by default; grandfather Agent Judge Candidates 01/02 without rewriting them | Dogfood correction |
 | 2026-08-08 | Separate human ratification, execution authorization, and fresh-session implementation dispatch | Dogfood correction |
+| 2026-08-08 | Make implementation work orders thin pointer envelopes; prohibit duplicated design, roadmap, ratification, and completion content | Dogfood correction |
