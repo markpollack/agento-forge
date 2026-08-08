@@ -43,6 +43,7 @@ distilled into the template where the session meets it.
 | How do I know a check actually catches anything? | `concepts/quality-infrastructure.md` (Checks That Catch) |
 | How do I design a DSL / fluent API / CLI so author mistakes get real diagnostics? | `guides/authoring-surface-quality.md` |
 | How do I run an independent second implementation against my own contract? | `guides/second-implementation-protocol.md` |
+| How are we testing independent AI review, adjudication, materialized candidates, ratification, and implementation dispatch? | `provisional/review-control-loop/README.md` then `PROTOCOL.md` — experimental, not normative Forge doctrine |
 | What should a stage gate's exit report actually say? | `phases/phase-review-template.md` (Gate Exit Is a Measured Report) |
 | What is our Java quality bar? (JaCoCo, ArchUnit, JSpecify, OWASP, Javadoc) | `guides/java-library-quality.md` — **the canonical standard**, formerly GP-9 `java-library-finishing-touches.md` |
 | How do I make `@NullMarked` actually mean something? | `guides/java-library-quality.md` §4.7 (JSpecify ships annotations only — NullAway at ERROR is the enforcer; wiring, config decisions, adoption triage) |
@@ -64,6 +65,7 @@ distilled into the template where the session meets it.
 | Project variants | `variants/` | Agent, project, research, steward, kb — when to use each, key differences |
 | Guides | `guides/` | Getting started, **the canonical Java quality standard** (`java-library-quality.md` — the single home; the `grand-plan/v2` and research-KB `conversations/archive/` copies are frozen snapshots), authoring-surface quality, the second-implementation protocol, research project structure |
 | Examples | `examples/` | Minimal directory structure examples for each variant |
+| Provisional experiments | `provisional/` | Dogfooded methods under evaluation; not normative until their promotion gate passes |
 | Unsorted | `inbox/` | Methodology comparisons, AGENTS.md/PLANS.md convergence research (staging area) |
 
 ## Cross-Topic Questions

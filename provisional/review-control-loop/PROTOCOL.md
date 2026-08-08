@@ -14,14 +14,43 @@ not silently choose the most plausible document.
 
 ## 2. Freeze a candidate
 
-A candidate must remain immutable while findings cite it. Use both mechanisms when useful:
+A candidate must remain immutable while findings cite it. Use both mechanisms:
 
 1. a Git commit or tag for byte integrity; and
 2. a numbered candidate record (`candidate-01`, `candidate-02`) for human legibility.
 
-The numbered record can be a materialized document bundle or a manifest that names an immutable Git
-tree and hashes every reviewed file. A mutable filename alone is not a review candidate. Prior
-candidates and received reviews are records: append a supersession note; never rewrite their substance.
+The numbered record is a **materialized review bundle**, not merely a manifest that requires the
+reviewer to reconstruct files from Git. Its default layout is:
+
+```text
+plans/reviews/<review-id>/candidate-NN/
+├── README.md                 # identity, standing, source references, and bundle inventory
+├── VISION.md                 # exact frozen copy of the active Vision
+├── DESIGN.md                 # exact frozen copy of the active Design
+├── ROADMAP.md                # exact frozen copy of the active Roadmap
+├── CORRECTIONS.md            # finding-to-candidate exhibit map from the prior adjudication
+├── decisions/                # exact copies of decisions needed to interpret this candidate
+└── project-inputs/           # exact copies of external/project-owned supporting inputs
+```
+
+`README.md` declares that the copies are immutable review records, not competing authorities. It maps
+each copy to its authoritative source path and source repository commit. The candidate tag protects
+the committed bundle as one tree. Per-file hashes are not required for tracked files already contained
+in that tree; an external project commit is sufficient provenance for tracked project inputs. Reserve
+digests for untracked inputs or claims whose subject is byte identity.
+
+The reviewer reads ordinary files in `candidate-NN/`. Routine review must not require repeated
+`git show`, a linked worktree, or Git history navigation. One tag/commit preflight may establish bundle
+integrity; Git diff remains an optional challenge tool for a specific provenance claim. Human-readable
+comparison may use the numbered bundles and `CORRECTIONS.md` directly.
+
+A manifest-only candidate is an exception for a genuinely large or non-copyable input set. It must
+record why materialization is impractical and the expected reviewer cost. Agent Judge Candidates 01
+and 02 are grandfathered pilot records and remain immutable; their Git-heavy verification is evidence
+for this rule, not a reason to rewrite them.
+
+A mutable filename alone is not a review candidate. Prior candidates and received reviews are records:
+append a supersession note outside the frozen bundle; never rewrite their substance.
 
 Committing a candidate does not mean the documents are finished. It means only: **these are the exact
 bytes under review**. Review branches and candidate commits may be squashed later, but received review
@@ -53,14 +82,14 @@ not automatically better; irrelevant precision consumes time and obscures the de
 |---|---|
 | Which released dependency is declared | build-file coordinate and version |
 | Which dependency Maven actually resolved, when disputed | dependency-tree/effective-model output |
-| Which immutable review candidate was examined | Git commit/tag plus manifest hashes |
+| Which immutable review candidate was examined | Numbered materialized bundle plus its single Git tag/commit |
 | Whether two artifacts under one mutable coordinate contain the same bytes | digest comparison |
 | Whether behavior satisfies a rule | executable counterexample or regression test |
 
-Do not checksum ordinary versioned dependencies prophylactically. Reserve byte digests for claims about
-byte identity—especially local installations, snapshots, mutable artifacts, candidate integrity, or an
-explicit provenance investigation. Evidence should answer the finding's question, not demonstrate that
-the reviewer can collect stronger-looking measurements.
+Do not checksum ordinary versioned dependencies or tracked candidate-bundle files prophylactically.
+Reserve byte digests for claims about byte identity—especially local installations, snapshots, mutable
+artifacts, untracked inputs, or an explicit provenance investigation. Evidence should answer the
+finding's question, not demonstrate that the reviewer can collect stronger-looking measurements.
 
 ## 4. Adjudicate before correcting
 
@@ -127,6 +156,44 @@ The loop can exit when:
 Human ratification decides whether to execute, merge, or reopen. The setpoint is **decision readiness
 with known residual risk**, not zero reviewer comments.
 
+### Ratification-to-execution transition
+
+Ratification and execution authorization are separate control decisions. A positive verification does
+not authorize implementation, and ratifying a planning candidate does not silently choose a worker or
+start a roadmap step.
+
+After verification reports `READY TO RATIFY`, the controller performs this sequence:
+
+1. Commit the verification record exactly as received; do not edit sensor output while accepting it.
+2. Wait for an explicit human candidate decision: `RATIFIED`, `REOPEN`, or `REJECTED`.
+3. Record that decision in `ratification-NN.md`, naming the candidate tag and verification record.
+   Record execution authorization separately as `NOT AUTHORIZED` or as one exact roadmap step.
+4. If an execution step is authorized, instantiate one bounded implementation work order from
+   `templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md`. It points to the ratified candidate, roadmap
+   step, decisions, mutation roots, evidence obligations, and stopping checkpoint; it does not restate
+   their substance.
+5. Update canonical `AGENTS.md` so its current-action section points to that work order. Tool-specific
+   files such as `CLAUDE.md` remain minimal bridges to `AGENTS.md` and do not duplicate the dispatch.
+6. Commit the ratification, work order, and current-action pointer as controller state. Report that no
+   implementation occurred.
+7. Launch a fresh implementation session with a one-line pointer to the steward's agent instructions.
+   The implementer stops at the work order's completion checkpoint; it does not self-ratify its result.
+
+The worker may be a different model from the author or verifier. That provides a useful independent
+implementer perspective and tests whether the plan is executable across contexts, but it is not an
+independent verification sensor. A later review still evaluates the implementation evidence.
+
+The lifecycle states are explicit:
+
+```text
+FROZEN CANDIDATE
+      -> VERIFIED: READY TO RATIFY
+      -> RATIFIED / EXECUTION NOT AUTHORIZED
+      -> RATIFIED / STEP N AUTHORIZED
+      -> IMPLEMENTATION CHECKPOINT
+      -> VERIFIED STEP EVIDENCE or BOUNDED CORRECTION
+```
+
 ## 7. Handoffs and cross-repository work
 
 A handoff points; it does not restate.
@@ -162,14 +229,15 @@ The reusable unit is a **work-order contract**, not a copied project prompt. It 
 
 1. **Input contract** — ordered authoritative inputs and the immutable candidate identity.
 2. **Authority contract** — settled decisions, reopening rule, and evidence ownership.
-3. **Mutation contract** — allowed evidence roots, the one output that may change, and explicit
+3. **Mutation contract** — allowed evidence roots, permitted outputs or path families, and explicit
    exclusions.
 4. **Completion contract** — required ledger fields, coverage denominators, stop conditions, and the
    decision brief.
 
 The work order points to project decisions; it never restates them. Project-specific facts belong in
-the binding, candidate manifest, and active documents. The work order may name a protected decision by
-identifier and say what evidence can reopen it, but it must not paraphrase the decision's substance.
+the binding, candidate-bundle README, and active documents. The work order may name a protected
+decision by identifier and say what evidence can reopen it, but it must not paraphrase the decision's
+substance.
 
 Keep instructions separate from results:
 
@@ -189,10 +257,24 @@ plans/reviews/<review-id>/work-order-verification-02.md
           |
           v
 plans/reviews/<review-id>/verification-02.md
+
+templates/RATIFICATION-TEMPLATE.md
+          |
+          v
+plans/reviews/<review-id>/ratification-02.md
+
+templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md
+          |
+          v
+plans/work-orders/<work-order-id>.md
+          |
+          v
+project commit + steward implementation record/checkpoint
 ```
 
-The first is the reusable session contract, the second is a filled immutable dispatch record, and the
-third is the evolving output until it is committed complete.
+Each flow keeps its reusable template, filled dispatch/decision record, and produced evidence separate.
+Templates define lifecycle contracts; project records bind those contracts to exact candidates,
+roadmap steps, repositories, and outputs.
 
 ### Automation maturity
 
@@ -200,10 +282,11 @@ Use progressive extraction rather than immediately building an orchestrator:
 
 | Level | Mechanism | Promotion evidence |
 |---|---|---|
-| 1 — current | Fill Markdown adjudication and verification work-order templates | Agent Judge completes one full candidate-review-adjudication-correction-verification loop without prompt repair |
+| 1 — current | Materialized candidate bundles plus filled Markdown adjudication, verification, ratification, and implementation-dispatch templates | Agent Judge completes one full planning loop and one dispatched implementation step without prompt repair |
 | 2 | Deterministic generator from candidate/review metadata | Agent Workflow needs the same fields with only values changed |
 | 3 | Forge command or skill with preflight validation | At least three clean uses establish stable inputs and stop rules |
 | 4 | Automated review controller | Pilot measurements show orchestration, rather than judgment, is the recurring bottleneck |
 
-Do not encode project judgment into a generator. Automation may verify paths, hashes, mutation
-boundaries, required fields, and lifecycle transitions; adjudication remains evidence-bearing work.
+Do not encode project judgment into a generator. Automation may copy exact bundle inputs, inventory
+paths, verify the single candidate ref, validate mutation boundaries and required fields, and enforce
+lifecycle transitions; adjudication remains evidence-bearing work.

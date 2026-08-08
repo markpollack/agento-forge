@@ -2,7 +2,7 @@
 
 > **Method:** {{path-or-version-of-review-control-loop-protocol}}
 > **Steward repository:** {{absolute-path}}
-> **Candidate:** {{immutable-tag-or-commit}}; {{candidate-manifest-path}}
+> **Candidate:** {{immutable-tag-or-commit}}; {{materialized-candidate-bundle-path}}
 > **Adjudication ledger:** {{adjudication-ledger-path}}
 > **Output record:** {{verification-record-path}}
 > **Mode:** independent verification; no correction or implementation
@@ -18,14 +18,15 @@ structural blocker, and is ready for human ratification.
 1. {{session-instructions-path}}
 2. {{steward-binding-path}}
 3. {{method-protocol-path}}
-4. {{candidate-manifest-path}}
+4. {{materialized-candidate-bundle-path}}/README.md
 5. {{adjudication-ledger-path}}
-6. the candidate-tagged VISION, DESIGN, and ROADMAP
+6. the materialized candidate-bundle VISION, DESIGN, and ROADMAP
 7. {{additional-authority-pointers-or-none}}
 
-Resolve all candidate artifacts from the immutable candidate ref, not from mutable working-tree files.
-Verify the tag and every manifest hash before interpreting content. Stop with `HOLD` if candidate
-integrity fails.
+Read candidate artifacts as ordinary files from the numbered materialized bundle, not from mutable
+active planning paths. Run one preflight confirming that the candidate tag identifies the committed
+bundle and that its README inventory/source references are complete. Do not reproduce tracked files
+through repeated `git show` or per-file hash commands. Stop with `HOLD` if candidate integrity fails.
 
 ## Evidence permissions
 
@@ -46,7 +47,7 @@ Edit only:
 
 Do not edit:
 
-- the candidate manifest or candidate-tagged artifacts;
+- the materialized candidate bundle or candidate-tagged artifacts;
 - the adjudication or received review;
 - active VISION, DESIGN, ROADMAP, or journal decisions;
 - project or consumer files;
@@ -55,7 +56,7 @@ Do not edit:
 
 ## Verification procedure
 
-1. Verify candidate identity, manifest hashes, and named external commit identities.
+1. Verify the single candidate ref, materialized bundle inventory, and named source commit identities.
 2. Walk every finding in the adjudication ledger. For an accepted correction, cite the exact candidate
    exhibit and classify it `verified-corrected` or `still-open`. For a refuted, filed, or parked item,
    verify that Candidate {{candidate-number}} preserves the disposition and trigger/owner.
@@ -74,7 +75,7 @@ another correction round.
 
 Report finite spaces as plain walked counts and method-level denominators, including:
 
-- {{manifest-identity-count}} manifest identities;
+- {{candidate-ref-and-bundle-inventory-count}} candidate ref and bundle inventory entries;
 - {{adjudicated-finding-count}} adjudicated findings;
 - {{active-document-count}} active planning documents;
 - {{roadmap-clause-or-step-count}} roadmap clauses or steps; and

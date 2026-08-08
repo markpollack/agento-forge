@@ -9,7 +9,7 @@
 | Effort | Agent Judge 0.14 closure and Agent Workflow adoption readiness |
 | Initial candidate | Private steward commit `a7ea488`, tag `review/aj-014-closure/candidate-01`; reviewed trio at project HEAD `8f8391b` plus recorded working-tree state |
 | Initial sensor output | `roadmap-readiness-review-2026-08-06`, 16 findings |
-| Current phase | CANDIDATE 02 FROZEN — READY FOR VERIFICATION |
+| Current phase | CANDIDATE 02 VERIFIED — READY FOR HUMAN RATIFICATION |
 | Ratification state | Not ratified |
 
 ### Initial observations
@@ -25,10 +25,18 @@
 
 ### Next experiment action
 
-Run an independent verification against private steward tag
-`review/aj-014-closure/candidate-02`. Verify all 16 adjudicated dispositions and the corrected active
-trio without editing the candidate. Present the front-loaded checkpoint for human ratification before
-any Agent Judge implementation begins.
+Preserve `verification-02.md` exactly as received. Wait for the human Candidate 02 decision, record it
+separately, and—only if one exact roadmap step is authorized—instantiate the implementation-dispatch
+work order and update the steward's canonical `AGENTS.md` current-action pointer. Candidate 02 remains
+immutable.
+
+### Candidate-packaging observation
+
+Candidates 01 and 02 used numbered manifest directories without materialized copies of the reviewed
+documents. Verification therefore required repeated `git show`, per-file hash reproduction, and Git
+history comparisons. Integrity held, but the human-readable-numbered-record objective did not. Future
+candidates default to materialized bundles; Git remains the backing integrity boundary rather than the
+reviewer's document-reading interface.
 
 ## Agent Workflow — Pilot 2
 
@@ -55,3 +63,5 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Use proportional evidence: coordinates for released dependencies; digests only when byte identity is disputed | Dogfood correction |
 | 2026-08-08 | Front-load a plain-language human checkpoint and replace ambiguous `CORRECT` with `CORRECTIONS REQUIRED` | Dogfood correction |
 | 2026-08-08 | Add a distinct verification work-order contract with `READY TO RATIFY` as its positive control state | Dogfood correction |
+| 2026-08-08 | Require materialized numbered candidate bundles by default; grandfather Agent Judge Candidates 01/02 without rewriting them | Dogfood correction |
+| 2026-08-08 | Separate human ratification, execution authorization, and fresh-session implementation dispatch | Dogfood correction |

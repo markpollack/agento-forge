@@ -2,7 +2,7 @@
 
 > **Method:** {{path-or-version-of-review-control-loop-protocol}}
 > **Steward repository:** {{absolute-path}}
-> **Candidate:** {{immutable-tag-or-commit}}; {{candidate-manifest-path}}
+> **Candidate:** {{immutable-tag-or-commit}}; {{materialized-candidate-bundle-path}}
 > **Received review:** {{review-record-path}}
 > **Output ledger:** {{adjudication-ledger-path}}
 > **Mode:** evidence gathering and adjudication; no correction
@@ -18,15 +18,17 @@ or implementing any correction.
 1. {{session-instructions-path}}
 2. {{steward-binding-path}}
 3. {{method-protocol-path}}
-4. {{candidate-manifest-path}}
+4. {{materialized-candidate-bundle-path}}/README.md
 5. {{received-review-path}}
-6. {{active-vision-path}}
-7. {{active-design-path}}
-8. {{active-roadmap-path}}
+6. {{materialized-candidate-bundle-path}}/VISION.md
+7. {{materialized-candidate-bundle-path}}/DESIGN.md
+8. {{materialized-candidate-bundle-path}}/ROADMAP.md
 9. {{additional-authority-pointers-or-none}}
 
-Verify that the candidate ref resolves and that the manifest hashes identify the reviewed artifacts.
-Stop and report a candidate-integrity blocker if they do not.
+Read ordinary files from the materialized bundle. Run one preflight confirming that the candidate ref
+identifies the committed bundle and that its README inventory/source references are complete. Do not
+reconstruct tracked inputs through repeated `git show` or per-file hashes. Stop and report a
+candidate-integrity blocker if the preflight fails.
 
 ## Evidence permissions
 
@@ -46,7 +48,7 @@ Edit only:
 
 Do not edit:
 
-- the candidate manifest or candidate-tagged artifacts;
+- the materialized candidate bundle or candidate-tagged artifacts;
 - the received review;
 - active VISION, DESIGN, or ROADMAP;
 - project or consumer code;
@@ -116,7 +118,7 @@ decision.
 
 Do not guess or correct artifacts if:
 
-- candidate identity or hashes cannot be verified;
+- candidate identity or bundle inventory cannot be verified;
 - two authorities conflict;
 - required evidence is outside the allowed roots;
 - a finding requires an owner decision before it can be classified; or

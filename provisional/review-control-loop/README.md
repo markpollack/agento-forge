@@ -42,6 +42,25 @@ author policy -> candidate artifact -> sensors / reviewers
 - A **verification reviewer** examines the corrected, frozen candidate for new structural blockers.
 - The human receives a compact decision brief plus reproducible exhibits, not a pile of opinions.
 
+The planning loop hands control to execution through an explicit transition:
+
+```text
+verified candidate
+       |
+       v
+human ratification ----> reopen or reject
+       |
+       v
+one-step authorization
+       |
+       v
+pointer-based work order -> fresh implementer -> implementation checkpoint -> later verification
+```
+
+Ratification, execution authorization, worker selection, and implementation acceptance are distinct
+events. The controller records and dispatches them; conversational glue such as “I would then…” is not
+an adequate project artifact.
+
 ## Repository experiment
 
 Each public project is paired 1:1 with a private steward repository.
@@ -67,6 +86,8 @@ named dependency or work order; it is not copied into ad hoc handoff prose.
    Git history noisy or inaccessible?
 5. Can handoffs become pointers to decisions and roadmap steps instead of restatements that drift?
 6. What minimum review lenses and coverage denominators produce useful confidence at acceptable cost?
+7. Can materialized numbered bundles preserve provenance while keeping Git out of the normal document-reading path?
+8. Can ratification and implementation dispatch become an explicit, reusable controller transition rather than an ad hoc handoff?
 
 ## Promotion gate
 
@@ -79,6 +100,8 @@ The method may be proposed for Forge only after both pilots record:
 - document oscillation or reopened settled decisions;
 - stale or duplicate authorities removed;
 - human time required for adjudication and ratification;
+- reviewer-interface overhead, including Git reconstruction commands versus substantive checks;
+- dispatch prompt repairs or missing controller-transition artifacts; and
 - failures and exceptions, not only successes.
 
 Promotion is a separate reviewed change. Pilot success does not silently make this directory normative.
@@ -92,3 +115,11 @@ Promotion is a separate reviewed change. Pilot success does not silently make th
 - [templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md](templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md) —
   fill-in instructions for a fresh adjudication session
 - [templates/ADJUDICATION-TEMPLATE.md](templates/ADJUDICATION-TEMPLATE.md) — adjudication output ledger
+- [templates/CANDIDATE-BUNDLE-TEMPLATE.md](templates/CANDIDATE-BUNDLE-TEMPLATE.md) — required
+  materialized numbered-candidate layout and source inventory
+- [templates/VERIFICATION-WORK-ORDER-TEMPLATE.md](templates/VERIFICATION-WORK-ORDER-TEMPLATE.md) —
+  independent verification contract for a corrected bundle
+- [templates/RATIFICATION-TEMPLATE.md](templates/RATIFICATION-TEMPLATE.md) — human candidate decision
+  and separately recorded execution authorization
+- [templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md](templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md) —
+  bounded dispatch contract for a fresh implementation session

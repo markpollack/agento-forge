@@ -47,6 +47,7 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Phase 5: Documentation | `phases/05-documentation.md` | User-facing docs, Diataxis taxonomy |
 | Changing a decided artifact | `concepts/act-pipeline.md` | Cold machine review → fix round → team review of the post-fix artifact → lockstep ratification |
 | Review evidence standard | `concepts/refutation-by-counterexample.md` | Findings are exhibits, non-findings are recorded searches |
+| Provisional review control loop | `provisional/review-control-loop/README.md` + `PROTOCOL.md` | Dogfood-only materialized candidates, AI review/adjudication, human ratification, and bounded implementation dispatch; not normative Forge doctrine |
 | **Concepts register** | `concepts/index.md` | 23 concepts as one-line rules + read-this-when, grouped by the moment each bites (starting · deciding · building · reviewing · shipping). **Start here for anything under `concepts/`** — the rules are self-sufficient; open a page only when its row describes your situation |
 | Core concepts (23 docs) | `concepts/` | The two loops, KB architecture, judges, steward, oracles, research patterns, improvement flywheel, review lenses, act pipeline, registers of absence, vocabulary law |
 | Templates (12 docs) | `templates/` | Fill-in templates for every phase output |
@@ -93,6 +94,7 @@ forge-methodology/
 ├── guides/                # Getting started, Java quality, authoring-surface quality,
 │                          #   second-implementation protocol, research structure
 ├── examples/              # Minimal project structure examples
+├── provisional/           # Dogfooded methods under evaluation; not normative Forge doctrine
 ├── inbox/                 # Unsorted staging (comparisons, raw research)
 └── plans/                 # Status reports
 ```
