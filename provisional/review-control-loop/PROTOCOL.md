@@ -49,6 +49,12 @@ record why materialization is impractical and the expected reviewer cost. Agent 
 and 02 are grandfathered pilot records and remain immutable; their Git-heavy verification is evidence
 for this rule, not a reason to rewrite them.
 
+For a verified grandfathered candidate, the controller may certify the unchanged active trio as the
+implementation session's ordinary-file planning view. The controller performs the equivalence check
+once and records it in ratification/dispatch state; the implementer does not repeat the candidate's
+Git reconstruction. If the active trio has changed since verification, create a new materialized
+candidate rather than claiming equivalence.
+
 A mutable filename alone is not a review candidate. Prior candidates and received reviews are records:
 append a supersession note outside the frozen bundle; never rewrite their substance.
 

@@ -3,7 +3,8 @@
 > **Method:** {{path-or-version-of-review-control-loop-protocol}}
 > **Steward repository:** {{absolute-steward-path}}
 > **Project repository:** {{absolute-project-path}}
-> **Ratified candidate:** {{candidate-tag-or-commit}}; {{materialized-candidate-bundle-path}}
+> **Ratified candidate:** {{candidate-tag-or-commit}}; {{candidate-record-path}}
+> **Execution planning view:** {{materialized-candidate-bundle | controller-certified unchanged active trio for a grandfathered candidate}}
 > **Ratification:** {{ratification-record-path}}
 > **Roadmap step:** {{candidate-bundle-roadmap-path-and-step-id}}
 > **Implementation record:** {{steward-output-record-path}}
@@ -19,12 +20,13 @@ stop at a human checkpoint. Do not begin the next step or self-ratify the implem
 1. Canonical steward `AGENTS.md`
 2. Steward binding
 3. Ratification record
-4. Materialized candidate bundle `README.md`
-5. Materialized candidate VISION, DESIGN, ROADMAP, and the authorized step
-6. Candidate decisions and project inputs named by that step
+4. The execution planning view named above
+5. Its VISION, DESIGN, ROADMAP, and the authorized step
+6. Its decisions and project inputs named by that step
 7. Project-local instructions and applicable engineering standards
 
-Read ordinary files from the materialized candidate bundle. Do not reconstruct routine inputs with
+Read ordinary files from the named execution planning view. For a grandfathered manifest-only
+candidate, trust the controller's recorded equivalence check; do not reconstruct routine inputs with
 `git show` or a worktree. Use Git only for normal repository safety, bounded provenance questions, and
 the required implementation commits.
 
