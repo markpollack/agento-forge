@@ -146,6 +146,15 @@ Before designing, understand what's available. This prevents building from scrat
    - Build patterns to follow (quality infrastructure, test infrastructure)
    - Conventions to match (package naming, error handling, logging)
 
+4. **Load applicable engineering standards before designing quality infrastructure**:
+   - For every Java project, read `{agento-forge}/guides/java-library-quality.md`; it is the
+     canonical Java quality standard, not optional background reading.
+   - Carry its applicable rules into DESIGN, ROADMAP quality-infrastructure work, and the generated
+     CLAUDE.md by reference rather than copying a soon-stale checklist.
+   - In particular, JSpecify annotations alone are not null-safety enforcement: when adopting
+     `@NullMarked`, configure a build-breaking checker such as NullAway at `ERROR`, scope adoption
+     deliberately, budget the initial triage, and watch a deliberate violation make the build fail.
+
 ### Phase 3: Create Structure
 
 Create the project directory:
@@ -181,7 +190,11 @@ Create `{project}/CLAUDE.md` defining:
 
 4. **Key architectural decisions** — Inline the most important design decisions for quick reference
 5. **Integration context** — How this project relates to others in the ecosystem
-6. **Quality standards** — Test coverage targets, code style, review expectations
+6. **Quality standards** — Test coverage targets, code style, review expectations. For a Java
+   project, include an explicit routing entry to
+   `{agento-forge}/guides/java-library-quality.md` and state that its applicable quality gates govern
+   the build. If JSpecify is adopted, say where `@NullMarked` applies and name the build-time enforcer;
+   annotations without enforcement must not be described as null safety.
 7. **Not Covered** — Explicit exclusions
 8. **Session behavior** — Follow ROADMAP steps, write tests before implementation, create learnings after each step
 
