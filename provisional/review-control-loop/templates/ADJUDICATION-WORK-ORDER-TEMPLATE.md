@@ -64,7 +64,9 @@ Do not restate the decision here.
 For every finding:
 
 1. Reproduce, partially reproduce, refute, or identify an owner decision.
-2. Record the exact exhibit: immutable file/ref plus line, command and output, or counterexample.
+2. Record the exact exhibit: immutable file/ref plus line, command and output, or counterexample. Use
+   the least expensive evidence that distinguishes the relevant states; do not checksum ordinary
+   versioned dependencies when a declared coordinate/version answers the claim.
 3. Separate the claimed defect from the reviewer's proposed remedy.
 4. Classify it as validating an existing decision, additive, or reopening settled design.
 5. Assign the current closure state:

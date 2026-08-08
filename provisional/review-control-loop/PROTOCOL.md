@@ -44,6 +44,24 @@ adversarial work cannot claim completeness; it reports the scenario families att
 
 Severity is not authority. A MUST without a breaking case is downgraded until its exhibit exists.
 
+### Evidence proportionality
+
+Use the least expensive evidence that distinguishes the states relevant to the claim. More evidence is
+not automatically better; irrelevant precision consumes time and obscures the decision.
+
+| Claim being tested | Normally sufficient evidence |
+|---|---|
+| Which released dependency is declared | build-file coordinate and version |
+| Which dependency Maven actually resolved, when disputed | dependency-tree/effective-model output |
+| Which immutable review candidate was examined | Git commit/tag plus manifest hashes |
+| Whether two artifacts under one mutable coordinate contain the same bytes | digest comparison |
+| Whether behavior satisfies a rule | executable counterexample or regression test |
+
+Do not checksum ordinary versioned dependencies prophylactically. Reserve byte digests for claims about
+byte identity—especially local installations, snapshots, mutable artifacts, candidate integrity, or an
+explicit provenance investigation. Evidence should answer the finding's question, not demonstrate that
+the reviewer can collect stronger-looking measurements.
+
 ## 4. Adjudicate before correcting
 
 The author or a separate adjudicator reproduces every finding against the frozen candidate and standing

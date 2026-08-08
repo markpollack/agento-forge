@@ -51,3 +51,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-06 | Keep this method provisional through both pilots | Owner decision |
 | 2026-08-08 | Separate reusable work-order instructions from the adjudication output ledger | Pilot decision |
 | 2026-08-08 | Add `accepted-open`; `fixed` is valid only after correction exists | Dogfood correction |
+| 2026-08-08 | Use proportional evidence: coordinates for released dependencies; digests only when byte identity is disputed | Dogfood correction |
