@@ -125,7 +125,7 @@ remaining ambiguous.
 | Project repository | `markpollack/agent-workflow` |
 | Steward repository | `markpollack/agent-workflow-steward` — private, created empty 2026-08-09 |
 | Entry trigger | Agent Judge adjudication establishes the cross-repository work order and the Agent Judge artifact is locally installed |
-| Current phase | Private steward bootstrapped; Act AJ-14 authorized, not started; first real gitmaildir round trip complete |
+| Current phase | Private steward bootstrapped; Act AJ-14 in authorized bounded correction C1; first deferred-future-work gitmaildir round trip complete |
 
 Pilot 2 will test whether Agent Judge's completed work order can be consumed by reference—without a new
 handoff document that restates and drifts from the upstream decisions.
@@ -133,6 +133,14 @@ handoff document that restates and drifts from the upstream decisions.
 Step 1.5 also tested the public footprint and active-plan size. The controller reduced both public
 projects to minimal stable `AGENTS.md` bridges, removed transient current-action state from steward
 instructions, and archived Workflow's completed Roadmap Stages 0–2 while leaving Act AJ-14 live.
+
+AJ-14 controller review then exercised the new inbox preflight with non-blocking future work. Agent
+Workflow sent one pointer-only framework-adapter finding; Agent Judge filed recipient-owned Act AJ-15
+with a trigger, returned a receipt, and both messages completed the real new→cur→archive lifecycle.
+The exercise also exposed operator friction: publishing, governed receiving, returning a receipt, and
+accepting it required four small temporary Java drivers. That is evidence for a future gitmaildir
+operator CLI/SPI shell—generic publish/list mechanics plus a recipient-supplied disposition handler—
+not a reason to copy project-specific pilot drivers into the library.
 
 ## Method-level decision log
 
@@ -161,3 +169,4 @@ instructions, and archived Workflow's completed Roadmap Stages 0–2 while leavi
 | 2026-08-09 | Keep public and steward `AGENTS.md` stable: no current action, candidate/artifact identity, roadmap status, dispatch pointer, pending decision, or checkpoint state; operational state stays in ROADMAP and controller records | Dogfood correction |
 | 2026-08-09 | Add an inbox preflight at Roadmap Controller/planning session entry and before dispatch; separate mechanical sensing from recipient-owned disposition, keep implementation sessions isolated, and preserve full stage-boundary inbox triage | Dogfood correction |
 | 2026-08-09 | Make named downstream milestones part of trajectory control so an earlier compatibility correction cannot erase prerequisites for later durable behavior | Dogfood correction |
+| 2026-08-09 | File gitmaildir operator-CLI extraction after the second real round trip required four temporary Java drivers; keep project-specific governance handlers outside the generic library | Pilot finding filed to gitmaildir |
