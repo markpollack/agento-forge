@@ -9,8 +9,8 @@
 | Effort | Agent Judge 0.14 closure and Agent Workflow adoption readiness |
 | Initial candidate | Private steward commit `a7ea488`, tag `review/aj-014-closure/candidate-01`; reviewed trio at project HEAD `8f8391b` plus recorded working-tree state |
 | Initial sensor output | `roadmap-readiness-review-2026-08-06`, 16 findings |
-| Current phase | STEP 1.2 IMPLEMENTED — CORRECTION REQUIRED |
-| Ratification state | Candidate 02 ratified; Steps 1.0 and 1.1 accepted; Step 1.2 correction pending |
+| Current phase | Step 1.5 handoff complete — Roadmap Controller recommends acceptance |
+| Ratification state | Candidate 02 ratified; Steps 1.0–1.4 accepted; Step 1.5 human decision pending |
 
 ### Initial observations
 
@@ -125,10 +125,14 @@ remaining ambiguous.
 | Project repository | `markpollack/agent-workflow` |
 | Steward repository | `markpollack/agent-workflow-steward` — private, created empty 2026-08-09 |
 | Entry trigger | Agent Judge adjudication establishes the cross-repository work order and the Agent Judge artifact is locally installed |
-| Current phase | Step 1.5 authorized to import the existing `plans/v3/` authority, stage the migration act, and perform the first real gitmaildir delivery |
+| Current phase | Private steward bootstrapped; Act AJ-14 staged, not authorized, not started; first real gitmaildir round trip complete |
 
 Pilot 2 will test whether Agent Judge's completed work order can be consumed by reference—without a new
 handoff document that restates and drifts from the upstream decisions.
+
+Step 1.5 also tested the public footprint and active-plan size. The controller reduced both public
+projects to minimal stable `AGENTS.md` bridges, removed transient current-action state from steward
+instructions, and archived Workflow's completed Roadmap Stages 0–2 while leaving Act AJ-14 live.
 
 ## Method-level decision log
 
