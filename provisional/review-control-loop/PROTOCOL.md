@@ -224,6 +224,13 @@ The Roadmap Controller:
 7. writes a checkpoint using `templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md` and presents one
    exact next human decision.
 
+The checkpoint is a **thin control-transition record**, normally one readable page. It points to the
+roadmap and implementation evidence; it does not restate design semantics, roadmap criteria, test
+transcripts, changed-path inventories, or discoveries already preserved in the step learning record.
+If the supporting evidence is incomplete, correct that evidence record rather than copying the
+missing report into the checkpoint. Like a thin implementation dispatch, an oversized controller
+checkpoint can become a competing roadmap or implementation report.
+
 The controller may directly apply bounded planning-currency corrections that only make authoritative
 documents truthfully describe already accepted evidence. It must not use that permission to change
 product semantics, broaden scope, rewrite historical evidence records, or begin the next step. A new

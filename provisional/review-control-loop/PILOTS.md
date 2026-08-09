@@ -55,6 +55,12 @@ accepting evidence, restoring planning currency, checking trajectory, and prepar
 decision. The pilot therefore adds an AI Roadmap Controller checkpoint between implementation and any
 next-step authorization.
 
+The first filled checkpoint then grew into a detailed evidence report, repeating test results,
+changed paths, design reasoning, and the learning record. It did not yet override the roadmap, but it
+had the same drift risk as the oversized first implementation dispatch. Controller checkpoints are
+therefore thin, one-page state-transition records; detailed evidence stays in the step learning
+record.
+
 ## Agent Workflow — Pilot 2
 
 | Field | State |
@@ -84,3 +90,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Separate human ratification, execution authorization, and fresh-session implementation dispatch | Dogfood correction |
 | 2026-08-08 | Make implementation work orders thin pointer envelopes; prohibit duplicated design, roadmap, ratification, and completion content | Dogfood correction |
 | 2026-08-08 | Add an AI Roadmap Controller checkpoint after every implementation step; the human remains Project Owner and next-step authority | Dogfood correction |
+| 2026-08-08 | Keep Roadmap Controller checkpoints to one-page transition records that point to, rather than duplicate, roadmap and implementation evidence | Dogfood correction |
