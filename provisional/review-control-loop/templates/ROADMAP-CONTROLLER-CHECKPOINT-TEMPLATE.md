@@ -4,6 +4,7 @@
 > **Project:** {{absolute-path}} at {{branch}} / {{full-commit}}
 > **Steward input:** {{absolute-path}} at {{branch}} / {{full-commit}}
 > **Evidence:** {{implementation-record-path}}
+> **Human decision:** PENDING
 > **Next step:** NOT AUTHORIZED
 
 This is a control-transition record, not another roadmap or implementation report. Keep it to one
@@ -32,3 +33,7 @@ historical step evidence remain unchanged.
 
 {{Ask for one exact decision: accept/reject the checkpoint and, if appropriate, authorize one named
 next roadmap step. Acceptance and silence do not themselves authorize execution.}}
+
+After the response, replace `PENDING` and `NOT AUTHORIZED` with the received decision and any one
+authorized step, then replace this request with a concise record of the response and dispatch path.
+Do not rewrite the recommendation or decision brief.

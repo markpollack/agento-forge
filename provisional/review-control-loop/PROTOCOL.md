@@ -247,6 +247,11 @@ The controller emits one of three recommendations:
 controller recommendation and authorizes at most one next roadmap step. Only then may the controller
 prepare the next thin dispatch.
 
+Record that response in the same controller checkpoint by changing its human-decision field from
+`PENDING` to the received decision and naming any one authorized next step. This closes the transition
+without creating a separate ad hoc authorization document. Do not alter the controller's earlier
+recommendation or evidence summary while recording the response.
+
 An independent implementation reviewer is an optional additional sensor selected by risk, novelty,
 or owner request. The Roadmap Controller can request that review, but its persistent project context
 means it must not represent itself as the independent sensor.
