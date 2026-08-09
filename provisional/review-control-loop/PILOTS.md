@@ -9,8 +9,8 @@
 | Effort | Agent Judge 0.14 closure and Agent Workflow adoption readiness |
 | Initial candidate | Private steward commit `a7ea488`, tag `review/aj-014-closure/candidate-01`; reviewed trio at project HEAD `8f8391b` plus recorded working-tree state |
 | Initial sensor output | `roadmap-readiness-review-2026-08-06`, 16 findings |
-| Current phase | CANDIDATE 02 VERIFIED — READY FOR HUMAN RATIFICATION |
-| Ratification state | Not ratified |
+| Current phase | STEP 1.0 IMPLEMENTED — ROADMAP CONTROLLER CHECKPOINT |
+| Ratification state | Candidate 02 ratified; Step 1.0 authorized and implemented |
 
 ### Initial observations
 
@@ -25,10 +25,9 @@
 
 ### Next experiment action
 
-Preserve `verification-02.md` exactly as received. Wait for the human Candidate 02 decision, record it
-separately, and—only if one exact roadmap step is authorized—instantiate the implementation-dispatch
-work order and update the steward's canonical `AGENTS.md` current-action pointer. Candidate 02 remains
-immutable.
+Dogfood the Roadmap Controller against Step 1.0: verify its evidence and mutation boundary, reconcile
+current-state drift in active planning and tool bridges, record the checkpoint, and ask the human
+whether Step 1.1 is authorized. Candidate 02 and received sensor records remain immutable.
 
 ### Candidate-packaging observation
 
@@ -45,6 +44,16 @@ semantics, roadmap work items, exit evidence, generic Git procedure, and stoppin
 bounded, it became a second roadmap and violated the pointer-only handoff rule. Future implementation
 work orders are thin, normally one-page dispatch envelopes; missing substantive instruction is fixed
 in DESIGN or ROADMAP rather than copied into the dispatch.
+
+### First implementation-checkpoint observation
+
+The Step 1.0 implementer followed its bounded dispatch, preserved unrelated working-tree state, met
+the named exits, and stopped before Step 1.1. It also found that active VISION/DESIGN statements and a
+tool-specific session pointer still described pre-Step-1.0 state. The dispatch correctly withheld
+authority to edit those surfaces, but the method had no explicit post-step role responsible for
+accepting evidence, restoring planning currency, checking trajectory, and preparing the next human
+decision. The pilot therefore adds an AI Roadmap Controller checkpoint between implementation and any
+next-step authorization.
 
 ## Agent Workflow — Pilot 2
 
@@ -74,3 +83,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Require materialized numbered candidate bundles by default; grandfather Agent Judge Candidates 01/02 without rewriting them | Dogfood correction |
 | 2026-08-08 | Separate human ratification, execution authorization, and fresh-session implementation dispatch | Dogfood correction |
 | 2026-08-08 | Make implementation work orders thin pointer envelopes; prohibit duplicated design, roadmap, ratification, and completion content | Dogfood correction |
+| 2026-08-08 | Add an AI Roadmap Controller checkpoint after every implementation step; the human remains Project Owner and next-step authority | Dogfood correction |

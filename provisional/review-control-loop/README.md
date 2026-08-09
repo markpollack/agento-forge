@@ -54,12 +54,23 @@ human ratification ----> reopen or reject
 one-step authorization
        |
        v
-pointer-based work order -> fresh implementer -> implementation checkpoint -> later verification
+pointer-based work order -> fresh implementer -> implementation checkpoint
+                                                      |
+                                                      v
+                                            AI Roadmap Controller
+                                             |                 |
+                                             v                 +-> independent review when risk warrants
+                                   human next-step decision
 ```
 
 Ratification, execution authorization, worker selection, and implementation acceptance are distinct
 events. The controller records and dispatches them; conversational glue such as “I would then…” is not
 an adequate project artifact.
+
+After each implementation step, an **AI Roadmap Controller** checks the step evidence, mutation scope,
+planning currency, and overall trajectory. It may make bounded current-state corrections, but the
+human Project Owner accepts the checkpoint and decides whether one next step is authorized. This
+closes the gap between “the worker stopped” and “the roadmap may safely continue.”
 
 The dispatch is intentionally thin. VISION/DESIGN/ROADMAP remain the source of truth; the work order
 adds only authorization, mutation, evidence-destination, and stopping metadata that is specific to one
@@ -93,6 +104,7 @@ named dependency or work order; it is not copied into ad hoc handoff prose.
 6. What minimum review lenses and coverage denominators produce useful confidence at acceptable cost?
 7. Can materialized numbered bundles preserve provenance while keeping Git out of the normal document-reading path?
 8. Can ratification and implementation dispatch become an explicit, reusable controller transition rather than an ad hoc handoff?
+9. Can an AI Roadmap Controller keep active plans current and execution on trajectory without becoming a self-approving implementer?
 
 ## Promotion gate
 
@@ -106,7 +118,8 @@ The method may be proposed for Forge only after both pilots record:
 - stale or duplicate authorities removed;
 - human time required for adjudication and ratification;
 - reviewer-interface overhead, including Git reconstruction commands versus substantive checks;
-- dispatch prompt repairs or missing controller-transition artifacts; and
+- dispatch prompt repairs or missing controller-transition artifacts;
+- post-step stale claims, controller corrections, and human checkpoint decisions; and
 - failures and exceptions, not only successes.
 
 Promotion is a separate reviewed change. Pilot success does not silently make this directory normative.
@@ -128,3 +141,5 @@ Promotion is a separate reviewed change. Pilot success does not silently make th
   and separately recorded execution authorization
 - [templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md](templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md) —
   bounded dispatch contract for a fresh implementation session
+- [templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md](templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md) —
+  post-step evidence, planning-currency, trajectory, and human-decision checkpoint

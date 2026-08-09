@@ -198,10 +198,53 @@ FROZEN CANDIDATE
       -> RATIFIED / EXECUTION NOT AUTHORIZED
       -> RATIFIED / STEP N AUTHORIZED
       -> IMPLEMENTATION CHECKPOINT
-      -> VERIFIED STEP EVIDENCE or BOUNDED CORRECTION
+      -> ROADMAP CONTROLLER CHECKPOINT
+      -> HUMAN AUTHORIZATION, BOUNDED CORRECTION, or HOLD
 ```
 
-## 7. Handoffs and cross-repository work
+## 7. Control a completed roadmap step
+
+An implementer reports evidence and stops; it does not decide that its own work is accepted or that
+the next roadmap step may begin. An **AI Roadmap Controller** assists the human Project Owner at every
+implementation checkpoint. This is a continuity and control role, not an independent-review claim.
+
+The Roadmap Controller:
+
+1. identifies both repositories explicitly and records the project and steward commits being
+   examined—never an unqualified `HEAD`;
+2. checks the completed step's evidence against its entry conditions, work boundary, and exit
+   criteria, reproducing high-value evidence in proportion to risk;
+3. checks repository status, the implementation diff, and preserved unrelated changes;
+4. sweeps VISION, DESIGN, ROADMAP, `AGENTS.md`, tool-specific bridges, current baselines, and learning
+   indexes for current-state claims made stale by the completed step;
+5. checks trajectory: whether the result still advances the Vision, preserves settled Design, and
+   leaves the next roadmap step correctly ordered and executable;
+6. classifies every discovery as a bounded planning-currency correction, an implementation defect, a
+   new or reopened owner decision, or explicitly deferred work with an owner/trigger; and
+7. writes a checkpoint using `templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md` and presents one
+   exact next human decision.
+
+The controller may directly apply bounded planning-currency corrections that only make authoritative
+documents truthfully describe already accepted evidence. It must not use that permission to change
+product semantics, broaden scope, rewrite historical evidence records, or begin the next step. A new
+design choice goes to the human/adjudication; a behavior defect goes to bounded correction; genuinely
+deferred work receives a named roadmap owner or observable reopening trigger.
+
+The controller emits one of three recommendations:
+
+- `STEP ACCEPTED` — exit evidence holds and any bounded currency corrections are recorded;
+- `CORRECTION REQUIRED` — the completed step has a reproducible defect or unmet exit; or
+- `HOLD` — authority conflicts or an owner decision prevents safe continuation.
+
+`STEP ACCEPTED` does not authorize the next step. The Project Owner separately accepts or rejects the
+controller recommendation and authorizes at most one next roadmap step. Only then may the controller
+prepare the next thin dispatch.
+
+An independent implementation reviewer is an optional additional sensor selected by risk, novelty,
+or owner request. The Roadmap Controller can request that review, but its persistent project context
+means it must not represent itself as the independent sensor.
+
+## 8. Handoffs and cross-repository work
 
 A handoff points; it does not restate.
 
@@ -224,7 +267,7 @@ An incoming handoff is triaged once:
 For cross-repository dependencies, the owning steward records the obligation and the consuming steward
 records the dependency. Neither repository silently claims it can satisfy the other's exit criterion.
 
-## 8. Steward repository invariants
+## 9. Steward repository invariants
 
 - One project repository maps to exactly one private steward repository.
 - The steward binding names the project remote, local checkout, default branch, and authority boundary.
@@ -237,7 +280,7 @@ records the dependency. Neither repository silently claims it can satisfy the ot
 - Code changes occur in the project repository. Steward commits may update planning, evidence, and work
   orders, but never masquerade as implementation commits.
 
-## 9. Reusable work orders
+## 10. Reusable work orders
 
 The reusable unit is a **work-order contract**, not a copied project prompt. It has four stable parts:
 
@@ -295,7 +338,13 @@ templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md
 plans/work-orders/<work-order-id>.md
           |
           v
-project commit + steward implementation record/checkpoint
+project commit + steward implementation record
+          |
+          v
+templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md
+          |
+          v
+plans/checkpoints/<step-id>-roadmap-controller.md
 ```
 
 Each flow keeps its reusable template, filled dispatch/decision record, and produced evidence separate.
@@ -308,7 +357,7 @@ Use progressive extraction rather than immediately building an orchestrator:
 
 | Level | Mechanism | Promotion evidence |
 |---|---|---|
-| 1 — current | Materialized candidate bundles plus filled Markdown adjudication, verification, ratification, and implementation-dispatch templates | Agent Judge completes one full planning loop and one dispatched implementation step without prompt repair |
+| 1 — current | Materialized candidate bundles plus filled Markdown adjudication, verification, ratification, implementation-dispatch, and roadmap-controller templates | Agent Judge completes one full planning loop and two controlled implementation checkpoints without prompt repair |
 | 2 | Deterministic generator from candidate/review metadata | Agent Workflow needs the same fields with only values changed |
 | 3 | Forge command or skill with preflight validation | At least three clean uses establish stable inputs and stop rules |
 | 4 | Automated review controller | Pilot measurements show orchestration, rather than judgment, is the recurring bottleneck |
