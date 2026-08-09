@@ -96,6 +96,16 @@ provisional evidence-backed execution state; the controller verifies those claim
 VISION/DESIGN/ROADMAP, recommends acceptance or correction, and never delegates next-step authority.
 This is the pilot's concrete form of “trust but verify.”
 
+### Operational-knowledge promotion observation
+
+Step 1.3 discovered two recurring release-health commands and proved that Javadoc errors must remain
+build-breaking. The implementation record correctly surfaced them, but a future session would not
+normally reread that step record before changing release infrastructure. The controller therefore
+promoted the exact Agent Judge commands and invariant into the public project's canonical
+`AGENTS.md`. The reusable method is the promotion rule, not those Maven commands: recurring verified
+commands, quality invariants, and diagnostic pitfalls move from per-step evidence into persistent
+agent instructions, while one-off transcripts stay in the evidence record.
+
 ## Agent Workflow — Pilot 2
 
 | Field | State |
@@ -131,3 +141,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Require a named transport binding to match the transport's real on-disk schema and lifecycle; conceptual compatibility is insufficient | Dogfood correction |
 | 2026-08-08 | Do not claim gitmaildir delivery into an ignored `plans/` tree; use a declared manual pointer exception or establish the tracked steward boundary first | Dogfood correction |
 | 2026-08-08 | Treat implementer roadmap checkmarks and `AGENTS.md` checkpoint pointers as provisional evidence claims; the controller owns verification and acceptance, not exclusive file authorship | Dogfood correction |
+| 2026-08-09 | Require the Roadmap Controller to promote newly proved recurring commands, quality invariants, and diagnostic pitfalls into canonical agent instructions without copying step transcripts | Dogfood correction |

@@ -231,11 +231,14 @@ The Roadmap Controller:
 3. checks repository status, the implementation diff, and preserved unrelated changes;
 4. sweeps VISION, DESIGN, ROADMAP, `AGENTS.md`, tool-specific bridges, current baselines, and learning
    indexes for current-state claims made stale by the completed step;
-5. checks trajectory: whether the result still advances the Vision, preserves settled Design, and
+5. promotes newly proved, reusable operational knowledge—recurring verification commands, quality
+   invariants, and diagnostic pitfalls—into the canonical project or steward `AGENTS.md`; record the
+   shortest durable rule, not the step transcript, and keep tool-specific bridges as pointers;
+6. checks trajectory: whether the result still advances the Vision, preserves settled Design, and
    leaves the next roadmap step correctly ordered and executable;
-6. classifies every discovery as a bounded planning-currency correction, an implementation defect, a
+7. classifies every discovery as a bounded planning-currency correction, an implementation defect, a
    new or reopened owner decision, or explicitly deferred work with an owner/trigger; and
-7. writes a checkpoint using `templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md` and presents one
+8. writes a checkpoint using `templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md` and presents one
    exact next human decision.
 
 The checkpoint is a **thin control-transition record**, normally one readable page. It points to the
@@ -250,6 +253,12 @@ documents truthfully describe already accepted evidence. It must not use that pe
 product semantics, broaden scope, rewrite historical evidence records, or begin the next step. A new
 design choice goes to the human/adjudication; a behavior defect goes to bounded correction; genuinely
 deferred work receives a named roadmap owner or observable reopening trigger.
+
+Operational-knowledge promotion is bounded by the same rule. Promote a command only after it has
+proved useful and executable in the project, and promote an invariant only after the build or evidence
+supports it. Do not turn one incident into a universal technology prescription: for example, a Java
+project may record its exact Javadoc and release-rehearsal commands, while the generic method records
+only the obligation to preserve newly discovered recurring gates in canonical agent instructions.
 
 The controller emits one of three recommendations:
 
