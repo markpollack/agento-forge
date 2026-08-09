@@ -25,9 +25,10 @@
 
 ### Next experiment action
 
-Dogfood the bounded correction transition against Step 1.2, including one received Agent Journal
-inbox message and one Agent Workflow message held pending creation of its 1:1 steward. Candidate 02,
-received sensor records, and prior implementation evidence remain immutable.
+Dogfood the bounded correction transition against Step 1.2. Agent Journal consumes its follow-up by
+an explicit local pointer because its `plans/` tree is ignored; Agent Workflow's message remains
+pending creation of its tracked 1:1 steward and will be the first real gitmaildir delivery. Candidate
+02, received sensor records, and prior implementation evidence remain immutable.
 
 ### Candidate-packaging observation
 
@@ -71,9 +72,11 @@ its original checkboxes were green. This is the first dogfood of the explicit co
 reproduce the defect, ratify the smallest coherent contract correction, reopen only Step 1.2, dispatch
 that correction, and run a new controller checkpoint before Step 1.3.
 
-The same finding has consequences owned by Agent Journal and Agent Workflow. Pilot 1 will test an
-actual gitmaildir `MailboxMessage` for Agent Journal and a pending outbound message for Agent
-Workflow whose delivery is triggered by creation of its 1:1 steward. Recipient roadmaps—not the
+The same finding has consequences owned by Agent Journal and Agent Workflow. Agent Journal cannot
+receive a real gitmaildir message yet because its `plans/` tree is ignored; force-adding a transport
+file would violate its current repository boundary. Its work therefore begins through an explicit
+local authority pointer, recorded as a pilot exception. The pending Agent Workflow message is
+triggered by creation of its 1:1 steward and will test the real transport. Recipient roadmaps—not the
 messages—own acceptance and implementation.
 
 The first method draft called a Markdown envelope under `plans/inbox/` “gitmaildir-compatible”
@@ -116,3 +119,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Make `CORRECTION REQUIRED` an explicit same-step control transition using the thin implementation dispatch in bounded-correction mode | Dogfood correction |
 | 2026-08-08 | Bind cross-steward delivery to gitmaildir `MailboxMessage` JSON under `plans/inbox/new/<type>/`; disposition returns in a separate receipt and remains recipient-owned | Dogfood correction |
 | 2026-08-08 | Require a named transport binding to match the transport's real on-disk schema and lifecycle; conceptual compatibility is insufficient | Dogfood correction |
+| 2026-08-08 | Do not claim gitmaildir delivery into an ignored `plans/` tree; use a declared manual pointer exception or establish the tracked steward boundary first | Dogfood correction |
