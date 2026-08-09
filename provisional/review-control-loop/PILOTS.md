@@ -121,9 +121,9 @@ remaining ambiguous.
 | Field | State |
 |---|---|
 | Project repository | `markpollack/agent-workflow` |
-| Steward repository | Not yet created |
+| Steward repository | `markpollack/agent-workflow-steward` — private, created empty 2026-08-09 |
 | Entry trigger | Agent Judge adjudication establishes the cross-repository work order and the Agent Judge artifact is locally installed |
-| Current phase | Planned |
+| Current phase | Step 1.5 authorized to import the existing `plans/v3/` authority, stage the migration act, and perform the first real gitmaildir delivery |
 
 Pilot 2 will test whether Agent Judge's completed work order can be consumed by reference—without a new
 handoff document that restates and drifts from the upstream decisions.
