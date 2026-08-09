@@ -32,7 +32,7 @@ plans/                      # (or plans/<effort>/ for multi-effort projects)
 ├── learnings/              # what we're LEARNING (per-step, compacted → LEARNINGS.md)
 ├── journal/                # what we've DECIDED (dated, ratified, durable, never compacted)
 ├── research/               # what we're DRAWING ON (active reference for upcoming work)
-├── inbox/                  # what's ARRIVING (unprocessed; the gitmaildir delivery endpoint)
+├── inbox/                  # what's ARRIVING (unprocessed; contains gitmaildir lifecycle dirs when bound)
 └── archive/                # what's DONE (superseded, kept for provenance, not consulted)
 ```
 
@@ -72,14 +72,36 @@ Completed or superseded items, kept for provenance and *not consulted* in normal
 
 ## Inbox transport: the project gitmaildir binding
 
-The `inbox/` is not only a manual accumulation point — it is the **delivery endpoint for the project's message transport**. The reference transport is **gitmaildir**: steward-to-steward coordination and human-in-the-loop (HITL) messages are materialized as **transparent git files** that land in `inbox/`, where they are triaged exactly like any other inbox item.
+The `inbox/` is not only a manual accumulation point — it is the **delivery endpoint for the project's message transport**. The reference transport is **gitmaildir**. Bind the gitmaildir work directory to the steward's `plans/` directory so its actual on-disk contract becomes:
+
+```text
+plans/
+├── inbox/
+│   ├── new/<type>/<id>.json       # delivered, waiting to be claimed
+│   ├── cur/<type>/<id>.json       # claimed, with lease
+│   ├── archive/<type>/<id>.json   # successfully handled transport records
+│   └── dead/<type>/<id>.json      # retry limit or explicit rejection
+└── audit/events.jsonl             # append-only transport audit
+```
+
+A message is a gitmaildir `MailboxMessage` JSON object—not a Markdown handoff—with top-level `id`,
+`type`, `from`, `createdAt`, `retryCount`, `lease`, and `payload` fields. Message-specific steward
+coordination data lives under `payload`. `GitPublisher` writes to `new/`, commits, and pushes; the
+receiver moves the same JSON record through `cur/` and then `archive/` or `dead/`.
+
+Files manually dropped directly into `plans/inbox/` remain ordinary Forge intake. Do not call one of
+those files a gitmaildir message merely because it is in the inbox tree.
 
 This unifies two things the methodology otherwise treated separately:
 
 - **The inbox pattern** (accumulate → triage → promote/archive) gains a real *arrival* mechanism instead of only hand-dropped files.
 - **HITL** (a human replies to an agent's question; a steward hands work to a peer) becomes concrete: the reply is a git file in `inbox/`, reviewable and diffable, with no opaque channel. A human approval, a reviewer's verdict, a sibling project's request — all arrive as inbox files.
 
-Keeping the transport's payload as git files (rather than a database row or a queue message) preserves the Forge property that *the repo is the memory*: intake is inspectable, versioned, and survives session clears with no external dependency to reconstruct. gitmaildir is the reference implementation; the binding at the methodology level is simply **"the message transport delivers into `inbox/` as files."**
+Keeping the transport's payload as git files (rather than a database row or an opaque queue message)
+preserves the Forge property that *the repo is the memory*: intake is inspectable, versioned, and
+survives session clears with no external dependency to reconstruct. The methodology-level binding is
+therefore precise: **gitmaildir runs with `plans/` as its work directory and delivers `MailboxMessage`
+JSON into `plans/inbox/new/<type>/`.**
 
 ## Records discipline: a record is appended to, never rewritten
 

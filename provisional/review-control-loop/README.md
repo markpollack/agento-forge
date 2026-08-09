@@ -105,6 +105,10 @@ named dependency or work order; it is not copied into ad hoc handoff prose.
 7. Can materialized numbered bundles preserve provenance while keeping Git out of the normal document-reading path?
 8. Can ratification and implementation dispatch become an explicit, reusable controller transition rather than an ad hoc handoff?
 9. Can an AI Roadmap Controller keep active plans current and execution on trajectory without becoming a self-approving implementer?
+10. Can `CORRECTION REQUIRED` produce a bounded same-step repair without reopening settled work or
+    authorizing the next step?
+11. Can steward-to-steward obligations travel through transparent inbox files while authority remains
+    in each recipient's journal and roadmap?
 
 ## Promotion gate
 
@@ -143,3 +147,5 @@ Promotion is a separate reviewed change. Pilot success does not silently make th
   bounded dispatch contract for a fresh implementation session
 - [templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md](templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md) —
   post-step evidence, planning-currency, trajectory, and human-decision checkpoint
+- [templates/INTER-STEWARD-MESSAGE-TEMPLATE.md](templates/INTER-STEWARD-MESSAGE-TEMPLATE.md) —
+  actual gitmaildir `MailboxMessage` JSON/payload schema whose recipient owns triage and disposition

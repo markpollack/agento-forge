@@ -306,7 +306,7 @@ plans/
 ├── ROADMAP.md                # This file — step-by-step execution plan
 ├── DESIGN.md                 # Architecture decisions
 ├── VISION.md                 # Product vision
-├── inbox/                    # Unprocessed ideas, briefs, handoff notes (gitmaildir delivers here)
+├── inbox/                    # Unprocessed ideas/briefs; optional gitmaildir lifecycle root
 │   └── (items arrive here during development)
 ├── research/                 # Active reference material informing upcoming stages
 │   └── (promoted from inbox when linked to roadmap steps)
@@ -321,7 +321,7 @@ plans/
     └── stage1-qa-review.md   # Stage review findings
 ```
 
-**Inbox lifecycle**: At stage boundaries (consolidation steps), triage `inbox/` — promote active research to `research/`, archive completed items, incorporate actionable items into the roadmap. Delete `inbox/` when empty. **`journal/`** is separate: dated decision records (choice + rationale + rejected alternatives), durable and never compacted — a decision goes there when a future session would ask "why is it this way?" and the code doesn't answer. Full layout incl. the gitmaildir intake binding: [Project Knowledge Layout](../concepts/project-knowledge-layout.md); lifecycle detail: [Phase 3: Roadmap](../phases/03-roadmap.md).
+**Inbox lifecycle**: At stage boundaries (consolidation steps), triage manually arrived items — promote active research to `research/`, archive completed items, incorporate actionable items into the roadmap. Delete `inbox/` when empty only when no transport is bound. With gitmaildir, configure `plans/` as its work directory: real messages are `MailboxMessage` JSON under `inbox/new/<type>/` and move through `cur/`, `archive/`, or `dead/`, with transport audit at `plans/audit/events.jsonl`; do not substitute a Markdown handoff and call it gitmaildir. **`journal/`** is separate: dated decision records (choice + rationale + rejected alternatives), durable and never compacted — a decision goes there when a future session would ask "why is it this way?" and the code doesn't answer. Full layout: [Project Knowledge Layout](../concepts/project-knowledge-layout.md); lifecycle detail: [Phase 3: Roadmap](../phases/03-roadmap.md).
 
 ---
 

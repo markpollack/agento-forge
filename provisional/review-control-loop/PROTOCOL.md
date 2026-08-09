@@ -243,6 +243,36 @@ The controller emits one of three recommendations:
 - `CORRECTION REQUIRED` — the completed step has a reproducible defect or unmet exit; or
 - `HOLD` — authority conflicts or an owner decision prevents safe continuation.
 
+### Correction-required transition
+
+`CORRECTION REQUIRED` reopens the completed step; it does not authorize the next step and does not
+send the original implementation report back as an informal prompt. The correction path is:
+
+```text
+IMPLEMENTATION CHECKPOINT
+      -> ROADMAP CONTROLLER: CORRECTION REQUIRED
+      -> HUMAN ACCEPTS OR REJECTS THE BOUNDED CORRECTION
+      -> AUTHORITY DOCUMENTS UPDATED, WHEN SEMANTICS OR SCOPE CHANGED
+      -> THIN CORRECTION DISPATCH
+      -> CORRECTED IMPLEMENTATION CHECKPOINT
+      -> NEW ROADMAP CONTROLLER CHECKPOINT FOR THE SAME STEP
+```
+
+The controller records the reproduced defect, affected exit criterion, and smallest coherent
+correction boundary. If the defect exposes a new product choice, that choice is ratified in DESIGN or
+the journal before dispatch. If the existing decision was right and only implementation was wrong,
+the checkpoint and ROADMAP correction block are sufficient authority.
+
+Use the implementation work-order template in `BOUNDED CORRECTION` mode. The dispatch points to the
+controller checkpoint, the accepted decision, and the reopened ROADMAP step; it does not copy the
+finding, replacement design, or revised exit criteria. The correction implementer writes a new
+evidence record or a dated correction beside the prior record. Historical implementation evidence is
+not rewritten to claim that the first attempt was correct.
+
+Until the new controller checkpoint is accepted, the step remains open and every later roadmap step
+remains unauthorized. A correction may file consequences in another repository, but it cannot mark
+that repository's work complete.
+
 `STEP ACCEPTED` does not authorize the next step. The Project Owner separately accepts or rejects the
 controller recommendation and authorizes at most one next roadmap step. Only then may the controller
 prepare the next thin dispatch.
@@ -278,6 +308,38 @@ An incoming handoff is triaged once:
 
 For cross-repository dependencies, the owning steward records the obligation and the consuming steward
 records the dependency. Neither repository silently claims it can satisfy the other's exit criterion.
+
+### Inter-steward delivery through `plans/inbox/`
+
+The project-knowledge layout binds gitmaildir's work directory to the recipient steward's `plans/`.
+The actual delivery path is `plans/inbox/new/<type>/<id>.json`, followed by the standard `cur`,
+`archive`, or `dead` transitions and `plans/audit/events.jsonl`. Use
+`templates/INTER-STEWARD-MESSAGE-TEMPLATE.md` for the message payload. The transport artifact is a
+gitmaildir `MailboxMessage` JSON record, not a Markdown handoff, not an authority, and not a miniature
+specification.
+
+The sender records both a durable correlation ID and the generated gitmaildir message ID in its
+checkpoint, roadmap dependency, or journal. The recipient's idempotent handler owns disposition:
+
+- accept as work: create or amend a named ROADMAP item with an owner, then archive the message;
+- accept as a decision input: ratify the decision in DESIGN/journal, then archive the message;
+- refute: record the counter-exhibit and archive the message;
+- park: record the observable reopening trigger and archive the message.
+
+An inbox item is never completion evidence. The recipient's roadmap, journal, or refutation record is
+the authority. After recording that disposition, the recipient sends a new `steward-receipt` message
+whose payload carries `inReplyTo`, `disposition`, and the resulting authority pointer; it never edits
+the received message. The handler may then return successfully so gitmaildir archives the transport
+record. A sender may close its routing obligation from that receipt, but it must not edit the
+recipient's priority or claim acceptance on the recipient's behalf.
+
+gitmaildir processing is at least once across a crash between handler completion and archive push.
+The handler therefore keys disposition and receipt deduplication by the original message ID or
+correlation ID.
+
+When the recipient's 1:1 private steward does not yet exist, record the outbound message as pending
+with that steward boundary as its delivery trigger. Do not create a new transitional authority in a
+project repository immediately before steward migration merely to make delivery appear complete.
 
 ## 9. Steward repository invariants
 
@@ -357,6 +419,14 @@ templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md
           |
           v
 plans/checkpoints/<step-id>-roadmap-controller.md
+
+templates/INTER-STEWARD-MESSAGE-TEMPLATE.md
+          |
+          v
+recipient-steward/plans/inbox/new/steward-follow-up/<message-id>.json
+          |
+          v
+recipient ROADMAP / journal / refutation + steward-receipt + archived transport record
 ```
 
 Each flow keeps its reusable template, filled dispatch/decision record, and produced evidence separate.

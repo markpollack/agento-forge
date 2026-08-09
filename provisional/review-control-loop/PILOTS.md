@@ -9,8 +9,8 @@
 | Effort | Agent Judge 0.14 closure and Agent Workflow adoption readiness |
 | Initial candidate | Private steward commit `a7ea488`, tag `review/aj-014-closure/candidate-01`; reviewed trio at project HEAD `8f8391b` plus recorded working-tree state |
 | Initial sensor output | `roadmap-readiness-review-2026-08-06`, 16 findings |
-| Current phase | STEP 1.0 IMPLEMENTED — ROADMAP CONTROLLER CHECKPOINT |
-| Ratification state | Candidate 02 ratified; Step 1.0 authorized and implemented |
+| Current phase | STEP 1.2 IMPLEMENTED — CORRECTION REQUIRED |
+| Ratification state | Candidate 02 ratified; Steps 1.0 and 1.1 accepted; Step 1.2 correction pending |
 
 ### Initial observations
 
@@ -25,9 +25,9 @@
 
 ### Next experiment action
 
-Dogfood the Roadmap Controller against Step 1.0: verify its evidence and mutation boundary, reconcile
-current-state drift in active planning and tool bridges, record the checkpoint, and ask the human
-whether Step 1.1 is authorized. Candidate 02 and received sensor records remain immutable.
+Dogfood the bounded correction transition against Step 1.2, including one received Agent Journal
+inbox message and one Agent Workflow message held pending creation of its 1:1 steward. Candidate 02,
+received sensor records, and prior implementation evidence remain immutable.
 
 ### Candidate-packaging observation
 
@@ -61,6 +61,28 @@ had the same drift risk as the oversized first implementation dispatch. Controll
 therefore thin, one-page state-transition records; detailed evidence stays in the step learning
 record.
 
+### First correction-required observation
+
+Step 1.2 satisfied its declared portability checks but exposed a semantic defect in the newly created
+model-usage projection: a volatile price estimate was narrowed from `BigDecimal` to `double`, and an
+unrepresentable value could disappear silently, while token categories were too weak for known
+reasoning/cache accounting. The Roadmap Controller therefore could not accept the step merely because
+its original checkboxes were green. This is the first dogfood of the explicit correction path:
+reproduce the defect, ratify the smallest coherent contract correction, reopen only Step 1.2, dispatch
+that correction, and run a new controller checkpoint before Step 1.3.
+
+The same finding has consequences owned by Agent Journal and Agent Workflow. Pilot 1 will test an
+actual gitmaildir `MailboxMessage` for Agent Journal and a pending outbound message for Agent
+Workflow whose delivery is triggered by creation of its 1:1 steward. Recipient roadmaps—not the
+messages—own acceptance and implementation.
+
+The first method draft called a Markdown envelope under `plans/inbox/` “gitmaildir-compatible”
+without reading gitmaildir's implementation. Human challenge exposed the mismatch: the real transport
+uses `MailboxMessage` JSON under `inbox/new/<type>/`, with `cur/archive/dead` lifecycle directories,
+generated IDs, leases, and a separate audit log. The binding now runs gitmaildir with `plans/` as its
+work directory and uses a separate receipt message. Method integrations must inspect the named
+external contract before borrowing its name.
+
 ## Agent Workflow — Pilot 2
 
 | Field | State |
@@ -91,3 +113,6 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Make implementation work orders thin pointer envelopes; prohibit duplicated design, roadmap, ratification, and completion content | Dogfood correction |
 | 2026-08-08 | Add an AI Roadmap Controller checkpoint after every implementation step; the human remains Project Owner and next-step authority | Dogfood correction |
 | 2026-08-08 | Keep Roadmap Controller checkpoints to one-page transition records that point to, rather than duplicate, roadmap and implementation evidence | Dogfood correction |
+| 2026-08-08 | Make `CORRECTION REQUIRED` an explicit same-step control transition using the thin implementation dispatch in bounded-correction mode | Dogfood correction |
+| 2026-08-08 | Bind cross-steward delivery to gitmaildir `MailboxMessage` JSON under `plans/inbox/new/<type>/`; disposition returns in a separate receipt and remains recipient-owned | Dogfood correction |
+| 2026-08-08 | Require a named transport binding to match the transport's real on-disk schema and lifecycle; conceptual compatibility is insufficient | Dogfood correction |

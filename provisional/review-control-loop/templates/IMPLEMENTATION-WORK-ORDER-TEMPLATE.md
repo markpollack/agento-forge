@@ -1,6 +1,7 @@
 # Dispatch: {{roadmap-step-id}} — {{step-title}}
 
-> **Authorized by:** {{ratification-record-path}}
+> **Mode:** {{ROADMAP STEP | BOUNDED CORRECTION}}
+> **Authorized by:** {{ratification-record-or-accepted-controller-checkpoint}}
 > **Steward:** {{absolute-steward-path}}
 > **Project:** {{absolute-project-path}}
 > **Planning view:** {{materialized-candidate-bundle | controller-certified active trio}}
@@ -18,7 +19,7 @@ do not expand this work order with substitute requirements.
 
 1. Canonical steward `AGENTS.md`
 2. Steward binding
-3. Ratification record
+3. Ratification record or accepted Roadmap Controller correction checkpoint
 4. The named execution planning view
 5. ROADMAP {{roadmap-step-id}}
 6. Only the decisions, project inputs, and engineering standard directly referenced by that step
@@ -31,6 +32,10 @@ candidate with repeated `git show`, per-file hashes, or a worktree.
 Execute ROADMAP {{roadmap-step-id}} exactly. ROADMAP owns its sequence, work items, deliverables, and
 exit criteria. DESIGN and its referenced decisions own semantics. Stop with a concise exhibit rather
 than choosing a new design branch if implementation reveals a conflict or new failure case.
+
+For `BOUNDED CORRECTION` mode, execute only the reopened step's named correction block. Preserve the
+original implementation evidence and write a new correction record or dated correction exhibit as
+the roadmap requires. Every later step remains unauthorized.
 
 ## Mutation boundary
 

@@ -57,7 +57,7 @@ During execution, the `plans/` directory accumulates more than just learnings. R
 plans/
 ├── ROADMAP.md           # Execution plan
 ├── DESIGN.md            # Architecture decisions
-├── inbox/               # Unprocessed: ideas, research briefs, handoff notes (gitmaildir delivers here)
+├── inbox/               # Unprocessed manual intake; optional gitmaildir lifecycle root
 ├── research/            # Active: reference material informing upcoming stages
 ├── journal/             # Ratified decisions (dated, durable): why we chose X; supersession trail
 ├── archive/             # Completed/superseded: kept for provenance, not consulted
@@ -69,7 +69,14 @@ plans/
 - Completed or superseded items → move to `archive/`
 - Items that should become roadmap steps → incorporate into the roadmap, then archive the original
 
-When `inbox/` is empty, delete it. The goal is zero inbox at each wave boundary.
+When `inbox/` is empty, delete it only if no message transport is bound. The goal is zero untriaged
+manual intake at each wave boundary.
+
+When gitmaildir is bound, configure `plans/` as its work directory. Its real on-disk representation
+is `inbox/new/<type>/<id>.json`, followed by `cur/`, `archive/`, or `dead/`, with transport audit in
+`plans/audit/events.jsonl`. These are `MailboxMessage` JSON records and operational lifecycle
+directories, not Markdown handoffs; successful handling creates the recipient-owned roadmap/journal
+disposition before the transport record is archived.
 
 **`journal/` is not part of the inbox lifecycle** — it is the durable decision record (dated `YYYY-MM-DD-<slug>.md` entries: the choice, the rationale, the rejected alternatives; a later entry *supersedes* an earlier one by explicit pointer, and both are kept). A decision goes here when a future session would ask "why is it this way?" and the code/roadmap doesn't answer. Journal entries are never compacted away, unlike `learnings/`.
 
