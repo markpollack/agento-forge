@@ -179,11 +179,13 @@ After verification reports `READY TO RATIFY`, the controller performs this seque
    ratified candidate, exact roadmap step, mutation roots, evidence destination, and stopping
    checkpoint. It does not restate design semantics, roadmap work items, exit criteria, or the human
    decision.
-5. Update canonical `AGENTS.md` so its current-action section points to that work order. Tool-specific
-   files such as `CLAUDE.md` remain minimal bridges to `AGENTS.md` and do not duplicate the dispatch.
-6. Commit the ratification, work order, and current-action pointer as controller state. Report that no
+5. Record the authorized step and work-order pointer in ROADMAP/ratification controller state. Do not
+   put the current action into `AGENTS.md`; tool-specific files such as `CLAUDE.md` remain minimal
+   bridges and do not duplicate the dispatch.
+6. Commit the ratification, work order, and roadmap transition as controller state. Report that no
    implementation occurred.
-7. Launch a fresh implementation session with a one-line pointer to the steward's agent instructions.
+7. Launch a fresh implementation session with a one-line pointer to the steward binding and named
+   work order.
    The implementer stops at the work order's completion checkpoint; it does not self-ratify its result.
 
 The worker may be a different model from the author or verifier. That provides a useful independent
@@ -193,15 +195,15 @@ independent verification sensor. A later review still evaluates the implementati
 ### Provisional worker state versus controller authority
 
 At its stopping checkpoint, the implementer may check roadmap work items and exit criteria for which
-it has recorded evidence, change the step status to `IMPLEMENTED — ACCEPTANCE PENDING`, add the new
-evidence pointer, and set steward `AGENTS.md` to `AWAITING ROADMAP CONTROLLER`. These edits are
-provisional claims submitted with the implementation, not self-acceptance. Keeping them beside the
-implementation evidence is useful because the worker has the freshest command and mutation context.
+it has recorded evidence, change the step status to `IMPLEMENTED — ACCEPTANCE PENDING`, and add the
+new evidence pointer. These edits are provisional claims submitted with the implementation, not
+self-acceptance. Keeping them beside the implementation evidence is useful because the worker has the
+freshest command and mutation context.
 
 The implementer must leave controller-only acceptance unchecked, must not mark the step accepted,
 must not authorize a later step, and normally does not reconcile VISION/DESIGN current-state prose.
-The Roadmap Controller reviews the worker's roadmap and `AGENTS.md` edits like every other exhibit,
-corrects planning currency, and owns the transition recommendation. “Controller-owned” therefore
+The Roadmap Controller reviews the worker's roadmap edits like every other exhibit, corrects planning
+currency, and owns the transition recommendation. “Controller-owned” therefore
 means decision authority and verification, not exclusive authorship of every state-bearing file.
 
 The lifecycle states are explicit:
@@ -229,8 +231,9 @@ The Roadmap Controller:
 2. checks the completed step's evidence against its entry conditions, work boundary, and exit
    criteria, reproducing high-value evidence in proportion to risk;
 3. checks repository status, the implementation diff, and preserved unrelated changes;
-4. sweeps VISION, DESIGN, ROADMAP, `AGENTS.md`, tool-specific bridges, current baselines, and learning
-   indexes for current-state claims made stale by the completed step;
+4. sweeps VISION, DESIGN, ROADMAP, current baselines, and learning indexes for current-state claims
+   made stale by the completed step, and checks that `AGENTS.md` and tool-specific bridges contain no
+   transient controller or session state;
 5. promotes newly proved, reusable operational knowledge—recurring verification commands, quality
    invariants, and diagnostic pitfalls—into the canonical project or steward `AGENTS.md`; record the
    shortest durable rule, not the step transcript, and keep tool-specific bridges as pointers;
@@ -372,8 +375,19 @@ project repository immediately before steward migration merely to make delivery 
   `plans/ROADMAP.md`.
 - Reviews, candidate records, adjudications, journals, and learnings are tracked; `plans/` is never
   gitignored in the private steward.
-- Public project files may temporarily mirror or point to steward documents during migration, but the
-  binding names one authority and a deadline/step for removing transition mirrors.
+- The public project's tracked `AGENTS.md` is a minimal, stable repository interface: ownership
+  boundary, steward-binding pointer, durable build rules, confidentiality/licensing constraints, and
+  links to maintained engineering standards. It contains no current action, candidate or artifact
+  identity, roadmap status, work-order pointer, pending decision, checkpoint state, or dirty-tree
+  exception.
+- The steward's `AGENTS.md`, when present, follows the same stability rule. Operational state belongs
+  in ROADMAP, ratification, dispatch, checkpoint, and evidence records; a fresh-session prompt points
+  directly to the binding and authorized dispatch.
+- Tool-specific files such as `CLAUDE.md` are optional minimal bridges to `AGENTS.md`; they do not
+  carry private planning or current-action state.
+- Public project files may temporarily mirror steward documents during migration only when the
+  binding names one authority and a deadline/step for removing those mirrors. `AGENTS.md` remains an
+  interface, never a planning mirror.
 - Code changes occur in the project repository. Steward commits may update planning, evidence, and work
   orders, but never masquerade as implementation commits.
 
@@ -402,8 +416,8 @@ For implementation dispatch, the four contracts remain compact:
 
 Duplicating roadmap bullets, design truth tables, human authorization prose, generic Git procedure,
 or an independent completion checklist is a dispatch defect because it creates a second plan that can
-drift. `AGENTS.md` points to the dispatch; it does not cause the dispatch to absorb `AGENTS.md`, the
-ratification record, or the roadmap.
+drift. The launch instruction points to the dispatch; `AGENTS.md` stays stable and does not point at
+the current dispatch or absorb the ratification record or roadmap.
 
 Keep instructions separate from results:
 

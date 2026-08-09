@@ -22,7 +22,7 @@ ratification or execution authority from a positive reviewer recommendation.}}
 ## Controller transition
 
 {{If execution is not authorized, name the next human decision required. If one step is authorized,
-name the implementation work-order path and the canonical AGENTS.md pointer update.}}
+name the implementation work-order path and the ROADMAP transition. `AGENTS.md` remains unchanged.}}
 
 ## Explicit non-effects
 

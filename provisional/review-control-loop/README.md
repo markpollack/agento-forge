@@ -72,9 +72,10 @@ planning currency, and overall trajectory. It may make bounded current-state cor
 human Project Owner accepts the checkpoint and decides whether one next step is authorized. This
 closes the gap between “the worker stopped” and “the roadmap may safely continue.”
 
-The implementer may submit evidence-backed roadmap checkmarks and an `AWAITING ROADMAP CONTROLLER`
-pointer. Those are provisional state claims. The controller owns acceptance and reconciliation, not
-exclusive authorship of the roadmap file; it verifies the submitted edits under “trust but verify.”
+The implementer may submit evidence-backed roadmap checkmarks and set the step to `IMPLEMENTED —
+ACCEPTANCE PENDING`. Those are provisional state claims. The controller owns acceptance and
+reconciliation, not exclusive authorship of the roadmap file; it verifies the submitted edits under
+“trust but verify.”
 
 The dispatch is intentionally thin. VISION/DESIGN/ROADMAP remain the source of truth; the work order
 adds only authorization, mutation, evidence-destination, and stopping metadata that is specific to one
@@ -94,6 +95,12 @@ The project repository owns code, tests, builds, releases, public documentation,
 implementation commits. The private steward repository owns VISION, DESIGN, ROADMAP, journals,
 learnings, review records, work orders, and private research. Cross-repository work is expressed as a
 named dependency or work order; it is not copied into ad hoc handoff prose.
+
+Public and steward `AGENTS.md` files are stable interfaces, not control-state ledgers. They may carry
+the ownership boundary, steward pointer, durable build and licensing rules, and maintained engineering
+standards. Current actions, candidate identities, pending decisions, dispatch pointers, and checkpoint
+state remain in ROADMAP and the controller records. A launch prompt points directly to the binding and
+authorized dispatch.
 
 ## Experiment questions
 

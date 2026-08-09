@@ -17,12 +17,11 @@ do not expand this work order with substitute requirements.
 
 ## Read
 
-1. Canonical steward `AGENTS.md`
-2. Steward binding
-3. Ratification record or accepted Roadmap Controller correction checkpoint
-4. The named execution planning view
-5. ROADMAP {{roadmap-step-id}}
-6. Only the decisions, project inputs, and engineering standard directly referenced by that step
+1. Steward binding and stable repository `AGENTS.md`
+2. Ratification record or accepted Roadmap Controller correction checkpoint
+3. The named execution planning view
+4. ROADMAP {{roadmap-step-id}}
+5. Only the decisions, project inputs, and engineering standard directly referenced by that step
 
 Read ordinary planning files. For a controller-certified legacy planning view, do not reconstruct the
 candidate with repeated `git show`, per-file hashes, or a worktree.
@@ -40,8 +39,8 @@ the roadmap requires. Every later step remains unauthorized.
 ## Mutation boundary
 
 - **Project:** {{authorized project path families needed by the roadmap step}}
-- **Steward:** {{provisional roadmap execution state, step evidence/learning, and current-action
-  pointer; never controller acceptance or next-step authorization}}
+- **Steward:** {{provisional roadmap execution state and step evidence/learning; never controller
+  acceptance, next-step authorization, or transient `AGENTS.md` edits}}
 - **Preserve:** {{known unrelated working-tree paths or `none`}}
 - **Forbidden:** {{external repositories or state specifically at risk in this dispatch}}
 
@@ -52,8 +51,9 @@ Commit project implementation and steward evidence separately when the roadmap r
 
 Write the evidence required by the ROADMAP exits to {{step-learning-or-implementation-record-path}}.
 Report the exit-criterion result and exact repository states, mark only evidence-backed roadmap items,
-update the current-action pointer to `AWAITING ROADMAP CONTROLLER`, and stop. Do not mark controller
-acceptance, begin {{next-roadmap-step-id}}, or act as the independent reviewer.
+set the roadmap step to `IMPLEMENTED — ACCEPTANCE PENDING`, and stop. Do not put checkpoint state in
+`AGENTS.md`, mark controller acceptance, begin {{next-roadmap-step-id}}, or act as the independent
+reviewer.
 
 Stop earlier if an entry criterion is false, unrelated changes overlap the mutation boundary, a
 governing authority conflicts, or satisfying the step requires work outside this dispatch.

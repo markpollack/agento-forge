@@ -89,12 +89,14 @@ external contract before borrowing its name.
 ### Implementer/controller authorship observation
 
 The Step 1.2 bounded-correction implementer checked completed correction items in ROADMAP and changed
-steward `AGENTS.md` to `AWAITING ACCEPTANCE`. That initially looked like controller work, but the
-edits stopped short of acceptance and kept the controller-only criterion unchecked. The useful
-boundary is not “only the controller edits state-bearing files.” It is: the implementer records
-provisional evidence-backed execution state; the controller verifies those claims, reconciles
-VISION/DESIGN/ROADMAP, recommends acceptance or correction, and never delegates next-step authority.
-This is the pilot's concrete form of “trust but verify.”
+steward `AGENTS.md` to `AWAITING ACCEPTANCE`. That initially looked like controller work, and the
+first method correction allowed it because the edits stopped short of acceptance. Agent Workflow
+Step 1.5 exposed the remaining hygiene defect: even provisional current-action pointers make
+`AGENTS.md` a volatile control-state ledger. The refined boundary is: the implementer records
+provisional evidence-backed execution state in ROADMAP and evidence; the controller verifies those
+claims, reconciles VISION/DESIGN/ROADMAP, recommends acceptance or correction, and never delegates
+next-step authority. `AGENTS.md` stays stable. This is the pilot's concrete form of “trust but
+verify.”
 
 ### Operational-knowledge promotion observation
 
@@ -150,5 +152,6 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Bind cross-steward delivery to gitmaildir `MailboxMessage` JSON under `plans/inbox/new/<type>/`; disposition returns in a separate receipt and remains recipient-owned | Dogfood correction |
 | 2026-08-08 | Require a named transport binding to match the transport's real on-disk schema and lifecycle; conceptual compatibility is insufficient | Dogfood correction |
 | 2026-08-08 | Do not claim gitmaildir delivery into an ignored `plans/` tree; use a declared manual pointer exception or establish the tracked steward boundary first | Dogfood correction |
-| 2026-08-08 | Treat implementer roadmap checkmarks and `AGENTS.md` checkpoint pointers as provisional evidence claims; the controller owns verification and acceptance, not exclusive file authorship | Dogfood correction |
+| 2026-08-08 | Treat implementer roadmap checkmarks and `AGENTS.md` checkpoint pointers as provisional evidence claims; the controller owns verification and acceptance, not exclusive file authorship | **Superseded 2026-08-09** for `AGENTS.md`; roadmap checkmarks remain provisional claims |
 | 2026-08-09 | Require the Roadmap Controller to promote newly proved recurring commands, quality invariants, and diagnostic pitfalls into canonical agent instructions without copying step transcripts | Dogfood correction |
+| 2026-08-09 | Keep public and steward `AGENTS.md` stable: no current action, candidate/artifact identity, roadmap status, dispatch pointer, pending decision, or checkpoint state; operational state stays in ROADMAP and controller records | Dogfood correction |
