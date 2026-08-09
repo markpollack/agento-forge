@@ -190,6 +190,20 @@ The worker may be a different model from the author or verifier. That provides a
 implementer perspective and tests whether the plan is executable across contexts, but it is not an
 independent verification sensor. A later review still evaluates the implementation evidence.
 
+### Provisional worker state versus controller authority
+
+At its stopping checkpoint, the implementer may check roadmap work items and exit criteria for which
+it has recorded evidence, change the step status to `IMPLEMENTED — ACCEPTANCE PENDING`, add the new
+evidence pointer, and set steward `AGENTS.md` to `AWAITING ROADMAP CONTROLLER`. These edits are
+provisional claims submitted with the implementation, not self-acceptance. Keeping them beside the
+implementation evidence is useful because the worker has the freshest command and mutation context.
+
+The implementer must leave controller-only acceptance unchecked, must not mark the step accepted,
+must not authorize a later step, and normally does not reconcile VISION/DESIGN current-state prose.
+The Roadmap Controller reviews the worker's roadmap and `AGENTS.md` edits like every other exhibit,
+corrects planning currency, and owns the transition recommendation. “Controller-owned” therefore
+means decision authority and verification, not exclusive authorship of every state-bearing file.
+
 The lifecycle states are explicit:
 
 ```text

@@ -72,6 +72,10 @@ planning currency, and overall trajectory. It may make bounded current-state cor
 human Project Owner accepts the checkpoint and decides whether one next step is authorized. This
 closes the gap between “the worker stopped” and “the roadmap may safely continue.”
 
+The implementer may submit evidence-backed roadmap checkmarks and an `AWAITING ROADMAP CONTROLLER`
+pointer. Those are provisional state claims. The controller owns acceptance and reconciliation, not
+exclusive authorship of the roadmap file; it verifies the submitted edits under “trust but verify.”
+
 The dispatch is intentionally thin. VISION/DESIGN/ROADMAP remain the source of truth; the work order
 adds only authorization, mutation, evidence-destination, and stopping metadata that is specific to one
 fresh session. Repeating roadmap or design content in a handoff creates another authority and is a

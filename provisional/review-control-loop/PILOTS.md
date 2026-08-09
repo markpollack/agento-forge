@@ -86,6 +86,16 @@ generated IDs, leases, and a separate audit log. The binding now runs gitmaildir
 work directory and uses a separate receipt message. Method integrations must inspect the named
 external contract before borrowing its name.
 
+### Implementer/controller authorship observation
+
+The Step 1.2 bounded-correction implementer checked completed correction items in ROADMAP and changed
+steward `AGENTS.md` to `AWAITING ACCEPTANCE`. That initially looked like controller work, but the
+edits stopped short of acceptance and kept the controller-only criterion unchecked. The useful
+boundary is not “only the controller edits state-bearing files.” It is: the implementer records
+provisional evidence-backed execution state; the controller verifies those claims, reconciles
+VISION/DESIGN/ROADMAP, recommends acceptance or correction, and never delegates next-step authority.
+This is the pilot's concrete form of “trust but verify.”
+
 ## Agent Workflow — Pilot 2
 
 | Field | State |
@@ -120,3 +130,4 @@ handoff document that restates and drifts from the upstream decisions.
 | 2026-08-08 | Bind cross-steward delivery to gitmaildir `MailboxMessage` JSON under `plans/inbox/new/<type>/`; disposition returns in a separate receipt and remains recipient-owned | Dogfood correction |
 | 2026-08-08 | Require a named transport binding to match the transport's real on-disk schema and lifecycle; conceptual compatibility is insufficient | Dogfood correction |
 | 2026-08-08 | Do not claim gitmaildir delivery into an ignored `plans/` tree; use a declared manual pointer exception or establish the tracked steward boundary first | Dogfood correction |
+| 2026-08-08 | Treat implementer roadmap checkmarks and `AGENTS.md` checkpoint pointers as provisional evidence claims; the controller owns verification and acceptance, not exclusive file authorship | Dogfood correction |

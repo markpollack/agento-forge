@@ -40,7 +40,8 @@ the roadmap requires. Every later step remains unauthorized.
 ## Mutation boundary
 
 - **Project:** {{authorized project path families needed by the roadmap step}}
-- **Steward:** {{roadmap state, step evidence/learning, and current-action pointer}}
+- **Steward:** {{provisional roadmap execution state, step evidence/learning, and current-action
+  pointer; never controller acceptance or next-step authorization}}
 - **Preserve:** {{known unrelated working-tree paths or `none`}}
 - **Forbidden:** {{external repositories or state specifically at risk in this dispatch}}
 
@@ -50,8 +51,9 @@ Commit project implementation and steward evidence separately when the roadmap r
 ## Completion and stop
 
 Write the evidence required by the ROADMAP exits to {{step-learning-or-implementation-record-path}}.
-Report the exit-criterion result and exact repository states, update the current-action pointer to a
-human checkpoint, and stop. Do not begin {{next-roadmap-step-id}} or act as the independent reviewer.
+Report the exit-criterion result and exact repository states, mark only evidence-backed roadmap items,
+update the current-action pointer to `AWAITING ROADMAP CONTROLLER`, and stop. Do not mark controller
+acceptance, begin {{next-roadmap-step-id}}, or act as the independent reviewer.
 
 Stop earlier if an entry criterion is false, unrelated changes overlap the mutation boundary, a
 governing authority conflicts, or satisfying the step requires work outside this dispatch.
