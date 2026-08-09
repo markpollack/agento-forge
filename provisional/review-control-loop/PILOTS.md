@@ -106,6 +106,16 @@ promoted the exact Agent Judge commands and invariant into the public project's 
 commands, quality invariants, and diagnostic pitfalls move from per-step evidence into persistent
 agent instructions, while one-off transcripts stay in the evidence record.
 
+### Coverage-label observation
+
+The Step 1.4 implementation summary reported “all nine exits,” while the authoritative roadmap
+contained nine work items and eight exit criteria. The persistent evidence table listed the correct
+eight exits and all were met, so no implementation work was missing; the conversational label had
+combined or miscounted two different inventories. The controller reported `9/9 work items` and `8/8
+exit criteria` in plain language. This validates the existing denominator rule: every count names the
+finite category it counts, because `9/9` without “work items” or “exit criteria” sounds precise while
+remaining ambiguous.
+
 ## Agent Workflow — Pilot 2
 
 | Field | State |
