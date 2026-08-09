@@ -14,11 +14,14 @@ test transcripts, changed-path inventories, or the step learning record.
 ## Decision brief
 
 - **Outcome:** {{whether the completed step should be accepted, in one sentence}}
+- **Inbox preflight:** {{plain count of unclaimed transport messages by type; dispositions affecting
+  this checkpoint or `none`; keep ordinary effort-local Forge intake separate}}
 - **Evidence check:** {{plain count of roadmap obligations checked and only the high-value evidence
   independently reproduced}}
 - **Scope/state:** {{whether mutation stayed bounded; exact clean/dirty repository exceptions}}
 - **Planning currency:** {{claim groups checked; bounded corrections made or none}}
-- **Trajectory:** {{on course, correction needed, or hold; next-step readiness}}
+- **Trajectory:** {{on course, correction needed, or hold; next-step readiness; named downstream
+  milestones whose prerequisites this step had to preserve}}
 
 ## Exceptions and controller actions
 

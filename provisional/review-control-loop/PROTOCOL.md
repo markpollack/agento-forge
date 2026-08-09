@@ -226,22 +226,27 @@ implementation checkpoint. This is a continuity and control role, not an indepen
 
 The Roadmap Controller:
 
-1. identifies both repositories explicitly and records the project and steward commits being
+1. performs the steward **inbox preflight**: synchronize the gitmaildir transport, inventory every
+   unclaimed `plans/inbox/new/<type>/` message by ID/correlation/sender/age/requested outcome, and
+   disposition any message that can affect acceptance, sequencing, or the next dispatch; ordinary
+   Forge intake under an effort-local inbox remains a separate stage-boundary concern;
+2. identifies both repositories explicitly and records the project and steward commits being
    examined—never an unqualified `HEAD`;
-2. checks the completed step's evidence against its entry conditions, work boundary, and exit
+3. checks the completed step's evidence against its entry conditions, work boundary, and exit
    criteria, reproducing high-value evidence in proportion to risk;
-3. checks repository status, the implementation diff, and preserved unrelated changes;
-4. sweeps VISION, DESIGN, ROADMAP, current baselines, and learning indexes for current-state claims
+4. checks repository status, the implementation diff, and preserved unrelated changes;
+5. sweeps VISION, DESIGN, ROADMAP, current baselines, and learning indexes for current-state claims
    made stale by the completed step, and checks that `AGENTS.md` and tool-specific bridges contain no
    transient controller or session state;
-5. promotes newly proved, reusable operational knowledge—recurring verification commands, quality
+6. promotes newly proved, reusable operational knowledge—recurring verification commands, quality
    invariants, and diagnostic pitfalls—into the canonical project or steward `AGENTS.md`; record the
    shortest durable rule, not the step transcript, and keep tool-specific bridges as pointers;
-6. checks trajectory: whether the result still advances the Vision, preserves settled Design, and
-   leaves the next roadmap step correctly ordered and executable;
-7. classifies every discovery as a bounded planning-currency correction, an implementation defect, a
+7. checks trajectory: whether the result still advances the Vision, preserves settled Design, leaves
+   the next roadmap step correctly ordered and executable, and preserves every named downstream
+   milestone whose prerequisites the current step could accidentally erase;
+8. classifies every discovery as a bounded planning-currency correction, an implementation defect, a
    new or reopened owner decision, or explicitly deferred work with an owner/trigger; and
-8. writes a checkpoint using `templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md` and presents one
+9. writes a checkpoint using `templates/ROADMAP-CONTROLLER-CHECKPOINT-TEMPLATE.md` and presents one
    exact next human decision.
 
 The checkpoint is a **thin control-transition record**, normally one readable page. It points to the
@@ -344,6 +349,31 @@ The actual delivery path is `plans/inbox/new/<type>/<id>.json`, followed by the 
 gitmaildir `MailboxMessage` JSON record, not a Markdown handoff, not an authority, and not a miniature
 specification.
 
+#### Inbox-preflight cadence and authority promotion
+
+A repository does not notice mail by itself. The **controller process** notices it. Every Roadmap
+Controller or planning session performs an inbox preflight at session entry and again immediately
+before dispatching a new roadmap step. Stage consolidation still performs the broader zero-inbox
+triage over ordinary Forge intake. A bounded implementation session does **not** poll or triage the
+inbox; new work cannot silently alter its mutation boundary.
+
+Keep three operations distinct:
+
+1. **Receive/sense** — synchronize transport state and report the finite inventory of unclaimed
+   message IDs and correlations. This is mechanical and may later be automated.
+2. **Triage/disposition** — the Roadmap Controller reproduces the pointer, classifies the request, and
+   records exactly one recipient-owned disposition. This is governance and is not delegated to the
+   transport.
+3. **Promote/archive** — accepted work becomes a named ROADMAP obligation with an owner and target or
+   observable trigger; a decision input becomes a journal/DESIGN record; a refutation or park gets
+   its own exhibit/trigger. Only after that authority exists does the handler archive the message and
+   return a receipt.
+
+The roadmap never says merely "read message X." It states the accepted obligation and cites the
+correlation as provenance. `FILED` means accepted as recipient-owned work and therefore requires a
+named roadmap home; it does not mean prioritized next. A receipt closes the sender's routing
+obligation, not the recipient's implementation obligation.
+
 The sender records both a durable correlation ID and the generated gitmaildir message ID in its
 checkpoint, roadmap dependency, or journal. The recipient's idempotent handler owns disposition:
 
@@ -383,6 +413,10 @@ project repository immediately before steward migration merely to make delivery 
 - The steward's `AGENTS.md`, when present, follows the same stability rule. Operational state belongs
   in ROADMAP, ratification, dispatch, checkpoint, and evidence records; a fresh-session prompt points
   directly to the binding and authorized dispatch.
+- A steward `AGENTS.md` may state the stable obligation that Roadmap Controller and planning sessions
+  perform the inbox preflight defined by the steward binding. It never names a current message,
+  correlation, disposition, or inbox depth. The binding owns transport paths and invocation details;
+  controller records own each observed inventory and disposition.
 - Tool-specific files such as `CLAUDE.md` are optional minimal bridges to `AGENTS.md`; they do not
   carry private planning or current-action state.
 - Public project files may temporarily mirror steward documents during migration only when the

@@ -120,6 +120,9 @@ authorized dispatch.
     authorizing the next step?
 11. Can steward-to-steward obligations travel through transparent inbox files while authority remains
     in each recipient's journal and roadmap?
+12. Can a stable inbox-preflight cadence make cross-steward work visible soon enough to affect
+    sequencing without letting incoming messages expand a bounded implementation session or become
+    authority merely by arriving?
 
 ## Promotion gate
 

@@ -36,7 +36,12 @@ manually created but unpushed JSON file is only a prepared message, not delivere
 
 The payload points to the authority for semantics; it does not restate a design or copy roadmap work
 items. The recipient records exactly one disposition in its own authority: `FILED`, `RATIFIED`,
-`REFUTED`, or `PARKED`.
+`REFUTED`, or `PARKED`. `FILED` means the recipient accepted ownership and created or amended a named
+ROADMAP item; it does not mean the item is next or already authorized.
+
+Roadmap Controller and planning sessions inspect `plans/inbox/new/` at session entry and before a new
+dispatch. Bounded implementation sessions do not poll or triage it. The received message is archived
+only after the recipient authority exists.
 
 The response is another immutable gitmaildir message:
 
