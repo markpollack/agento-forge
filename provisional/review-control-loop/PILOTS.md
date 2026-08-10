@@ -193,3 +193,4 @@ silently substitute a delegating multi-agent mode for either independent sensor.
 | 2026-08-09 | File gitmaildir operator-CLI extraction after the second real round trip required four temporary Java drivers; keep project-specific governance handlers outside the generic library | Pilot finding filed to gitmaildir |
 | 2026-08-10 | Use stage-aware review profiles: capable normal/high sensors for iterative artifact correction, then the strongest suitable independent and diverse sensors for the frozen final pass | Agent Workflow dogfood |
 | 2026-08-10 | Materialize each CLI cold-review handoff as a reviewer-local launch script with pinned selected configuration, input integrity checks, overwrite refusal, and persistent output | Agent Workflow dogfood |
+| 2026-08-10 | Prefer owner-visible interactive CLI startup with the pointer handoff as the initial prompt; reserve unattended print/exec mode for deliberately logged runs | Agent Workflow dogfood |

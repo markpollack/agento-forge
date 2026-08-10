@@ -112,6 +112,14 @@ capture mechanism, not a security boundary: read-only permissions, sandboxing, a
 network policy still enforce the mutation and evidence boundary. Use
 `templates/COLD-REVIEW-LAUNCHER-TEMPLATE.md` as the checklist and shell skeleton.
 
+Prefer an interactive CLI startup for an owner-operated review: pass the small pointer handoff as the
+initial prompt, let the owner observe the native session, and preserve terminal scrollback when the
+CLI supports it. “Do not steer” does not mean “hide the run”; it means the owner observes without
+adding corrective context after launch. Use unattended print/exec mode only when visibility is not
+needed or when its event stream is deliberately logged. Interaction mode may change which isolation
+flags a CLI supports, so validate the exact interactive invocation rather than copying automation-only
+flags into it.
+
 An authoring product implementing this protocol should expose these as two simple actions—iterative
 review and final review. For either action it freezes the selected ordinary-file packet, resolves the
 current recommended reviewer configuration, creates one persistent directory and launcher per

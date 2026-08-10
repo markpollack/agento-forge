@@ -15,6 +15,12 @@ Resolve actual CLI, model, and reasoning names when generating the launcher. Do 
 vendor catalog into the reusable method, and do not treat a delegating multi-agent mode as a stronger
 version of one cold reviewer.
 
+For an owner-operated review, prefer the CLI's interactive mode and supply the handoff as its initial
+prompt. This keeps the native progress display visible without asking the owner to reconstruct the
+invocation. Enable inline display or preserved scrollback when available. Do not use print/exec mode
+unless the run is intentionally unattended or its stream is captured. Some session-persistence and
+configuration flags are mode-specific; validate the exact selected form from installed CLI help.
+
 ## Directory contract
 
 ```text
@@ -63,9 +69,10 @@ verify_input
 
 handoff='Read input/REVIEW-PROMPT.md completely, perform the independent review exactly as directed, write REVIEW.md in the current directory, and stop.'
 
-# Replace this line with one exact CLI invocation for the selected review profile.
-# Pin the model, reasoning tier, configuration/session behavior, and permission
-# mode; do not rely on ambient defaults or automatically choose maximum effort.
+# Default owner-operated form: one exact interactive CLI invocation with the
+# handoff as its initial prompt. Pin the model, reasoning tier, configuration/
+# session behavior, and permission mode; do not rely on ambient defaults or
+# automatically choose maximum effort.
 reviewer-cli --model <model> --reasoning <tier> <isolation-flags> "$handoff"
 
 test -s REVIEW.md
@@ -89,6 +96,7 @@ Before launch, record:
 - selected `ITERATIVE` or `FINAL` profile and why this sensor fits it;
 - installed CLI version;
 - selected model and reasoning tier;
+- interactive or unattended mode, including how progress/output is preserved;
 - configuration, session, permission, network, and allowed-root posture;
 - successful syntax and input-integrity checks; and
 - who will launch the reviewer.
