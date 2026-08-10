@@ -142,6 +142,27 @@ accepting it required four small temporary Java drivers. That is evidence for a 
 operator CLI/SPI shell—generic publish/list mechanics plus a recipient-supplied disposition handler—
 not a reason to copy project-specific pilot drivers into the library.
 
+## Current cold-review sensor profiles
+
+> **Standing:** dated pilot/operator defaults, not stable Forge doctrine
+> **As of:** 2026-08-10
+
+Keep the profile names stable and resolve the concrete model names again when generating a launcher.
+The owner has found `high` effective as the daily-driver reasoning level for current Claude and Codex
+models; reserve the selected `max` configurations for the frozen final pass.
+
+| Profile | CLI/model family | Reasoning | Default use |
+|---|---|---|---|
+| `ITERATIVE` | Claude Code — current Claude/Anthropic daily-driver model | `high` | Vision, Design, Roadmap, and correction-loop review |
+| `ITERATIVE` | Codex CLI — current Codex/OpenAI daily-driver model | `high` | Vision, Design, Roadmap, and correction-loop review |
+| `FINAL` | Claude Code — Fable 5 | `max` | One independent final sensor |
+| `FINAL` | Codex CLI — GPT-5.6-Sol | `max` | One independent final sensor |
+
+An iterative round may use either daily-driver sensor or both when diversity is useful. The final
+profile uses both listed sensors in separate persistent directories against the same frozen packet.
+If CLI availability changes, update this dated profile after checking the installed resolver; do not
+silently substitute a delegating multi-agent mode for either independent sensor.
+
 ## Method-level decision log
 
 | Date | Decision | Standing |
@@ -170,3 +191,5 @@ not a reason to copy project-specific pilot drivers into the library.
 | 2026-08-09 | Add an inbox preflight at Roadmap Controller/planning session entry and before dispatch; separate mechanical sensing from recipient-owned disposition, keep implementation sessions isolated, and preserve full stage-boundary inbox triage | Dogfood correction |
 | 2026-08-09 | Make named downstream milestones part of trajectory control so an earlier compatibility correction cannot erase prerequisites for later durable behavior | Dogfood correction |
 | 2026-08-09 | File gitmaildir operator-CLI extraction after the second real round trip required four temporary Java drivers; keep project-specific governance handlers outside the generic library | Pilot finding filed to gitmaildir |
+| 2026-08-10 | Use stage-aware review profiles: capable normal/high sensors for iterative artifact correction, then the strongest suitable independent and diverse sensors for the frozen final pass | Agent Workflow dogfood |
+| 2026-08-10 | Materialize each CLI cold-review handoff as a reviewer-local launch script with pinned selected configuration, input integrity checks, overwrite refusal, and persistent output | Agent Workflow dogfood |

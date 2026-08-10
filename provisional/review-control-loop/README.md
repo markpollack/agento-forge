@@ -123,6 +123,9 @@ authorized dispatch.
 12. Can a stable inbox-preflight cadence make cross-steward work visible soon enough to affect
     sequencing without letting incoming messages expand a bounded implementation session or become
     authority merely by arriving?
+13. Can stage-aware model escalation keep iterative artifact review responsive while reserving the
+    strongest diverse cold sensors for the final ratification boundary, with launch handoffs simple
+    enough for agento-university to generate?
 
 ## Promotion gate
 
@@ -136,6 +139,7 @@ The method may be proposed for Forge only after both pilots record:
 - stale or duplicate authorities removed;
 - human time required for adjudication and ratification;
 - reviewer-interface overhead, including Git reconstruction commands versus substantive checks;
+- selected review profile/model/reasoning tier and its elapsed time and useful-finding yield;
 - dispatch prompt repairs or missing controller-transition artifacts;
 - post-step stale claims, controller corrections, and human checkpoint decisions; and
 - failures and exceptions, not only successes.
@@ -155,6 +159,8 @@ Promotion is a separate reviewed change. Pilot success does not silently make th
   materialized numbered-candidate layout and source inventory
 - [templates/VERIFICATION-WORK-ORDER-TEMPLATE.md](templates/VERIFICATION-WORK-ORDER-TEMPLATE.md) —
   independent verification contract for a corrected bundle
+- [templates/COLD-REVIEW-LAUNCHER-TEMPLATE.md](templates/COLD-REVIEW-LAUNCHER-TEMPLATE.md) —
+  persistent reviewer-directory and inspectable CLI launcher pattern for cold sensors
 - [templates/RATIFICATION-TEMPLATE.md](templates/RATIFICATION-TEMPLATE.md) — human candidate decision
   and separately recorded execution authorization
 - [templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md](templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md) —

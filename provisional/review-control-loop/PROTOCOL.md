@@ -67,6 +67,59 @@ and adjudication records remain in the private steward history.
 Use a fresh reviewer with restricted, declared inputs. Author self-review is useful but correlated with
 the generating context; it is not the independent sensor.
 
+### Escalate review strength by stage
+
+Do not begin every artifact review with the most expensive model and maximum reasoning. Select a
+review profile from the decision stage:
+
+| Profile | Use | Sensor selection | Expected loop |
+|---|---|---|---|
+| `ITERATIVE` | While Vision, Design, Roadmap, or a correction is still developing | A capable, responsive model at its normal or high reasoning tier | Review, discuss, correct, and repeat while structural findings remain useful |
+| `FINAL` | After the candidate is frozen and before ratification or execution authorization | The strongest suitable independent single-reviewer configuration currently available; use distinct model families or vendors when the decision warrants multiple sensors | Run each sensor cold against identical inputs, then adjudicate their durable reports |
+
+The escalation is deliberate: inexpensive iterations remove ordinary defects before scarce final-pass
+attention is spent. `FINAL` does not mechanically mean a flag named `max`; select the strongest tier
+that preserves the declared single-reviewer boundary and record the choice. A nominally stronger mode
+that silently delegates to subagents is a different sensor topology, not a drop-in tier increase.
+Exact vendor and model names belong in the generated launcher and handoff record because availability
+changes; they do not belong in this reusable protocol. The pilot's dated operator defaults live in
+`PILOTS.md` so agento-university has a concrete profile to resolve without turning it into doctrine.
+
+### Materialize the cold-review handoff
+
+For a CLI reviewer, make the launch itself a small, inspectable artifact. Create one persistent
+directory per reviewer containing a read-only `input/` view, a reviewer-local `run-review.sh`, and the
+eventual `REVIEW.md`. Do not use a temporary directory for the only copy of review output. When
+several reviewers examine the same candidate, derive every `input/` view from one frozen canonical
+packet and keep their output directories separate.
+
+The launcher pins the CLI, model, reasoning tier, permission/configuration mode, and exact pointer
+prompt. That prompt should normally say only: read the review work order in `input/`, write
+`REVIEW.md` here, and stop. The work order owns the substantive review contract. The launcher:
+
+1. resolves and enters its own directory so invocation location cannot change the result paths;
+2. refuses to overwrite an existing review;
+3. verifies the frozen input before launch and after completion when the packet has a manifest or
+   equivalent integrity check;
+4. invokes one fresh, non-resuming reviewer with the recorded configuration;
+5. requires a non-empty persistent output at the declared path; and
+6. records enough version/configuration evidence to reproduce which sensor was selected.
+
+Validate the wrapper without launching it, then give the owner or designated operator the one-line
+launcher. Do not monitor or steer a cold reviewer after launch; a failed run remains a failed sensor
+run and is relaunched from a clean reviewer directory. The wrapper is an auditable handoff and
+capture mechanism, not a security boundary: read-only permissions, sandboxing, allowed roots, and
+network policy still enforce the mutation and evidence boundary. Use
+`templates/COLD-REVIEW-LAUNCHER-TEMPLATE.md` as the checklist and shell skeleton.
+
+An authoring product implementing this protocol should expose these as two simple actions—iterative
+review and final review. For either action it freezes the selected ordinary-file packet, resolves the
+current recommended reviewer configuration, creates one persistent directory and launcher per
+reviewer, and presents the launch commands. It does not silently launch reviewers, combine their
+findings, or mutate the authored Vision/Design/Roadmap. Those remain explicit owner and adjudication
+transitions. This is the provisional integration contract for the agento-university artifact-authoring
+and Roadmap Steward experience.
+
 Each review lens reports two things:
 
 - **findings**, each with a falsifiable exhibit; and
@@ -468,6 +521,9 @@ templates/VERIFICATION-WORK-ORDER-TEMPLATE.md
           |
           v
 plans/reviews/<review-id>/work-order-verification-02.md
+          |
+          v
+<persistent-review-root>/<reviewer>/run-review.sh
           |
           v
 plans/reviews/<review-id>/verification-02.md
