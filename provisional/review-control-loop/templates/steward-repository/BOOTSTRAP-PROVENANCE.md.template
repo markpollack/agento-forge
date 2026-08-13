@@ -8,6 +8,7 @@
 > **Imported planning root:** `{{PLANNING_ROOT}}`
 > **Imported committed paths:** {{IMPORTED_PATH_COUNT}}
 > **Excluded dirty/untracked status entries at bootstrap:** {{EXCLUDED_STATUS_COUNT}}
+> **Bootstrap script SHA-256:** `{{BOOTSTRAP_SCRIPT_SHA256}}`
 > **Steward:** `{{STEWARD_SLUG}}`
 > **Steward checkout:** `{{STEWARD_DIR}}`
 

@@ -28,6 +28,7 @@ printf '# Untracked status must not cross boundary\n' > "$project_dir/plans/stat
 "$script_dir/bootstrap-steward-repository.sh" \
   --project-dir "$project_dir" \
   --project-slug example/project \
+  --project-visibility PRIVATE \
   --project-branch main \
   --project-commit "$project_commit" \
   --steward-dir "$steward_dir" \
@@ -70,10 +71,14 @@ grep -q '^> \*\*Imported committed paths:\*\* 4$' \
   "$steward_dir/plans/archive/migration/STEWARD-BOOTSTRAP.md"
 grep -q '^> \*\*Excluded dirty/untracked status entries at bootstrap:\*\* 2$' \
   "$steward_dir/plans/archive/migration/STEWARD-BOOTSTRAP.md"
+grep -q '| Project |.*| PRIVATE/project-owned |' "$steward_dir/BINDING.md"
+grep -Eq '^> \*\*Bootstrap script SHA-256:\*\* `[0-9a-f]{64}`$' \
+  "$steward_dir/plans/archive/migration/STEWARD-BOOTSTRAP.md"
 
 if "$script_dir/bootstrap-steward-repository.sh" \
     --project-dir "$project_dir" \
     --project-slug example/project \
+    --project-visibility PRIVATE \
     --project-branch main \
     --project-commit "$project_commit" \
     --steward-dir "$steward_dir" \

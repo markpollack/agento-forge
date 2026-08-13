@@ -5,13 +5,15 @@ set -euo pipefail
 usage() {
   printf '%s\n' \
     'Usage: bootstrap-steward-repository.sh' \
-    '  --project-dir ABS --project-slug OWNER/REPO --project-branch BRANCH' \
+    '  --project-dir ABS --project-slug OWNER/REPO --project-visibility PUBLIC|PRIVATE' \
+    '  --project-branch BRANCH' \
     '  --project-commit COMMIT --steward-dir ABS --steward-slug OWNER/REPO' \
     '  --established YYYY-MM-DD [--planning-root plans]'
 }
 
 project_dir=''
 project_slug=''
+project_visibility=''
 project_branch=''
 project_commit=''
 steward_dir=''
@@ -23,6 +25,7 @@ while (($#)); do
   case "$1" in
     --project-dir) project_dir=${2-}; shift 2 ;;
     --project-slug) project_slug=${2-}; shift 2 ;;
+    --project-visibility) project_visibility=${2-}; shift 2 ;;
     --project-branch) project_branch=${2-}; shift 2 ;;
     --project-commit) project_commit=${2-}; shift 2 ;;
     --steward-dir) steward_dir=${2-}; shift 2 ;;
@@ -34,7 +37,7 @@ while (($#)); do
   esac
 done
 
-for required in project_dir project_slug project_branch project_commit steward_dir steward_slug established; do
+for required in project_dir project_slug project_visibility project_branch project_commit steward_dir steward_slug established; do
   if [[ -z ${!required} ]]; then
     printf 'Missing required value: %s\n' "$required" >&2
     usage >&2
@@ -44,6 +47,10 @@ done
 
 if [[ $project_dir != /* || $steward_dir != /* ]]; then
   printf 'Project and steward directories must be absolute paths.\n' >&2
+  exit 2
+fi
+if [[ $project_visibility != PUBLIC && $project_visibility != PRIVATE ]]; then
+  printf 'Project visibility must be PUBLIC or PRIVATE.\n' >&2
   exit 2
 fi
 if [[ ! $project_slug =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ||
@@ -60,7 +67,7 @@ if [[ ! $established =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
   exit 2
 fi
 
-for command in git sed tar; do
+for command in awk git sed sha256sum tar; do
   command -v "$command" >/dev/null || { printf 'Required command missing: %s\n' "$command" >&2; exit 1; }
 done
 
@@ -93,6 +100,7 @@ fi
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 template_dir="$script_dir/../templates/steward-repository"
+bootstrap_script_sha256=$(sha256sum "$script_dir/bootstrap-steward-repository.sh" | awk '{print $1}')
 project_name=${project_slug#*/}
 steward_name=${steward_slug#*/}
 
@@ -106,6 +114,7 @@ render() {
     -e "s|{{PROJECT_NAME}}|$project_name|g" \
     -e "s|{{PROJECT_DIR}}|$project_dir|g" \
     -e "s|{{PROJECT_SLUG}}|$project_slug|g" \
+    -e "s|{{PROJECT_VISIBILITY}}|$project_visibility|g" \
     -e "s|{{PROJECT_BRANCH}}|$project_branch|g" \
     -e "s|{{PROJECT_COMMIT}}|$project_commit|g" \
     -e "s|{{STEWARD_NAME}}|$steward_name|g" \
@@ -115,6 +124,7 @@ render() {
     -e "s|{{PLANNING_ROOT}}|$planning_root|g" \
     -e "s|{{IMPORTED_PATH_COUNT}}|$imported_path_count|g" \
     -e "s|{{EXCLUDED_STATUS_COUNT}}|$excluded_status_count|g" \
+    -e "s|{{BOOTSTRAP_SCRIPT_SHA256}}|$bootstrap_script_sha256|g" \
     "$source" > "$destination"
 }
 

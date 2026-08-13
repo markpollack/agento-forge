@@ -8,7 +8,7 @@
 
 | Role | Local checkout | Repository | Visibility |
 |---|---|---|---|
-| Project | `{{PROJECT_DIR}}` | `{{PROJECT_SLUG}}` | Public/project-owned |
+| Project | `{{PROJECT_DIR}}` | `{{PROJECT_SLUG}}` | {{PROJECT_VISIBILITY}}/project-owned |
 | Steward | `{{STEWARD_DIR}}` | `{{STEWARD_SLUG}}` | PRIVATE |
 
 The pairing is 1:1. The project branch at bootstrap is `{{PROJECT_BRANCH}}`; the private steward
@@ -58,6 +58,6 @@ correlation ID. The transport record is immutable and is never edited to carry i
 - Planning, decision, review, evidence, and correspondence commits occur here.
 - Implementation commits occur in the project repository.
 - Cross-repository work becomes a named dependency or work order owned by its recipient.
-- The public project's tracked `AGENTS.md` is a stable bridge only. It carries no current action,
+- The paired project's tracked `AGENTS.md` is a stable bridge only. It carries no current action,
   candidate, roadmap, message, checkpoint, or dirty-tree state.
 - Tool-specific instruction files are optional minimal bridges, not duplicate authority.

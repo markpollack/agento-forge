@@ -19,6 +19,7 @@ and send mail without intermediate validation.
 Record these values before running the scaffold:
 
 - project local checkout and repository slug;
+- actual project repository visibility (`PUBLIC` or `PRIVATE`);
 - exact committed project source identity to import;
 - project default or active branch;
 - new steward local checkout and repository slug;
@@ -44,6 +45,7 @@ validator.
 provisional/review-control-loop/scripts/bootstrap-steward-repository.sh \
   --project-dir /absolute/project \
   --project-slug owner/project \
+  --project-visibility PRIVATE \
   --project-branch main \
   --project-commit <full-commit> \
   --steward-dir /absolute/project-steward \
@@ -137,7 +139,7 @@ gh repo view <owner/project-steward> --json visibility,defaultBranchRef
 Stop if visibility is not `PRIVATE`, the default branch is not `main`, or the pushed HEAD differs
 from the inspected bootstrap commit. Repository privacy is an invariant, not a naming convention.
 
-## Stage 3 — migrate the public repository interface separately
+## Stage 3 — migrate the project repository interface separately
 
 Only after the steward authority is committed and privately pushed may a separately authorized
 project change:
@@ -148,7 +150,7 @@ project change:
   and
 - preserve project-owned code, tests, builds, releases, and public documentation.
 
-The public bridge contains no current action, candidate identity, roadmap status, message ID,
+The project bridge contains no current action, candidate identity, roadmap status, message ID,
 correlation, checkpoint, dirty-tree exception, or private planning content.
 
 ## Stage 4 — prove real transport with the first message
