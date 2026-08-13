@@ -1,0 +1,36 @@
+# Steward Migration Continuity Checkpoint
+
+> **Established:** {{ESTABLISHED}}
+> **Source project:** `{{PROJECT_SLUG}}`
+> **Exact imported commit:** `{{PROJECT_COMMIT}}`
+> **Imported planning root:** `{{PLANNING_ROOT}}`
+
+This checkpoint records the semantic handoff from project-local planning to the 1:1 private
+steward. Replace every `[REQUIRED]` field from the imported authorities and learnings. Do not infer
+authorization from an unchecked box or from migration itself.
+
+## Last accepted or completed work
+
+[REQUIRED] Name the last accepted/completed roadmap step or milestone and its exact evidence.
+
+## Current frontier
+
+[REQUIRED] Name the exact next active, paused, or awaiting-owner boundary where work resumes.
+
+## Filed but not authorized
+
+[REQUIRED] List filed work that migration does not authorize, or state `None`.
+
+## Owner and release holds
+
+[REQUIRED] List every owner decision, execution hold, publication hold, or state `None`.
+
+## Planning path disposition
+
+[REQUIRED] Record which imported paths remain active, which are historical evidence, and every path
+moved while adapting to steward format. State `No paths moved` when exact paths were retained.
+
+## Continuity assertion
+
+[REQUIRED] State why the private steward can pick up at the recorded frontier without losing,
+reopening, authorizing, or reprioritizing work.

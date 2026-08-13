@@ -1,0 +1,19 @@
+# Steward Bootstrap Provenance
+
+> **Established:** {{ESTABLISHED}}
+> **Project:** `{{PROJECT_SLUG}}`
+> **Project checkout:** `{{PROJECT_DIR}}`
+> **Project branch at bootstrap:** `{{PROJECT_BRANCH}}`
+> **Exact imported commit:** `{{PROJECT_COMMIT}}`
+> **Imported planning root:** `{{PLANNING_ROOT}}`
+> **Imported committed paths:** {{IMPORTED_PATH_COUNT}}
+> **Excluded dirty/untracked status entries at bootstrap:** {{EXCLUDED_STATUS_COUNT}}
+> **Steward:** `{{STEWARD_SLUG}}`
+> **Steward checkout:** `{{STEWARD_DIR}}`
+
+The planning tree was imported from the exact committed project object with `git archive`; dirty,
+ignored, and untracked project state was not imported. Project instruction files present at the
+exact commit are preserved beside this record as migration evidence. They are not active authority.
+
+This local scaffold did not create a remote, assert remote privacy, edit the project, send a
+message, or prove the gitmaildir lifecycle. Those are separate validated bootstrap stages.

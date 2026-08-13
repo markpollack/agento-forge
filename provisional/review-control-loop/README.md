@@ -149,6 +149,9 @@ Promotion is a separate reviewed change. Pilot success does not silently make th
 ## Contents
 
 - [PROTOCOL.md](PROTOCOL.md) — the operating protocol being tested
+- [STEWARD-REPOSITORY-BOOTSTRAP.md](STEWARD-REPOSITORY-BOOTSTRAP.md) — reproducible creation,
+  privacy validation, planning migration, gitmaildir enablement, and first-message proof for a new
+  1:1 private steward
 - [PILOTS.md](PILOTS.md) — cross-pilot status and observations
 - [ANTECEDENTS.md](ANTECEDENTS.md) — bounded comparison with configuration management, IV&V,
   scenario-based review, and current SDD

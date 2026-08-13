@@ -460,12 +460,23 @@ project repository immediately before steward migration merely to make delivery 
 
 ## 9. Steward repository invariants
 
+New steward repositories are created and checked through
+`STEWARD-REPOSITORY-BOOTSTRAP.md`, `scripts/bootstrap-steward-repository.sh`, and
+`scripts/validate-steward-repository.sh`. Bootstrap is a staged control transition: local scaffold,
+private remote, public bridge, and first-message lifecycle are independently inspectable. Dogfood
+repairs update that procedure before the next steward is created.
+
 - One project repository maps to exactly one private steward repository.
 - The steward binding names the project remote, local checkout, default branch, and authority boundary.
 - Active planning filenames are singular and stable: `plans/VISION.md`, `plans/DESIGN.md`, and
   `plans/ROADMAP.md`.
 - Reviews, candidate records, adjudications, journals, and learnings are tracked; `plans/` is never
   gitignored in the private steward.
+- Every steward is gitmaildir-enabled in its first commit. The work directory is `plans/`; tracked
+  lifecycle roots exist at `plans/inbox/{new,cur,archive,dead}/` for `steward-follow-up` and
+  `steward-receipt`; `plans/audit/events.jsonl` is tracked; runtime heartbeats are ignored. Real
+  transport is accepted only after a generated message completes delivery, recipient-owned
+  disposition, archive, and separate receipt—not from directory existence alone.
 - The public project's tracked `AGENTS.md` is a minimal, stable repository interface: ownership
   boundary, steward-binding pointer, durable build rules, confidentiality/licensing constraints, and
   links to maintained engineering standards. It contains no current action, candidate or artifact

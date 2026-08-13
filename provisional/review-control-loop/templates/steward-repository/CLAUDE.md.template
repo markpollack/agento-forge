@@ -1,0 +1,4 @@
+# {{PROJECT_NAME}} Steward
+
+Read `AGENTS.md`, then `BINDING.md`. The binding names the active private authorities and the paired
+project boundary. Do not duplicate roadmap or current control state in this tool-specific bridge.

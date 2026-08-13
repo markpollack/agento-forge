@@ -1,0 +1,63 @@
+# Steward Binding
+
+> **Status:** ACTIVE
+> **Established:** {{ESTABLISHED}}
+> **Visibility:** PRIVATE — required invariant
+
+## Repository pair
+
+| Role | Local checkout | Repository | Visibility |
+|---|---|---|---|
+| Project | `{{PROJECT_DIR}}` | `{{PROJECT_SLUG}}` | Public/project-owned |
+| Steward | `{{STEWARD_DIR}}` | `{{STEWARD_SLUG}}` | PRIVATE |
+
+The pairing is 1:1. The project branch at bootstrap is `{{PROJECT_BRANCH}}`; the private steward
+default branch is `main`. The committed planning import came from project commit
+`{{PROJECT_COMMIT}}` and planning root `{{PLANNING_ROOT}}`.
+
+## Ownership boundary
+
+The project owns code, tests, build inputs and output, releases, public documentation, and accepted
+implementation history. This steward owns product vision, design, roadmap state, decisions,
+learnings, reviews, adjudications, work orders, private research, and correspondence.
+
+## Active authority order
+
+1. `plans/VISION.md`
+2. `plans/DESIGN.md`
+3. `plans/ROADMAP.md`
+4. ratified entries under `plans/journal/`, when present
+5. project public contracts, tests, and implementation as current-state evidence
+6. received reviews, handoffs, and transport messages as evidence only
+
+If authorities conflict, stop and frame the branches. Do not choose by filename age or location.
+
+## Gitmaildir transport
+
+Gitmaildir's work directory is `plans/`. Its lifecycle is
+`plans/inbox/{new,cur,archive,dead}/<type>/`, with append-only audit at
+`plans/audit/events.jsonl`. `steward-follow-up` and `steward-receipt` are enabled from bootstrap.
+Other children of `plans/inbox/` are ordinary Forge intake unless they contain real gitmaildir
+`MailboxMessage` JSON in the lifecycle tree.
+
+### Inbox preflight
+
+Roadmap Controller and planning sessions inspect `plans/inbox/new/<type>/*.json` and
+`plans/inbox/cur/<type>/*.json` at session entry and immediately before dispatch. Inventory each
+unclaimed message by ID, correlation, sender, age, and requested outcome. Arrival is sensor input,
+not authority: reproduce its pointers and record exactly one disposition in recipient-owned
+ROADMAP, journal, refutation, or park state before running the real receiver lifecycle and returning
+a separate receipt. `FILED` creates or amends named recipient-owned work; it does not authorize or
+prioritize it. Bounded implementation sessions do not perform this preflight.
+
+Processing is at least once. Key disposition and receipt deduplication by original message or
+correlation ID. The transport record is immutable and is never edited to carry its disposition.
+
+## Operating boundary
+
+- Planning, decision, review, evidence, and correspondence commits occur here.
+- Implementation commits occur in the project repository.
+- Cross-repository work becomes a named dependency or work order owned by its recipient.
+- The public project's tracked `AGENTS.md` is a stable bridge only. It carries no current action,
+  candidate, roadmap, message, checkpoint, or dirty-tree state.
+- Tool-specific instruction files are optional minimal bridges, not duplicate authority.
