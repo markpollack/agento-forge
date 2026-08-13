@@ -39,6 +39,13 @@ The current scaffold enforces the singular root trio. A multi-effort exception s
 deviation; do not create root pointer files or flatten load-bearing paths merely to satisfy the
 validator.
 
+If the project has no committed active planning trio, use the separate minimal-authority scaffold
+`scripts/bootstrap-minimal-steward-repository.sh`. It requires an exact accepted seed work order
+from a named private authority repository, creates a deliberately incomplete minimal trio, and
+refuses to run when a committed project trio already exists. Complete and validate that trio before
+the first commit. This is initialization from explicit authority, not reconstruction of historical
+planning from public documentation or an untracked status summary.
+
 ## Stage 1 — create and validate the local private boundary
 
 ```text
@@ -97,6 +104,7 @@ Run the self-contained regression before dogfooding a changed scaffold:
 
 ```text
 provisional/review-control-loop/scripts/test-bootstrap-steward-repository.sh
+provisional/review-control-loop/scripts/test-minimal-steward-repository.sh
 ```
 
 The fixture proves committed-object import, exclusion of dirty/untracked planning, coexistence with

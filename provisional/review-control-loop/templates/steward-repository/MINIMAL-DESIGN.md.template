@@ -1,0 +1,7 @@
+# Design: {{PROJECT_NAME}}
+
+> **Status:** [REQUIRED]
+> **Established:** {{ESTABLISHED}}
+
+[REQUIRED] Record only the stable ownership, build, verification, and compatibility constraints
+needed by the accepted seed obligation. Project implementation remains the current-state evidence.

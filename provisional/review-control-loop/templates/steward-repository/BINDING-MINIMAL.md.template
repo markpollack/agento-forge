@@ -1,0 +1,60 @@
+# Steward Binding
+
+> **Status:** ACTIVE
+> **Established:** {{ESTABLISHED}}
+> **Visibility:** PRIVATE — required invariant
+
+## Repository pair
+
+| Role | Local checkout | Repository | Visibility |
+|---|---|---|---|
+| Project | `{{PROJECT_DIR}}` | `{{PROJECT_SLUG}}` | {{PROJECT_VISIBILITY}}/project-owned |
+| Steward | `{{STEWARD_DIR}}` | `{{STEWARD_SLUG}}` | PRIVATE |
+
+The pairing is 1:1. The project baseline at bootstrap is branch `{{PROJECT_BRANCH}}`, exact commit
+`{{PROJECT_COMMIT}}`; the steward default branch is `main`. The project had no committed active
+planning trio. Minimal authority was initialized from exact accepted seed
+`{{SEED_SLUG}}@{{SEED_COMMIT}}:{{SEED_PATH}}`; its preserved bytes are migration evidence, not a
+second active roadmap.
+
+## Ownership boundary
+
+The project owns code, tests, build inputs and output, releases, public documentation, and accepted
+implementation history. This steward owns product vision, design, roadmap state, decisions,
+learnings, reviews, adjudications, work orders, private research, and correspondence.
+
+## Active authority order
+
+1. `plans/VISION.md`
+2. `plans/DESIGN.md`
+3. `plans/ROADMAP.md`
+4. ratified entries under `plans/journal/`, when present
+5. project public contracts, tests, and implementation as current-state evidence
+6. the accepted seed and received messages as evidence only
+
+If authorities conflict, stop and frame the branches. Do not infer missing history.
+
+## Gitmaildir transport
+
+Gitmaildir's work directory is `plans/`. Its lifecycle is
+`plans/inbox/{new,cur,archive,dead}/<type>/`, with append-only audit at
+`plans/audit/events.jsonl`. `steward-follow-up` and `steward-receipt` are enabled from bootstrap.
+
+### Inbox preflight
+
+Roadmap Controller and planning sessions inspect `plans/inbox/new/<type>/*.json` and
+`plans/inbox/cur/<type>/*.json` at session entry and before dispatch. Arrival is evidence, not
+authority. Reproduce its pointers, record exactly one recipient-owned disposition, run the real
+receiver lifecycle, and return a separate receipt. `FILED` does not authorize implementation.
+Bounded implementation sessions do not perform this preflight.
+
+Processing is at least once. Deduplicate disposition and receipt by original message or correlation
+ID. Never edit an immutable transport message to carry its disposition.
+
+## Operating boundary
+
+- Planning, decision, review, evidence, and correspondence commits occur here.
+- Implementation commits occur in the paired project repository.
+- Cross-repository work becomes a named dependency or work order owned by its recipient.
+- The paired project's tracked `AGENTS.md` is a stable bridge only; it carries no current control
+  state.

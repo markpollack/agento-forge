@@ -1,0 +1,15 @@
+# Minimal Authority Bootstrap Provenance
+
+> **Established:** {{ESTABLISHED}}
+> **Project:** `{{PROJECT_SLUG}}`
+> **Project checkout:** `{{PROJECT_DIR}}`
+> **Project branch:** `{{PROJECT_BRANCH}}`
+> **Exact project baseline:** `{{PROJECT_COMMIT}}`
+> **Accepted seed:** `{{SEED_SLUG}}@{{SEED_COMMIT}}:{{SEED_PATH}}`
+> **Excluded dirty/untracked status entries at bootstrap:** {{EXCLUDED_STATUS_COUNT}}
+> **Bootstrap script SHA-256:** `{{BOOTSTRAP_SCRIPT_SHA256}}`
+
+The project had no committed `plans/{VISION,DESIGN,ROADMAP}.md` trio. This steward was initialized
+from the exact accepted seed copied beside this record. No historical planning was inferred from
+project documentation or untracked files. The active trio and continuity checkpoint were
+intentionally incomplete at scaffold time and had to pass final validation before commit.

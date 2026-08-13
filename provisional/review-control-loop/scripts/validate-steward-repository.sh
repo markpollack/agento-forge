@@ -93,6 +93,15 @@ if [[ $require_continuity == true ]]; then
       exit 1
     fi
   done
+  if grep -q '^# Minimal Authority Bootstrap Provenance$' \
+      "$steward_dir/plans/archive/migration/STEWARD-BOOTSTRAP.md"; then
+    for authority in plans/VISION.md plans/DESIGN.md plans/ROADMAP.md; do
+      if grep -q '\[REQUIRED\]' "$steward_dir/$authority"; then
+        printf 'Minimal steward authority is unresolved: %s\n' "$authority" >&2
+        exit 1
+      fi
+    done
+  fi
 fi
 
 if [[ -n $private_remote ]]; then

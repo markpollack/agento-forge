@@ -461,8 +461,10 @@ project repository immediately before steward migration merely to make delivery 
 ## 9. Steward repository invariants
 
 New steward repositories are created and checked through
-`STEWARD-REPOSITORY-BOOTSTRAP.md`, `scripts/bootstrap-steward-repository.sh`, and
-`scripts/validate-steward-repository.sh`. Bootstrap is a staged control transition: local scaffold,
+`STEWARD-REPOSITORY-BOOTSTRAP.md`, `scripts/bootstrap-steward-repository.sh`,
+`scripts/bootstrap-minimal-steward-repository.sh`, and `scripts/validate-steward-repository.sh`.
+The minimal scaffold is used only when no committed project planning trio exists and an exact
+accepted seed work order supplies the new authority boundary. Bootstrap is a staged control transition: local scaffold,
 private remote, public bridge, and first-message lifecycle are independently inspectable. Dogfood
 repairs update that procedure before the next steward is created.
 

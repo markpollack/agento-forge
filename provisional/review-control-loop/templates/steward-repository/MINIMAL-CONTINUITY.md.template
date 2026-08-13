@@ -1,0 +1,32 @@
+# Steward Migration Continuity Checkpoint
+
+> **Established:** {{ESTABLISHED}}
+> **Source project:** `{{PROJECT_SLUG}}`
+> **Exact project baseline:** `{{PROJECT_COMMIT}}`
+> **Accepted seed:** `{{SEED_SLUG}}@{{SEED_COMMIT}}:{{SEED_PATH}}`
+
+## Last accepted or completed work
+
+[REQUIRED] Name only the accepted project baseline represented by committed history.
+
+## Current frontier
+
+[REQUIRED] Name the exact seed obligation and owner-decision boundary.
+
+## Filed but not authorized
+
+[REQUIRED] List filed work migration does not authorize, or state `None`.
+
+## Owner and release holds
+
+[REQUIRED] List every owner, implementation, review, publication, and release hold.
+
+## Planning path disposition
+
+[REQUIRED] State that no committed planning trio existed, name preserved evidence, and account for
+any explicitly preserved untracked status without treating it as authority.
+
+## Continuity assertion
+
+[REQUIRED] Explain why the minimal authority preserves the exact baseline and seed without inventing
+history or granting execution authority.

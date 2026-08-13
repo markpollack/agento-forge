@@ -1,0 +1,13 @@
+# Roadmap: {{PROJECT_NAME}}
+
+> **Status:** [REQUIRED]
+> **Project baseline:** `{{PROJECT_COMMIT}}`
+> **Accepted seed:** `{{SEED_SLUG}}@{{SEED_COMMIT}}:{{SEED_PATH}}`
+
+## Current obligation
+
+[REQUIRED] State the one accepted obligation, its exact scope and verification gates.
+
+## Holds
+
+[REQUIRED] State all implementation, review, acceptance, release, and publication holds.
