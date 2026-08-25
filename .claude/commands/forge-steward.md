@@ -13,10 +13,10 @@ description: "RETIRED - use /forge-steward-repo. Bootstrapped stewardship inside
 >
 > **Why it was retired.** Planning cannot live inside a public repository. This command's model put
 > it there, and a `.gitignore` entry does not untrack what is already tracked — so the exposure
-> persists silently until someone audits `origin/<default-branch>` directly. That leak class was
-> found and fixed in `agent-hooks`, `agent-workflow` and `agent-experiment`, each by `git rm
-> --cached` on `main` after the content had been public for months. The separate steward repository
-> removes the possibility rather than relying on discipline.
+> persists silently until someone audits `origin/<default-branch>` directly, typically long after
+> the content first became visible. Untracking also only stops future exposure: what was committed
+> remains in history and in every clone. The separate steward repository removes the possibility
+> rather than relying on discipline.
 >
 > **Use instead:** `/forge-steward-repo`
 > **Procedure:** `provisional/review-control-loop/STEWARD-REPOSITORY-BOOTSTRAP.md`

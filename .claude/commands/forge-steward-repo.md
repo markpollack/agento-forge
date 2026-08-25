@@ -10,9 +10,8 @@ paired 1:1 with the project**, holding the authority trio, the inbox, and the au
 
 **This supersedes `/forge-steward`**, which added stewardship content *inside* an existing project.
 That model does not work when the project is public — planning cannot live in a repository whose
-contents are world-readable — and it is the direct cause of the recurring `plans/` leak class
-(`agent-hooks`, `agent-workflow`, `agent-experiment`, each fixed by `git rm --cached` on `main`).
-Use this command instead. See `Retired predecessor` at the end.
+contents are world-readable — and it is the direct cause of a recurring leak class in which tracked
+planning stays exposed long after someone believes it was excluded. Use this command instead. See `Retired predecessor` at the end.
 
 ## Configuration
 
@@ -84,8 +83,8 @@ The choice is determined by evidence, not preference:
 The minimal path is **initialization from explicit authority** — not reconstruction of historical
 planning from public documentation or an untracked status summary. If you find yourself inventing
 what the project's vision must have been, stop: derive it from cited sources and mark it
-`PENDING OWNER RATIFICATION`, following the precedent that `agent-experiment`'s trio carries that
-banner. **A steward whose trio is unratified has no authority. Say so; do not imply otherwise.**
+`PENDING OWNER RATIFICATION`, which is the established banner for a derived trio awaiting the
+owner's sign-off. **A steward whose trio is unratified has no authority. Say so; do not imply otherwise.**
 
 A partial trio is common and is not the same as none. A project with `DESIGN.md` and `ROADMAP.md`
 but no `VISION.md` has a design and a roadmap serving a vision nobody wrote down — that is precisely
