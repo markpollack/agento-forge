@@ -1,9 +1,28 @@
 ---
 name: forge-steward
-description: "Bootstrap stewardship for an existing project (Forge Steward Variant)"
+description: "RETIRED - use /forge-steward-repo. Bootstrapped stewardship inside a project; superseded by the 1:1 private steward repository."
 ---
 
 # Forge Steward — Bootstrap Project Stewardship
+
+> # ⚠️ RETIRED — use `/forge-steward-repo`
+>
+> This command bootstrapped stewardship **inside** an existing project: CLAUDE.md steward sections,
+> an in-repo knowledge base, monitoring config. It is superseded by the **1:1 private steward
+> repository** model, which pairs a separate private repository with the project.
+>
+> **Why it was retired.** Planning cannot live inside a public repository. This command's model put
+> it there, and a `.gitignore` entry does not untrack what is already tracked — so the exposure
+> persists silently until someone audits `origin/<default-branch>` directly. That leak class was
+> found and fixed in `agent-hooks`, `agent-workflow` and `agent-experiment`, each by `git rm
+> --cached` on `main` after the content had been public for months. The separate steward repository
+> removes the possibility rather than relying on discipline.
+>
+> **Use instead:** `/forge-steward-repo`
+> **Procedure:** `provisional/review-control-loop/STEWARD-REPOSITORY-BOOTSTRAP.md`
+>
+> Retained for historical projects that adopted this model. Do not use it for new stewards.
+
 
 You are helping bootstrap stewardship for an existing project using the Forge methodology's steward variant. This skill handles: understanding the project's current state, bootstrapping a knowledge base, writing steward sections for CLAUDE.md, configuring monitoring, and defining accountability boundaries.
 
