@@ -20,10 +20,9 @@ or implementing any correction.
 3. {{method-protocol-path}}
 4. {{materialized-candidate-bundle-path}}/README.md
 5. {{received-review-path}}
-6. {{materialized-candidate-bundle-path}}/VISION.md
-7. {{materialized-candidate-bundle-path}}/DESIGN.md
-8. {{materialized-candidate-bundle-path}}/ROADMAP.md
-9. {{additional-authority-pointers-or-none}}
+6. {{materialized-reviewed-artifact-paths-in-order}}
+7. {{materialized-standing-authority-paths-in-order}}
+8. {{additional-authority-pointers-or-none}}
 
 Read ordinary files from the materialized bundle. Run one preflight confirming that the candidate ref
 identifies the committed bundle and that its README inventory/source references are complete. Do not
@@ -77,6 +76,15 @@ For every finding:
    - `filed` with a named owner or roadmap step; or
    - `parked` with an observable trigger.
 6. Name the repository that owns any correction.
+7. If the accepted findings cannot be corrected coherently in one bounded session, populate the
+   adjudication template's work-package routing table. Group by shared invariant or decision boundary,
+   assign each finding exactly one owning package or the direct path, and name any contributor
+   packages. Record `1`-through-`10` attention priority, dependencies, owner checkpoints, and
+   integration targets. Do not execute the packages or create a package roadmap during this
+   adjudication. Freeze the issued finding/routing rows; later controller state is append-only in the
+   ledger's transition log.
+8. Otherwise populate numbered direct-correction obligations. These, rather than surrounding prose,
+   become the exact scope an owner may authorize for the planning-correction work order.
 
 Do not mark a finding `fixed` during adjudication unless the cited correction already exists in the
 candidate being adjudicated. `Accepted-open` is the normal state for a reproduced, not-yet-corrected
@@ -102,7 +110,7 @@ evidence—write a concise human checkpoint containing:
 - reproduced blocking findings;
 - refuted or downgraded findings;
 - owner decisions required, each with a recommended default and consequence of deferral;
-- the exact next-candidate correction boundary;
+- the exact direct-correction boundary or proposed work-package boundary;
 - explicit exclusions;
 - residual risks; and
 - what changed and did not change;

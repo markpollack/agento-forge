@@ -1,0 +1,100 @@
+# Steward Binding
+
+> **Status:** ACTIVE
+> **Established:** {{ESTABLISHED}}
+> **Visibility:** PRIVATE — required invariant
+> **Binding kind:** `PORTFOLIO` — **1:N**, this steward binds to other stewards, not to a codebase
+
+## Why this binding kind exists
+
+The common steward binds **1:1 to a project**: it owns that project's vision, design and roadmap,
+and implementation commits land in the paired repository. That shape assumes there *is* a paired
+codebase.
+
+A portfolio steward has none. It stewards a **program** — the arcs that run across several projects,
+each of which already has its own steward. Its subject is sequencing, thrulines and cross-repo
+dependencies: the questions no single steward can see from inside its own repository.
+
+The distinction is the same one an organisation makes between the engineer who owns the mechanics of
+shipping and the product manager who owns what is being shipped and in what order. Both are real
+work; conflating them means the concern with tests and gates always crowds out the one without.
+
+## Bound stewards
+
+| Steward | Repository | Stewards | Relationship |
+|---|---|---|---|
+{{BOUND_STEWARDS_TABLE}}
+
+This steward binds to **stewards**, not to their projects. It does not reach past a steward into the
+project that steward owns. If it needs something from a project, it raises it with that project's
+steward.
+
+## ⚠️ Authority — coordination, not command
+
+**This is the invariant that keeps the pattern from collapsing.**
+
+A 1:1 steward holds *authority* over its project: its `VISION`/`DESIGN`/`ROADMAP` are that project's
+active authority. A portfolio steward holds **no authority over the stewards it binds to.** It has:
+
+- **Authority** over the program record — the arcs, their sequencing, and the thrulines between them.
+- **Standing to raise intent** with a bound steward, through that steward's own inbox.
+- **No power to dispose.** Each bound steward records exactly one disposition, in its own repository,
+  under its own authority order. A "no" from a bound steward is an answer, not an escalation.
+
+Writing a roadmap item into a bound steward's repository, or treating a raised intent as accepted
+because it was sent, breaks this. If a program needs something a steward declines, that is an owner
+decision, not a program-steward decision.
+
+## Ownership boundary
+
+This steward owns: the program vision, the arcs and their sequencing, cross-repo dependency and
+blocker state, program-level decisions and their rationale, and correspondence with bound stewards.
+
+This steward owns **no code, no release mechanics, no gates, and no evidence tree.** It does not
+execute. Where a program arc requires mechanical work — a release, a migration, a scan — that work
+belongs to the steward or execution repository that owns it, reached by work order.
+
+It records **pointers to episodes, never their contents.** Dated episode documents (a release train,
+a wave, a diligence pass) live where they are executed and close when they are done. The program
+record persists and points at them. A program document that absorbs episode detail has become a
+fourth ledger and stopped doing its job.
+
+## Active authority order
+
+1. `plans/VISION.md`
+2. `plans/DESIGN.md`
+3. `plans/ROADMAP.md`
+4. ratified entries under `plans/journal/`, when present
+5. **bound stewards' own authorities as current-state evidence** — never as instructions to rewrite
+6. the accepted seed and received messages as evidence only
+
+If a bound steward's authority conflicts with the program record, that is a finding to surface, not
+a conflict to resolve unilaterally. Frame both branches and stop.
+
+## Gitmaildir transport
+
+Gitmaildir's work directory is `plans/`. Its lifecycle is
+`plans/inbox/{new,cur,archive,dead}/<type>/`, with append-only audit at
+`plans/audit/events.jsonl`. `steward-follow-up` and `steward-receipt` are enabled from bootstrap.
+
+Outbound intent to a bound steward goes to **that steward's** inbox and returns as a receipt.
+Because this steward cannot dispose, a receipt is the only evidence an intent was accepted.
+
+### Inbox preflight
+
+Planning sessions inspect `plans/inbox/new/<type>/*.json` and `plans/inbox/cur/<type>/*.json` at
+session entry and before dispatch. Arrival is evidence, not authority. Reproduce its pointers,
+record exactly one recipient-owned disposition, run the real receiver lifecycle, and return a
+separate receipt. `FILED` does not authorize implementation.
+
+Processing is at least once. Deduplicate disposition and receipt by original message or correlation
+ID. Never edit an immutable transport message to carry its disposition.
+
+## Operating boundary
+
+- Program planning, sequencing, decisions and correspondence commit **here**.
+- Implementation, release and evidence commits occur in the bound stewards' own repositories and
+  their projects. Never here.
+- A cross-repository need becomes a named work order owned by its **recipient**.
+- Adding or removing a bound steward is a change to this file and requires the same deliberation as
+  establishing the binding did.

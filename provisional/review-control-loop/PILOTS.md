@@ -142,6 +142,29 @@ accepting it required four small temporary Java drivers. That is evidence for a 
 operator CLI/SPI shell—generic publish/list mechanics plus a recipient-supplied disposition handler—
 not a reason to copy project-specific pilot drivers into the library.
 
+### Multi-package adjudication observation
+
+The Agent Workflow steward's `plans/main-due-diligence/inbox/review-java-line-2026-08-20.md` returned
+14 MUST and 5 SHOULD findings across coupled DSL, runtime, persistence, identity, release-scope, and
+evidence-integrity questions. Sending all accepted findings directly into one correction session would
+require that session to make several owner choices while simultaneously rewriting the whole proposal.
+Creating one independent design document per finding would instead lose the shared invariants and
+create competing partial authorities.
+
+Agent Workflow's earlier `plans/v3/inbox/cross-check-polyglot-identity-cold-reviews-2026-08-10.md`
+supplied an ad hoc positive precedent: de-duplicate the docket, walk owner choices in dependency order,
+record topic dispositions, integrate once, and then run fresh cold reviews. Its active state was
+scattered through `inbox/`, however, so the pattern was difficult to supervise and reuse.
+
+The provisional method now formalizes that sequence under one review root. One adjudication ledger
+retains finding closure, priority, dependencies, and routing; grouped work packages return evidence
+and recommendations without editing authority artifacts; the controller checks them and records owner
+dispositions; one correction brief maps the accepted whole; the owner then authorizes a separate
+planning-correction work order that produces one new candidate. For a cross-cutting integrity finding,
+unsafe use is contained first and the finding closes only after synthesis and citation verification.
+This observation defines the next Agent Workflow experiment; it does not claim that the Java-line
+multi-package correction has already completed.
+
 ## Current cold-review sensor profiles
 
 > **Standing:** dated pilot/operator defaults, not stable Forge doctrine
@@ -197,3 +220,4 @@ silently substitute a delegating multi-agent mode for either independent sensor.
 | 2026-08-10 | Use stage-aware review profiles: capable normal/high sensors for iterative artifact correction, then the strongest suitable independent and diverse sensors for the frozen final pass | Agent Workflow dogfood |
 | 2026-08-10 | Materialize each CLI cold-review handoff as a reviewer-local launch script with pinned selected configuration, input integrity checks, overwrite refusal, and persistent output | Agent Workflow dogfood |
 | 2026-08-10 | Prefer owner-visible interactive CLI startup with the pointer handoff as the initial prompt; reserve unattended print/exec mode for deliberately logged runs | Agent Workflow dogfood |
+| 2026-08-21 | Test routing a coupled review through one master adjudication ledger, grouped dependency-ordered work packages, one owner-authorized correction brief, and one coherent next candidate; package outputs remain evidence rather than competing design or implementation authorities | Provisional experiment amendment — Java-line pilot pending |

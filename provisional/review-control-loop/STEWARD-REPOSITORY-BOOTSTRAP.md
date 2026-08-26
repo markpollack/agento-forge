@@ -14,6 +14,45 @@ bridge migration, and first-message transport proof are separately inspectable t
 single opaque command must not create repositories, rewrite the public project, migrate authority,
 and send mail without intermediate validation.
 
+## Binding kinds — 1:1 and 1:N
+
+Decide this **before** freezing inputs; it changes which binding template renders and what the
+steward may do.
+
+| Kind | Binds to | Owns | Authority over what it binds |
+|---|---|---|---|
+| `PROJECT` | one codebase, 1:1 | that project's vision, design, roadmap | **yes** — its trio is the project's active authority |
+| `PORTFOLIO` | other stewards, 1:N | a program: arcs, sequencing, thrulines | **no** — coordination standing only |
+
+`PROJECT` is the common case and everything else in this procedure assumes it.
+
+A `PORTFOLIO` steward stewards a **program** rather than a codebase — the arcs that run across
+several already-stewarded projects. It exists because program management and execution have
+different rhythms, and housing both in one repository lets the concern with tests and gates crowd
+out the one without.
+
+Three consequences that are not cosmetic:
+
+1. **There is no paired project.** No planning import, no `git archive`, no project baseline commit.
+   Authority comes from an accepted seed, so the **minimal** scaffold is the right one — this is
+   initialization from explicit authority, which is exactly what that scaffold is for.
+2. **It holds no authority over the stewards it binds.** It may raise intent into a bound steward's
+   inbox; that steward records the disposition, in its own repository, under its own authority
+   order. A decline is an answer, not an escalation. Writing into a bound steward's repository
+   breaks the pattern.
+3. **It owns no code, no release mechanics, no evidence tree** — and records *pointers* to episodes,
+   never their contents. A program document that absorbs episode detail has become another ledger.
+
+Render `BINDING-PORTFOLIO.md.template` instead of `BINDING-MINIMAL.md.template`, and populate
+`{{BOUND_STEWARDS_TABLE}}` with one row per bound steward. Everything else in the procedure — the
+staging rule, gitmaildir, remote creation, proof-by-clone — applies unchanged.
+
+**Known tooling gap.** Neither scaffold takes a `--binding-kind` flag yet; the portfolio binding is
+currently a post-scaffold replacement of the rendered `BINDING.md`. Fold the flag in when a second
+portfolio steward is created rather than before — one instance is not yet a pattern.
+
+---
+
 ## Inputs to freeze before creation
 
 Record these values before running the scaffold:

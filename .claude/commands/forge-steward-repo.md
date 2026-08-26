@@ -54,6 +54,26 @@ Stage 1 through Stage 4 into one action, however routine it looks.
 Stages 3 and 4 are **separately authorized**. Finishing 1 and 2 is a complete, useful outcome; say
 so plainly rather than implying the steward is fully live.
 
+## Phase 0a — Which binding kind?
+
+Decide first; it changes the binding template and what the steward may do.
+
+| Kind | Binds to | Authority over what it binds |
+|---|---|---|
+| `PROJECT` | one codebase, **1:1** | **yes** — its trio is that project's active authority |
+| `PORTFOLIO` | other stewards, **1:N** | **no** — coordination standing only |
+
+`PROJECT` is the common case; the rest of this command assumes it.
+
+A `PORTFOLIO` steward stewards a **program** — the arcs across several already-stewarded projects —
+and owns no code, no release mechanics and no evidence. It has no paired project, so use the
+**minimal** scaffold (authority comes from an accepted seed) and render
+`BINDING-PORTFOLIO.md.template`.
+
+Its defining constraint: it may **raise intent** into a bound steward's inbox, but that steward
+records the disposition in its own repository under its own authority. A decline is an answer, not
+an escalation. Writing into a bound steward's repository breaks the pattern.
+
 ## Phase 0 — Freeze the inputs
 
 Record these before creating anything. Guessing any of them produces a steward that misrepresents

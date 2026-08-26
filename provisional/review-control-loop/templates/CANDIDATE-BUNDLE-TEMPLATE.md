@@ -4,8 +4,14 @@ Use this layout for every new review candidate unless the candidate inputs are g
 cannot legally be copied. A manifest-only candidate is an exception that must record its reason and
 reviewer cost.
 
+`<review-home>` is the review-scope directory declared by the steward binding or bundle README. It may
+be `plans/`, an effort directory such as `plans/v3/`, or a bounded review scope such as
+`plans/main-due-diligence/`; it does not establish planning authority.
+
+### Active planning-trio candidate
+
 ```text
-plans/reviews/<review-id>/candidate-NN/
+<review-home>/reviews/<review-id>/candidate-NN/
 ├── README.md
 ├── VISION.md
 ├── DESIGN.md
@@ -18,9 +24,28 @@ plans/reviews/<review-id>/candidate-NN/
         └── <supporting-files-needed-by-this-candidate>
 ```
 
+### Standalone proposal or bounded-artifact candidate
+
+Use this variant when the proposal, brief, contract, or other bounded artifact is the reviewed object.
+Authority inputs help interpret it; they do not automatically enter its correction scope.
+
+```text
+<review-home>/reviews/<review-id>/candidate-NN/
+├── README.md
+├── CORRECTIONS.md
+├── reviewed/
+│   └── <exact-reviewed-filename>.md
+├── authorities/
+│   ├── <standing-planning-or-decision-files-needed-to-interpret-the-review>
+│   └── decisions/
+└── project-inputs/
+    └── <supporting-files-needed-by-this-candidate>
+```
+
 ## Bundle construction rules
 
-1. Copy the reviewed documents byte-for-byte. Do not prepend snapshot banners to the copies; declare
+1. Select the variant that matches the actual review object and copy every reviewed artifact
+   byte-for-byte. Do not prepend snapshot banners to the copies; declare
    their standing once in the bundle README.
 2. Include only decisions and supporting inputs needed to interpret the review question. A candidate
    is not a repository archive.
@@ -33,10 +58,10 @@ plans/reviews/<review-id>/candidate-NN/
    optional challenge tools, not the normal reading path.
 7. Never rewrite a frozen bundle. A correction creates `candidate-(NN+1)`.
 
-Normally commit corrected active steward documents first, then materialize their exact copies in a
-separate bundle commit. This makes the source steward commit knowable before the bundle is written.
-Never try to embed a candidate commit hash inside that same commit; the candidate tag is the stable
-identity for the completed bundle.
+Normally commit the corrected source artifacts first, then materialize their exact copies in a separate
+bundle commit. This makes the source steward commit knowable before the bundle is written. Never try to
+embed a candidate commit hash inside that same commit; the candidate tag is the stable identity for the
+completed bundle.
 
 ## README.md skeleton
 
@@ -54,11 +79,15 @@ authoritative source paths are listed below.
 
 ## Bundle inventory and provenance
 
+Retain only the rows used by this candidate variant.
+
 | Bundle path | Authoritative source | Source repository commit | Purpose |
 |---|---|---|---|
 | `VISION.md` | `plans/VISION.md` | `<steward-commit>` | Product purpose and boundaries |
 | `DESIGN.md` | `plans/DESIGN.md` | `<steward-commit>` | Architecture and decisions |
 | `ROADMAP.md` | `plans/ROADMAP.md` | `<steward-commit>` | Execution order and gates |
+| `reviewed/<proposal>.md` | `<source-proposal-path>` | `<steward-commit>` | Standalone reviewed artifact, when this variant is used |
+| `authorities/<authority>.md` | `<authority-source-path>` | `<steward-commit>` | Standing interpretation input, not automatically in correction scope |
 
 ## Review question
 
@@ -81,7 +110,7 @@ the bundle through repeated Git commands.
 
 | Finding | Prior disposition | Candidate NN exhibit | Intended terminal state |
 |---|---|---|---|
-| `<ID>` | `accepted-open` | `DESIGN.md:<section>` | `verified-corrected` |
+| `<ID>` | `accepted-open` | `<reviewed-or-planning-artifact>:<section>` | `verified-corrected` |
 
 ## Deliberate non-changes
 

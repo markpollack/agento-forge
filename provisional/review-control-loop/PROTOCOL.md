@@ -20,10 +20,15 @@ A candidate must remain immutable while findings cite it. Use both mechanisms:
 2. a numbered candidate record (`candidate-01`, `candidate-02`) for human legibility.
 
 The numbered record is a **materialized review bundle**, not merely a manifest that requires the
-reviewer to reconstruct files from Git. Its default layout is:
+reviewer to reconstruct files from Git. `<review-home>` is the review-scope directory declared by the
+binding or candidate README. It defaults to `plans/` and may be a nested scope such as `plans/v3/` or
+`plans/main-due-diligence/`; the name does not imply that the directory itself is an authoritative
+planning root.
+
+When the reviewed object is the active planning trio, use this layout:
 
 ```text
-plans/reviews/<review-id>/candidate-NN/
+<review-home>/reviews/<review-id>/candidate-NN/
 ├── README.md                 # identity, standing, source references, and bundle inventory
 ├── VISION.md                 # exact frozen copy of the active Vision
 ├── DESIGN.md                 # exact frozen copy of the active Design
@@ -31,6 +36,20 @@ plans/reviews/<review-id>/candidate-NN/
 ├── CORRECTIONS.md            # finding-to-candidate exhibit map from the prior adjudication
 ├── decisions/                # exact copies of decisions needed to interpret this candidate
 └── project-inputs/           # exact copies of external/project-owned supporting inputs
+```
+
+When the reviewed object is a standalone proposal or another bounded artifact, materialize the exact
+in-scope files under `reviewed/` and the standing documents needed to interpret them under
+`authorities/`. Do not add the active trio to the mutation scope merely because it is an authority
+input:
+
+```text
+<review-home>/reviews/<review-id>/candidate-NN/
+├── README.md
+├── CORRECTIONS.md
+├── reviewed/                 # exact proposal or other artifacts under review
+├── authorities/              # exact standing VISION/DESIGN/ROADMAP/decisions needed for interpretation
+└── project-inputs/           # exact external/project-owned supporting inputs
 ```
 
 `README.md` declares that the copies are immutable review records, not competing authorities. It maps
@@ -198,11 +217,111 @@ found every possible issue.
 Use unambiguous control states: `CORRECTIONS REQUIRED`, `HOLD`, or `READY FOR VERIFICATION`. Do not use
 `CORRECT`, which can be misread as either an instruction or a claim that the candidate is correct.
 
+### Scale coupled corrections through adjudication work packages
+
+Most accepted findings should move directly into one bounded correction. Use the multi-package path
+only when several findings share design invariants, require ordered owner decisions, or need separate
+evidence spikes before one coherent correction can be written. This path extends adjudication; it is
+not an implementation roadmap and does not create several competing designs.
+
+Keep `adjudication-NN.md` as the single controller ledger. Add a category, an execution priority from
+`1` (first) through `10` (last), dependencies, a work-package assignment, and the intended integration
+target for every accepted finding. Priority is an attention-ordering aid, not severity: an authority
+or integrity gate and an actual dependency always override the number.
+
+Group findings by a shared decision boundary or invariant, not mechanically one document per finding.
+Each finding has exactly one owning package or the direct-correction path; other packages may be named
+contributors or dependencies. One package may own several findings. This preserves a single proposed
+closure route while still making cross-package constraints visible. The controller keeps the
+dependency view and overall shape; fresh sessions execute the packages. Use this default layout:
+
+```text
+<review-home>/reviews/<review-id>/
+├── adjudication-NN.md                         # sole findings ledger and package board
+├── work-packages/
+│   └── WP-NN-<slug>/
+│       ├── work-order.md                      # restricted instruction contract
+│       └── disposition.md                     # evidence and recommendation, not authority
+├── correction-brief-NN.md                     # proposed integrated correction boundary
+├── work-order-correction-NN.md                 # owner-authorized planning correction dispatch
+├── correction-result-NN.md                     # returned correction evidence
+└── candidate-(NN+1)/                          # one coherent corrected candidate
+```
+
+Do not place active package records in `inbox/`; they are controlled review work, not unprocessed
+intake. Do not place them under implementation `work-orders/`, whose dispatches carry mutation
+authority. Do not put a recommendation in `journal/` merely because a package produced it. A package
+result is sensor/adjudication evidence. The controller appends the owner's acceptance or rejection to
+the master ledger transition log. After Candidate NN+1 ratification, promote a choice whose rationale
+must stand beyond this review into `journal/` by exact pointer; never treat the package result itself as
+that authority.
+
+Each work package uses the four work-order contracts in Section 10 and names:
+
+- the owned findings, contributor obligations, and the one decision question or invariant joining them;
+- exact candidate, authority, evidence, and dependency inputs;
+- protected decisions and what evidence could reopen them;
+- its only allowed output path and explicit non-mutation of the candidate, active
+  VISION/DESIGN/ROADMAP, project code, and master ledger;
+- alternatives, recommended disposition, acceptance or falsification conditions, candidate targets,
+  and owner decisions required; and
+- a stop condition for authority conflicts, missing dependencies, or work that no longer fits the
+  declared boundary.
+
+The controller independently checks returned exhibits and appends transitions to the master ledger;
+package authors do not mark their own findings fixed. A package is complete for controller review only
+when every owned finding and contributor obligation is mapped, its cross-package contracts are
+explicit, and each owner choice is either resolved or visibly blocking. It is ready for synthesis only
+after no unresolved choice remains. For a cross-cutting integrity defect, split its handling into an
+immediate **containment gate**—for example,
+prohibit implementation from the unsafe candidate—and a final **closure gate** after every dependent
+correction and source claim has been checked. Do not let the integrity package become a parallel
+attempt to redesign all of the other packages.
+
+Package flow state (`queued`, `active`, `owner-decision`, `decided`, `briefed`,
+`candidate-integrated`) is separate from finding closure. Packages with equal priority may run in
+parallel only when their dependencies and decision surfaces do not overlap. A package that discovers
+a collision stops and returns it to the controller rather than editing the other package or racing on
+the master ledger.
+
+The base finding and routing rows become immutable when adjudication is issued. The controller records
+package returns, owner choices, containment, briefing, and candidate integration as dated append-only
+transition rows; it does not rewrite returned package dispositions or earlier transitions. Each new
+candidate/review round receives its own candidate-qualified `adjudication-NN.md`; never append a new
+review's findings to the prior candidate's ledger.
+
 ## 5. Apply bounded correction
 
 Correct only accepted findings and consequences required for coherence. Do not opportunistically reopen
 settled decisions, fold in unrelated cleanup, or adopt every reviewer preference. One correction round
 produces the next candidate; it does not edit the reviewed candidate in place.
+
+For a direct correction, the owner authorizes the exact correction boundary in the adjudication ledger
+and the controller instantiates a bounded planning-correction work order from that pointer. The
+multi-package path inserts the integration steps below before the same work-order transition.
+
+When the multi-package path was used, the controller first writes one `correction-brief-NN.md` from
+the accepted package dispositions and owner decisions. The brief records the conflict/dependency
+resolution, finding-to-artifact edit map, explicit deferrals and triggers, containment and closure
+gates, and exact bounded correction scope. It states only the minimum integration rules needed for a
+coherent correction and cites each controlling owner/authority pointer; it does not recreate the full
+design. It is an integration record, not a new DESIGN, ROADMAP, authorization, or work order, and it
+is frozen once issued. A changed integration decision creates a superseding brief.
+
+The owner then accepts, rejects, or reopens that brief in an exact adjudication transition. Acceptance
+authorizes the controller to instantiate one bounded planning-correction work order; it does not
+ratify the not-yet-written candidate. One synthesis session applies that work order coherently only to
+the artifacts named by the candidate inventory and correction brief—a standalone proposal, the active
+planning trio, or another declared set. Do not broaden a proposal correction into VISION/DESIGN/ROADMAP
+mutation merely because those documents were authority inputs. Do not let individual package authors
+edit their own authoritative slices: local correctness can still produce an inconsistent whole.
+
+New journal records are outside pre-ratification synthesis. Existing ratified journal decisions may
+be read and cited; a new journal entry is written only during or after Candidate NN+1 ratification,
+with exact pointers to the owner decision and package/adjudication evidence. `CORRECTIONS.md` in the
+new bundle maps every prior finding to its corrected exhibit or terminal non-change. If an
+accepted-open finding has neither a correction nor a valid filed/parked/refuted disposition, the state
+is `HOLD`, not a partially synthesized candidate.
 
 This is the control-gain rule: enough intervention to remove demonstrated error, not enough to make the
 documents chase each new reviewer's style.
@@ -527,32 +646,69 @@ or an independent completion checklist is a dispatch defect because it creates a
 drift. The launch instruction points to the dispatch; `AGENTS.md` stays stable and does not point at
 the current dispatch or absorb the ratification record or roadmap.
 
-Keep instructions separate from results:
+Keep instructions separate from results. The diagram shows the coupled path. Its work-package and
+correction-brief segment is optional; an uncomplicated adjudication moves from an owner-authorized
+ledger boundary directly to the same planning-correction work order.
 
 ```text
 templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md
           |
           v
-plans/reviews/<review-id>/work-order-adjudication-01.md
+<review-home>/reviews/<review-id>/work-order-adjudication-01.md
           |
           v
-plans/reviews/<review-id>/adjudication-01.md
+<review-home>/reviews/<review-id>/adjudication-01.md
+
+templates/ADJUDICATION-WORK-PACKAGE-WORK-ORDER-TEMPLATE.md
+          |
+          v
+<review-home>/reviews/<review-id>/work-packages/WP-01-<slug>/work-order.md
+          |
+          v
+templates/ADJUDICATION-WORK-PACKAGE-TEMPLATE.md
+          |
+          v
+<review-home>/reviews/<review-id>/work-packages/WP-01-<slug>/disposition.md
+          |
+          v
+templates/CORRECTION-BRIEF-TEMPLATE.md
+          |
+          v
+<review-home>/reviews/<review-id>/correction-brief-01.md
+          |
+          v
+owner decision in adjudication-01.md transition log
+          |
+          v
+templates/PLANNING-CORRECTION-WORK-ORDER-TEMPLATE.md
+          |
+          v
+<review-home>/reviews/<review-id>/work-order-correction-01.md
+          |
+          v
+templates/PLANNING-CORRECTION-RESULT-TEMPLATE.md
+          |
+          v
+<review-home>/reviews/<review-id>/correction-result-01.md + corrected named artifacts
+          |
+          v
+<review-home>/reviews/<review-id>/candidate-02/
 
 templates/VERIFICATION-WORK-ORDER-TEMPLATE.md
           |
           v
-plans/reviews/<review-id>/work-order-verification-02.md
+<review-home>/reviews/<review-id>/work-order-verification-02.md
           |
           v
 <persistent-review-root>/<reviewer>/run-review.sh
           |
           v
-plans/reviews/<review-id>/verification-02.md
+<review-home>/reviews/<review-id>/verification-02.md
 
 templates/RATIFICATION-TEMPLATE.md
           |
           v
-plans/reviews/<review-id>/ratification-02.md
+<review-home>/reviews/<review-id>/ratification-02.md
 
 templates/IMPLEMENTATION-WORK-ORDER-TEMPLATE.md
           |

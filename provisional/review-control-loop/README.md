@@ -42,6 +42,13 @@ author policy -> candidate artifact -> sensors / reviewers
 - A **verification reviewer** examines the corrected, frozen candidate for new structural blockers.
 - The human receives a compact decision brief plus reproducible exhibits, not a pile of opinions.
 
+When one adjudication exposes several coupled design questions, the controller may route them through
+grouped **adjudication work packages**. One master ledger retains finding state, priority, dependencies,
+and package routing; fresh sessions return bounded dispositions; one correction brief integrates the
+owner-accepted results. The owner explicitly authorizes that brief, and a separate planning-correction
+work order produces one new candidate. Package results are evidence and recommendations, not parallel
+designs or implementation authority.
+
 The planning loop hands control to execution through an explicit transition:
 
 ```text
@@ -126,6 +133,9 @@ authorized dispatch.
 13. Can stage-aware model escalation keep iterative artifact review responsive while reserving the
     strongest diverse cold sensors for the final ratification boundary, with launch handoffs simple
     enough for agento-university to generate?
+14. Can one master adjudication route a large, coupled review through dependency-ordered work packages
+    and one correction brief without creating competing authorities, losing finding traceability, or
+    turning design work into a premature implementation roadmap?
 
 ## Promotion gate
 
@@ -140,6 +150,8 @@ The method may be proposed for Forge only after both pilots record:
 - human time required for adjudication and ratification;
 - reviewer-interface overhead, including Git reconstruction commands versus substantive checks;
 - selected review profile/model/reasoning tier and its elapsed time and useful-finding yield;
+- work-package count, dependency order, owner checkpoints, integration conflicts, orphan accepted
+  findings, and correction/synthesis prompt repairs;
 - dispatch prompt repairs or missing controller-transition artifacts;
 - post-step stale claims, controller corrections, and human checkpoint decisions; and
 - failures and exceptions, not only successes.
@@ -158,6 +170,16 @@ Promotion is a separate reviewed change. Pilot success does not silently make th
 - [templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md](templates/ADJUDICATION-WORK-ORDER-TEMPLATE.md) —
   fill-in instructions for a fresh adjudication session
 - [templates/ADJUDICATION-TEMPLATE.md](templates/ADJUDICATION-TEMPLATE.md) — adjudication output ledger
+- [templates/ADJUDICATION-WORK-PACKAGE-WORK-ORDER-TEMPLATE.md](templates/ADJUDICATION-WORK-PACKAGE-WORK-ORDER-TEMPLATE.md) —
+  restricted dispatch for one coupled design question inside an adjudication
+- [templates/ADJUDICATION-WORK-PACKAGE-TEMPLATE.md](templates/ADJUDICATION-WORK-PACKAGE-TEMPLATE.md) —
+  package evidence, recommendation, integration contract, and owner checkpoint
+- [templates/CORRECTION-BRIEF-TEMPLATE.md](templates/CORRECTION-BRIEF-TEMPLATE.md) — one derived
+  integration map from accepted package dispositions to the next coherent candidate
+- [templates/PLANNING-CORRECTION-WORK-ORDER-TEMPLATE.md](templates/PLANNING-CORRECTION-WORK-ORDER-TEMPLATE.md) —
+  owner-authorized bounded synthesis of the named proposal or planning artifacts
+- [templates/PLANNING-CORRECTION-RESULT-TEMPLATE.md](templates/PLANNING-CORRECTION-RESULT-TEMPLATE.md) —
+  returned correction evidence and finding-to-next-candidate exhibit map
 - [templates/CANDIDATE-BUNDLE-TEMPLATE.md](templates/CANDIDATE-BUNDLE-TEMPLATE.md) — required
   materialized numbered-candidate layout and source inventory
 - [templates/VERIFICATION-WORK-ORDER-TEMPLATE.md](templates/VERIFICATION-WORK-ORDER-TEMPLATE.md) —

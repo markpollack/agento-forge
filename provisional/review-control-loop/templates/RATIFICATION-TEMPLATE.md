@@ -24,6 +24,21 @@ ratification or execution authority from a positive reviewer recommendation.}}
 {{If execution is not authorized, name the next human decision required. If one step is authorized,
 name the implementation work-order path and the ROADMAP transition. `AGENTS.md` remains unchanged.}}
 
+## Standing decision records
+
+For a `RATIFIED` candidate only, list any owner choice from adjudication whose rationale must stand
+beyond this review and the journal entry that now records it. Cite the package/adjudication evidence;
+do not treat a package recommendation as the decision. Use `none` when DESIGN and this ratification
+record are sufficient.
+
+| Owner decision / transition | Journal destination | Recorded with this ratification |
+|---|---|---|
+| | none / path | not required / yes |
+
+Every non-`none` destination must be recorded with this ratification before the ratification transition
+is complete or any implementation dispatch is authorized. If it cannot be recorded, use `REOPEN`; do
+not mark a required standing rationale as optional follow-up.
+
 ## Explicit non-effects
 
 - Ratification is not implementation evidence.

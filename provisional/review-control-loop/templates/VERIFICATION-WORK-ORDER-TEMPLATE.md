@@ -20,8 +20,12 @@ structural blocker, and is ready for human ratification.
 3. {{method-protocol-path}}
 4. {{materialized-candidate-bundle-path}}/README.md
 5. {{adjudication-ledger-path}}
-6. the materialized candidate-bundle VISION, DESIGN, and ROADMAP
-7. {{additional-authority-pointers-or-none}}
+6. {{correction-brief-path-or-direct-adjudication-boundary}}
+7. {{owner-authorization-transition-pointer}}
+8. {{planning-correction-result-path}}
+9. {{materialized-reviewed-artifact-paths-in-order}}
+10. {{materialized-standing-authority-paths-in-order}}
+11. {{additional-authority-pointers-or-none}}
 
 Read candidate artifacts as ordinary files from the numbered materialized bundle, not from mutable
 active planning paths. Run one preflight confirming that the candidate tag identifies the committed
@@ -48,8 +52,8 @@ Edit only:
 Do not edit:
 
 - the materialized candidate bundle or candidate-tagged artifacts;
-- the adjudication or received review;
-- active VISION, DESIGN, ROADMAP, or journal decisions;
+- the adjudication, received review, correction scope, owner transition, or correction result;
+- active source artifacts or journal decisions;
 - project or consumer files;
 - Maven repository content;
 - any evidence source.
@@ -57,15 +61,21 @@ Do not edit:
 ## Verification procedure
 
 1. Verify the single candidate ref, materialized bundle inventory, and named source commit identities.
-2. Walk every finding in the adjudication ledger. For an accepted correction, cite the exact candidate
+2. Verify that the owner transition authorizes the exact correction scope, that the correction result
+   accounts for every authorized obligation, and that Candidate {{candidate-number}} materializes the
+   resulting source artifacts without unreported change.
+3. Walk every finding in the adjudication ledger. For an accepted correction, cite the exact candidate
    exhibit and classify it `verified-corrected` or `still-open`. For a refuted, filed, or parked item,
-   verify that Candidate {{candidate-number}} preserves the disposition and trigger/owner.
-3. Check that the correction stayed within the adjudicated boundary and did not reopen protected
+   verify that Candidate {{candidate-number}} preserves the disposition and trigger/owner. For an
+   already-fixed item, verify that its prior exhibit remains present and unregressed and classify it
+   `preserved-already-fixed` or `still-open`.
+4. Check that the correction stayed within the owner-authorized boundary and did not reopen protected
    decisions or adopt rejected reviewer preferences.
-4. Re-run the declared coherence and roadmap-satisfiability lenses against the corrected candidate.
-5. Attempt at least one adversarial scenario per selected lens that could expose a new structural
+5. Re-run the declared cross-artifact coherence lenses and, when ROADMAP is in scope, the
+   roadmap-satisfiability lenses against the corrected candidate.
+6. Attempt at least one adversarial scenario per selected lens that could expose a new structural
    blocker. Record scenario families and residual gaps; do not claim open-ended completeness.
-6. Separate candidate defects from optional future improvements. A preference without a breaking case
+7. Separate candidate defects from optional future improvements. A preference without a breaking case
    does not block ratification.
 
 Do not fix anything during verification. A failure produces evidence and a bounded recommendation for
@@ -77,8 +87,9 @@ Report finite spaces as plain walked counts and method-level denominators, inclu
 
 - {{candidate-ref-and-bundle-inventory-count}} candidate ref and bundle inventory entries;
 - {{adjudicated-finding-count}} adjudicated findings;
-- {{active-document-count}} active planning documents;
-- {{roadmap-clause-or-step-count}} roadmap clauses or steps; and
+- {{reviewed-artifact-count}} reviewed candidate artifacts;
+- {{standing-authority-count}} materialized authority inputs;
+- {{roadmap-clause-or-step-count-or-not-applicable}} roadmap clauses or steps; and
 - {{other-finite-lens-or-scenario-family}}.
 
 Record non-finding searches another reviewer can extend. A denominator is the declared space walked,
@@ -106,12 +117,13 @@ The verification record must contain:
 
 1. identity/status metadata and the front-loaded human checkpoint;
 2. candidate-integrity evidence;
-3. a complete finding-verification ledger;
-4. correction-boundary and protected-decision checks;
-5. cross-document coherence and roadmap-satisfiability results;
-6. coverage denominators, scenario families, and recorded non-findings;
-7. residual risk; and
-8. the final recommendation and next authorized action.
+3. correction-scope, owner-authorization, and correction-result reconciliation;
+4. a complete finding-verification ledger;
+5. correction-boundary and protected-decision checks;
+6. cross-artifact coherence and, when in scope, roadmap-satisfiability results;
+7. coverage denominators, scenario families, and recorded non-findings;
+8. residual risk; and
+9. the final recommendation and next authorized action.
 
 ## Stop conditions
 

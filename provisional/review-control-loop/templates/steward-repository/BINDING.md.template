@@ -3,6 +3,7 @@
 > **Status:** ACTIVE
 > **Established:** {{ESTABLISHED}}
 > **Visibility:** PRIVATE — required invariant
+> **Binding kind:** `PROJECT` — **1:1**, this steward binds to one codebase
 
 ## Repository pair
 
@@ -11,9 +12,13 @@
 | Project | `{{PROJECT_DIR}}` | `{{PROJECT_SLUG}}` | {{PROJECT_VISIBILITY}}/project-owned |
 | Steward | `{{STEWARD_DIR}}` | `{{STEWARD_SLUG}}` | PRIVATE |
 
-The pairing is 1:1. The project branch at bootstrap is `{{PROJECT_BRANCH}}`; the private steward
+The pairing is 1:1 — the `PROJECT` binding kind. The project branch at bootstrap is `{{PROJECT_BRANCH}}`; the private steward
 default branch is `main`. The committed planning import came from project commit
 `{{PROJECT_COMMIT}}` and planning root `{{PLANNING_ROOT}}`.
+
+> A steward may instead bind **1:N to other stewards** — a *portfolio* steward, which stewards a
+> program rather than a codebase and holds coordination standing rather than authority over what
+> it binds to. See `BINDING-PORTFOLIO.md.template`.
 
 ## Ownership boundary
 
