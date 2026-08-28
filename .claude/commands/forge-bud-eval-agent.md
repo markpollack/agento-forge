@@ -60,13 +60,13 @@ Use this command when:
 - The dataset uses **bud-core preconditions** (`ProjectScaffolder` fixtures), and/or
 - You want a workspace that participates in the **agento studio** (studio.json identity, targetRepos)
 - You want golden-path instrumentation (JSONL traces + agent-journal) pre-wired and verifiable
-- The agent is a **review agent** (reviews a target repo, writes a report, ships an ACP server into the IDE — bud-ddd, bud-spring-advisor) → the phases apply with the deltas in the **Review-Agent Variant** section below
 
 Do NOT use this for:
 - **Generic eval-agent projects** (non-Bud agent, agent-experiment-template) → use `/forge-eval-agent`
 - **Research projects** → `/forge-research`
 - **Standard software projects** → `/forge-project`
 - **The Bud platform or template itself** — fix those in place
+- **Review agents** (review a target repo, write a report, ship an ACP server) — not scaffolded here; see *Review agents — not covered by this command* below
 
 ## Arguments
 - `$ARGUMENTS` — Optional: brief file path, target workspace path, reference material paths
@@ -345,79 +345,23 @@ git commit -m "Complete bootstrap: {workspace-name} (all BOOTSTRAP-CHECKLIST cri
 - [ ] **Golden-path smoke check (Phase 6) passed end to end** — compile + (a)/(b)/(c)/(d). This is the gate; do not skip it.
 - [ ] `plans/BOOTSTRAP-CHECKLIST.md` has every box checked
 
-## Review-Agent Variant
+## Review agents — not covered by this command
 
-The phases above assume the *generation*-agent shape (bud-core `ProjectScaffolder` fixtures, judges on generated-project artifacts). When the agent under evaluation **reviews a target repo and writes a report**, apply these deltas. The live review consumers (`~/projects/bud-ddd`, `~/projects/bud-spring-advisor`, and the newest, `~/projects/bud-spring-modernize`) derived all of this by hand — documented here so the next review agent does not re-derive it. **`bud-spring-modernize` is the current newest consumer** — prefer it as the copy source below.
+This command scaffolds **generation** agents. Review agents — which read a target repo, write a
+report, and ship an ACP server into the IDE — are **not** scaffolded here, and the previous
+attempt to document them was removed rather than repaired.
 
-### studio.json shape (Phase 3 delta)
+It described copying the ACP server module from another consumer and then sweeping roughly thirty
+identity literals by hand across ten families (report filename, KB dir, trace dir, logback config,
+property and env prefixes, plan-step labels, `@AcpAgent` strings, prompts, packages). That is an
+afternoon of renaming documented as if it were scaffolding, and it named a copy source that no
+longer holds the module. Pointing it at a different repository would have made it executable and
+left it just as wrong.
 
-Review targets are read, not written. The workspace also *ships* a KB, registered as owned:
-
-```json
-"targetRepos": [{
-  "id": "<domain>-corpus",
-  "role": "review-target",
-  "path": "<workspace-abs-path>/corpus",
-  "writePolicy": "read-mostly",
-  "description": "<domain> review benchmark corpus — calibration anchor + violation-dense targets"
-}],
-"knowledgeStructure": {
-  "ownedKnowledgeBases": [{
-    "id": "<domain>-review",
-    "path": "knowledge/<domain>",
-    "type": "code-agent",
-    "description": "the KB the agent reads at review time"
-  }]
-}
-```
-
-Live examples: `~/projects/bud-spring-modernize/studio.json` (newest), `~/projects/bud-ddd/studio.json`, `~/projects/bud-spring-advisor/studio.json`.
-
-### corpus/ and knowledge/ conventions
-
-- **`corpus/`** — clones of the review-target repos. **Git-ignored** (add `corpus/` to `.gitignore` — verify; the template may not ship this entry). Pair a **calibration anchor** (a known-clean repo, e.g. spring-petclinic) with **violation-dense** targets — the anchor catches judges that hallucinate findings on clean code.
-- **`knowledge/<domain>/`** — the shipped KB (the `ownedKnowledgeBases[0].path`). This is workspace content, committed, not corpus.
-
-### The ACP server module
-
-Review agents ship a `<name>-acp-server/` module serving the agent over ACP into the IDE. It is **standalone — deliberately NOT an aggregator module** of the workspace pom. Build it directly:
-
-```bash
-./mvnw -f <name>-acp-server/pom.xml package
-```
-
-**Adaptation checklist** — copy the module from the **newest** consumer (currently `~/projects/bud-spring-modernize`), then sweep the identity literals (~30 occurrences; this checklist exists until AgentSpec consolidation / `bud-review-core` extraction makes it obsolete — see `~/tuvium/projects/tuvium-research-conversation-agent/plans/inbox/bud-review-core-brief.md`):
-
-| Literal family | Example (bud-ddd) | Where it hides |
-|---|---|---|
-| Report filename | `ddd-review.md` | translator path heuristics, plan-step label, agent + workflow javadoc/messages |
-| KB dir | `knowledge/<domain>` | translator `isKb()`, workflow KB resolution + error messages |
-| Trace dir | `~/.bud-ddd/traces` | workflow trace-dir default |
-| Log dir / logback | `~/.config/bud-ddd`, `bud-ddd.log` | `logback.xml` property + file names |
-| Property prefix | `bud.<domain>.*` (incl. `bud.<domain>.discussion.*`) | `AgentModelFactory`, workflow resolution |
-| Env prefix | `BUD_<DOMAIN>_*` | same locations + error messages |
-| Plan-step labels | `ReviewProgress.Step` display strings | `ReviewProgress` |
-| `@AcpAgent` | `name = "bud-<domain>"`, version, description strings | the agent class |
-| Prompts | `prompts/<domain>-review-system.md`, `prompts/<domain>-discussion-system.md` | resources + classpath references |
-| Package + classes | `…bud.<domain>.acp`, `<Domain>ReviewAgent` / `<Domain>ReviewWorkflow` / `<Domain>DiscussionWorkflow` / `<Domain>AgentLauncher` | whole module |
-
-Exit grep, mirror of the Phase 3 sweep: `grep -ri '<other-domain>' <name>-acp-server/src` returns nothing.
-
-### Judges (Phase 4 delta)
-
-Review agents judge the **report**, not generated-project poms: T1 deterministic = report exists / required sections / citation format; T3 semantic = finding quality and recall against the violation-dense targets (with the calibration anchor as the false-positive control). `SpringBootPomJudge`-style judges on scaffolded fixtures do not apply, and the `PreConditionBuilder`/`ProjectScaffolder` machinery typically goes unused — preconditions are corpus clones instead.
-
-### Bootstrap checklist additions
-
-When scaffolding a review agent, append to `plans/BOOTSTRAP-CHECKLIST.md` in Phase 2:
-
-```markdown
-## Review-agent variant
-- [ ] `corpus/` git-ignored; calibration anchor + violation-dense targets cloned
-- [ ] `knowledge/<domain>/` present; registered in studio.json `ownedKnowledgeBases`
-- [ ] ACP server module adapted from newest consumer; identity-literal sweep clean (`grep -ri` other domains)
-- [ ] `./mvnw -f <name>-acp-server/pom.xml package` builds the fat jar
-```
+**The intended fix is the shared-shell extraction**, `bud-agent-core` — the module the sweep exists
+to make unnecessary. It is filed in the research KB under its former name,
+`plans/inbox/bud-review-core-brief.md`. Until a review agent can be scaffolded from that shell
+rather than hand-renamed out of a sibling, this command has nothing honest to say about them.
 
 ## Extraction Patterns
 
@@ -436,7 +380,8 @@ Be precise and empirical. The cardinal rule is **copy-then-replace, never regene
 
 ## Notes
 
-- **Template currency**: `bud-agent-experiment-template` is current as of **agentworks BOM 1.5.0 / agent-journal 1.3.0** — the TraceWriter tool-input capture + control-character escaping fix (2026-06-03). The Phase 6 smoke check (a)/(c) exists specifically to verify that fix held: `tool_use` lines carry `"input": {...}` objects and multi-line `Write` content round-trips as valid JSONL.
+- **Template versions**: read them from the template's own `pom.xml` — it is the only current
+  source. Do not restate a version here; a hardcoded currency claim is stale by default.
 - **Known template gaps**:
   - **No bundled test suite** — the template ships the working main code but not a regression test harness. The Phase 6 golden-path smoke check compensates: it is the verification gate in lieu of a packaged test suite.
   - **Reference contract**: the `TEMPLATE_CONTRACT.md` reference copy (the canonical description of the placeholder set and the workspace ⇄ template contract) lives at `~/projects/bud-eval/plans/TEMPLATE_CONTRACT.md`. Consult it if a placeholder location here looks stale against the template.
