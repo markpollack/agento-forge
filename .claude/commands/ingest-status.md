@@ -46,7 +46,7 @@ Do NOT proceed to Phase 2 (theme mapping) or Phase 3 (theme doc updates). Instea
 
 ## Phase 2: Map to Themes
 
-Identify which of the 7 themes this status touches. Use keyword mapping:
+Identify which themes this status touches. Use keyword mapping:
 
 | Theme | Keywords |
 |-------|---------|
@@ -57,6 +57,7 @@ Identify which of the 7 themes this status touches. Use keyword mapping:
 | 5. Community & Tooling | Spring AI, community, ACP, skills, Loopy, forge methodology |
 | 6. Data Analysis | Markov, parquet, DuckDB, figures, T3, coverage results, cost analysis |
 | 7. Episodic Capture | stage complete, roadmap progress, blocked on, next step, session |
+| 8. Agent Behavior — Steering, Understanding & Trajectory Analysis | steering, agent behavior, hooks vs skills, Strands, Temporal, control theory, trajectory, Markov chain, attention depletion, levers, understanding vs controlling |
 
 **Theme 7 guard**: Do not use Theme 7 merely because a status report exists. Theme 7 requires **both**:
 1. The project has structured lifecycle artifacts (ROADMAP, plans/, phase docs, stage docs, experiment plans, or planning journals).
@@ -96,6 +97,22 @@ from the status file — don't paraphrase into vague summaries.
 - It must **not** add unheaded bridge sentences above the new section
 - If you notice something relevant to another project, note it in the commit message as a follow-up — do not modify that project's section
 
+**Nothing may go nowhere.** Before appending, check that every theme directory in the KB appears in
+the mapping table above:
+
+```bash
+ls synthesis/phase2/theme-*.md | sed -E 's|.*/theme-([0-9]+)[a-z]?-.*|\1|' | sort -nu
+```
+
+If the KB has a theme this command cannot route to, **stop and report it** — do not proceed with a
+partial ingest. Content belonging to an unrouted theme is dropped silently, which is worse than a
+visible failure because nobody learns it happened. The same applies in the other direction: if a
+substantive part of the status report maps to no theme at all, say so explicitly in the commit
+message rather than letting it disappear.
+
+`agento-forge/scripts/check-ingest-status-themes.sh <kb-dir>` performs this check and exits non-zero
+when a theme would be unroutable.
+
 **Theme fan-out discipline**: If more than three themes are selected for a single project, include a brief confidence/justification note for each theme in the commit message. Keep additions concise — a single project mapping to 5 themes should be the exception, not the norm.
 
 **Size-class maintenance**: after appending, `wc -l` each touched theme doc and check whether it crossed a size-class threshold:
@@ -129,11 +146,19 @@ Do **not** add interpretive framing, strategic language, or coordination notes t
 
 In `KB-FEDERATION.md`, update two locations:
 
-1. **Project Status Reports table** (around line 44): update the `Latest Status` date and path
-   for this project. If it's not in the table, add a row.
+**Locate both tables by their headings, never by line number.** Hardcoded offsets rot on the next
+edit, and a rotted offset does not announce itself — it silently addresses whatever now occupies
+that line. Both numbers previously written here had drifted into the wrong table.
 
-2. **KB Freshness table** (around line 82): update the consolidation date and summary for
-   this project. If not present, add a row.
+1. **Project Status Reports table** — find the `## Project Status Reports` heading and edit the
+   table immediately below it. Update the `Latest Status` date and path for this project. If it's
+   not in the table, add a row.
+
+2. **KB Freshness table** — find the `## KB Freshness` heading and edit the table immediately below
+   it. Update the consolidation date and summary for this project. If not present, add a row.
+
+If either heading is absent, **stop and report it** rather than guessing at a location. A table you
+cannot find by name is a structural change someone needs to know about.
 
 3. **Federation Routing block** (if present in the status report): treat it as a
    **recommendation, never an automatic rewrite**.
