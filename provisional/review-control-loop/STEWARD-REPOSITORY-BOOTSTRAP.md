@@ -217,6 +217,81 @@ a hand-shaped JSON file. Prove:
 Until the operator CLI exists, a project may need a bounded launcher to invoke the Java API. Record
 that friction as product evidence; do not weaken the transport proof by manually writing JSON.
 
+### ⚠️⚠️ Publish only through a throwaway clone — never a live checkout
+
+`GitCommandRunner.commitAndPush` runs **`git add -A`**, and `GitMailboxStore` calls `resetHard()`
+(**`git reset --hard HEAD`**) when a push is rejected non-fast-forward.
+
+Aimed at a checkout another session is working in, the publisher will **sweep that session's
+uncommitted work into the delivery commit** — under a message naming only the message id — and, on a
+routine push race, **destroy it outright**. Neither is signalled. The contract reads *"writes the
+message… commits, and pushes"*; the implementation is *"commits the entire working tree, and
+discards it on contention."*
+
+In an estate of long-lived dirty steward checkouts this is a live data-loss defect, not a rough
+edge. **Clone the target fresh, publish into the clone, discard it.** A correct delivery commit
+touches exactly two files — the message and one audit line — so the diffstat is itself the check.
+
+The same rule applies on the receiving side: **run the store against a clean tree**, or the claim
+commit will sweep your own uncommitted work.
+
+### ⚠️ Property 6 cannot be satisfied today — record it failed, do not fill the gap
+
+All twelve `AuditEventType` values are **recipient-side** (`MESSAGE_ARRIVED`, `SEEN`, `CLAIMED`,
+`ARCHIVED`, `REQUEUED`, `DEAD_LETTERED`, two `LEASE_*`, three `WORK_*`, `QUEUE_DEPTH`). There is no
+`MESSAGE_PUBLISHED` or `MESSAGE_SENT`. **A steward has no way, through the API, to record that it
+sent anything**, and `GitPublisher` writes its one `MESSAGE_ARRIVED` into the *recipient's* log.
+
+So a sender's `events.jsonl` is **still empty after a message genuinely went out**, and property 6
+as written above asks for something the product cannot produce. Left unqualified, this clause pushes
+the next operator into hand-writing the missing line — **the exact act this procedure forbids two
+paragraphs earlier.**
+
+**Record property 6 as NOT MET, citing the vocabulary gap.** It is a product gap, not a bootstrap
+defect, and it stays failed until gitmaildir grows a sender-side event.
+
+Related: the `MESSAGE_ARRIVED` line landing in the recipient's log carries `repoName` = **the
+sender**. Serviceable as provenance; it means `repoName` cannot be read as "the repo this log
+belongs to".
+
+### ⚠️ Property 5 is weaker than it reads — state which half holds
+
+Measured by republishing one message with an identical id, `createdAt` and body:
+
+- the maildir is **idempotent at rest** — `inbox/new/<type>/<id>.json` is overwritten, one file; but
+- the recipient's `events.jsonl` gains a **second `MESSAGE_ARRIVED`**, and the republish produces a
+  **second commit** with an identical message.
+
+And `correlationId` is carried only as an opaque payload field — **nothing in the library reads
+it.** Two deliveries of one order under different ids are two orders as far as transport is
+concerned; only recipient discipline prevents double-execution.
+
+So a retry is **safe for the message and lossy for the record**. Prove the half that holds, state
+the half that does not, and describe a correlation id as a convention between stewards rather than a
+de-duplication guarantee.
+
+### ⚠️ Driving `GitMailboxStore` directly produces a correct maildir with **no audit trail**
+
+The store takes **no `AuditLogger`** — `GitReceiver` holds it and passes it to the message source.
+The store's public `claim`/`archive` methods invite direct use, and direct use moves the message
+correctly and **logs nothing**: no `MESSAGE_CLAIMED`, no `MESSAGE_ARCHIVED`.
+
+Transitions right, history silent, nothing marking the gap. Either drive `GitReceiver`, or call the
+product's own `AuditLogger` for the lifecycle events — **never write that JSON by hand** — and if
+they are recorded after the fact, **disclose that the timestamps are late** rather than let them
+read as contemporaneous.
+
+### ⚠️ Clear hand-delivered content out of `inbox/` *before* sending anything
+
+A peer may drop a file straight into `plans/inbox/` — untracked, well-intentioned, holding real
+content. Under `inbox/` it **reads as delivered mail**, and it will stand in for the transport proof
+this stage exists to obtain.
+
+**Move it to `plans/archive/<label>/` before the first message goes out**, and record its hash. Then
+compare it against the transported bytes when they arrive. In the observed case the two proved
+byte-identical — which is not a reason to have skipped the request, but the only way that identity
+could be established at all. Evidence, not authority.
+
 ## Stage 5 — capture dogfood corrections
 
 Every bootstrap records:
