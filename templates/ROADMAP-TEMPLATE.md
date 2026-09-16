@@ -33,7 +33,13 @@
 
 ---
 
-### Step 1.1: Project Scaffolding
+### Step 1.1: Project Scaffolding — *new project*
+
+> ⭐ **On an existing codebase, use Step 1.1b below instead.** This step creates the ground the
+> project stands on. If that ground is already there, creating it is wrong rather than merely
+> redundant — `git init` in a repository the developer is already working in, or a second build
+> file beside the one in use, damages a working project. The step does not disappear; its verb
+> changes from CREATE to ASSESS.
 
 **Entry criteria**:
 - [ ] Step 1.0 complete
@@ -63,11 +69,47 @@
 
 ---
 
+### Step 1.1b: Project Assessment — *existing codebase*
+
+Use instead of 1.1 when the work targets a codebase that already exists. Same position in the
+roadmap, same purpose — know the ground before building on it — and it is **not a smaller step**.
+
+**Entry criteria**:
+- [ ] Step 1.0 complete
+- [ ] Read: `plans/learnings/step-1.0-design-review.md` — prior step learnings (when this context did not produce them)
+- [ ] Read: `DESIGN.md` — the constraints the existing codebase must satisfy
+
+**Work items**:
+- [ ] READ the existing build configuration; record tool, version, module structure, base package
+- [ ] READ the existing source layout; record where the design's components already have a home
+- [ ] IDENTIFY quality infrastructure already present (formatter, linter, static analysis, CI) and its actual enforcement — configured is not the same as enforced
+- [ ] IDENTIFY existing test infrastructure, and whether the suite currently passes **before any change**
+- [ ] RECORD the gap: present and adequate / present and inadequate / absent — **all three, explicitly**
+- [ ] RAISE each inadequate-or-absent item as a roadmap work item rather than fixing it here
+- [ ] COMMIT: the assessment record
+
+**Exit criteria**:
+- [ ] The existing build, layout, quality tooling and test setup are recorded as observed, not as assumed
+- [ ] A baseline exists for whether the test suite passed before this work began
+- [ ] Every gap is either adopted, raised as a work item, or explicitly accepted with a reason
+- [ ] **Nothing was created that already existed**, and nothing existing was replaced without a recorded decision
+- [ ] Create: `plans/learnings/step-1.1b-project-assessment.md`
+- [ ] Update `CLAUDE.md` with distilled learnings
+- [ ] Update `ROADMAP.md` checkboxes
+
+**Deliverables**: A recorded assessment of the existing build, source layout, quality tooling and test state — each item adopted, raised as a work item, or accepted with a reason — and a baseline for whether the suite passed before this work began
+
+> ⚠️ **"Absent" and "present but inadequate" are different findings and must not collapse.** A
+> codebase with a linter nobody runs is not a codebase without a linter, and the remedy differs. An
+> assessment that reports only what is missing will silently adopt what is broken.
+
+---
+
 ### Step 1.2: Quality Infrastructure Setup
 
 **Entry criteria**:
-- [ ] Step 1.1 complete (buildable project exists)
-- [ ] Read: `plans/learnings/step-1.1-project-scaffolding.md` — prior step learnings
+- [ ] Step 1.1 or 1.1b complete (a buildable project exists — newly scaffolded, or assessed and confirmed to build)
+- [ ] Read: `plans/learnings/step-1.1-project-scaffolding.md` (or `step-1.1b-project-assessment.md`) — prior step learnings, when this context did not produce them
 
 **Work items**:
 - [ ] CONFIGURE test coverage tool (see [quality guide](../guides/))

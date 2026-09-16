@@ -17,15 +17,17 @@ Break the stable design into an ordered sequence of implementable steps, each wi
 
 1. **Decompose the design** — Identify natural implementation boundaries. Each step should produce something testable.
 2. **Order by dependency** — What must exist before something else can be built? Data layer before service layer, interfaces before implementations.
-3. **Define entry/exit criteria per step** — Entry: what must be true to start. Exit: what must be true to consider it done. Entry criteria must include reading the prior step's learnings file — this prevents context loss between steps and across sessions.
-4. **Include standard early steps** — Every roadmap's first stage starts with design review, project scaffolding, [quality infrastructure](../concepts/quality-infrastructure.md) setup, and test infrastructure, before any implementation. See the [Roadmap Template](../templates/ROADMAP-TEMPLATE.md).
+3. **Define entry/exit criteria per step** — Entry: what must be true to start. Exit: what must be true to consider it done. Entry criteria must include reading the prior step's learnings file **when the executing context did not produce them** — which is the usual case, because a step boundary is usually a session boundary. State the rule that way rather than as an unconditional read: the point is that no step starts blind to what the last one learned, not that a file is opened. One executor legitimately performing several consecutive steps in one context has already met it, and making it re-read what it just wrote teaches that entry criteria are ceremony. Planning structure describes the work; it does not dictate invocation boundaries.
+4. **Include standard early steps** — Every roadmap's first stage establishes the ground the rest of the work stands on: design review, the project's build and source structure, [quality infrastructure](../concepts/quality-infrastructure.md), and test infrastructure, before any implementation. See the [Roadmap Template](../templates/ROADMAP-TEMPLATE.md).
+
+   ⭐ **On an existing codebase, that ground already exists — assess and reuse it instead of creating it.** The step is real either way, and it is not smaller: read the current build, source layout, quality tooling and test setup; record what is present, what is missing, and what is present but inadequate; adopt what holds and raise the rest as work items. What changes is the verb, not the necessity. Creating a build file where one already exists, or initialising a repository the developer is already working in, is wrong rather than redundant.
 5. **Group into stages** — Related steps form roadmap stages. Each stage ends with a consolidation step that compacts per-step learnings into `LEARNINGS.md` and a [stage review](phase-review-template.md).
 6. **Identify the learnings structure** — What will you capture along the way? Set up the learnings file structure.
 
 ## Exit Criteria
 
 - Every design component has at least one roadmap step
-- Stage 1 includes design review, project scaffolding, quality infrastructure, and test infrastructure steps
+- Stage 1 includes design review, and steps that **establish or assess** the build and source structure, quality infrastructure, and test infrastructure — creating them on a new project, reading and reconciling them on an existing one
 - **Freeze/contract gates schedule their lenses as steps BEFORE the freeze step** (the pre-freeze window is when fixes are naming-level; after, they are versioned migration events): the cold second-implementation spike, producer-coverage + persona-matrix runs, and conformance-vector attestation all precede the freeze — and the gate step re-runs lenses 4/5 as standing dimensions ([review-lenses](../concepts/review-lenses.md))
 - **Mid-execution research arrivals route through the (a)/(b)/(c) classification protocol** — only class-(c) findings may reopen approved design, at a high bar; (b) findings land in a named Deferred list, never silently
 - Steps are ordered with no circular dependencies

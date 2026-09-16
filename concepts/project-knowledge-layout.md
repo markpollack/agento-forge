@@ -15,10 +15,17 @@ Left unorganized these bleed together, and the project loses the ability to answ
 
 ## The root: `plans/`
 
-`plans/` is the project's **agent-and-human-facing working memory**. It holds the Forge artifacts (`VISION.md`, `DESIGN.md`, `ROADMAP.md`) at its root and the four knowledge subdirectories below. **Whether it is tracked is decided by repository visibility, not by the nature of the content.**
+`plans/` is the project's **agent-and-human-facing working memory**. It holds the Forge artifacts (`VISION.md`, `DESIGN.md`, `ROADMAP.md`) at its root and the four knowledge subdirectories below. **Whether it is tracked is decided by repository visibility, not by the nature of the content** — and whether it lives in the project repository at all is a third question, answered below.
 
 - **Public repo → gitignore `plans/`.** The planning — vision, competitive positioning, commercial model, unshipped roadmap — is usually not for public view. Two consequences to accept deliberately: the reasoning must survive session clears on its own organization rather than on git history, and **it has no backup** unless you mirror it elsewhere.
 - **Private repo → track `plans/`.** Backup, history, and multi-machine access come free, and the reasoning is versioned alongside the code it explains. There is no confidentiality argument to trade against.
+- ⭐ **Planning outside the project repository entirely — a separate private steward, or a per-project directory the tool owns.** The two options above both put `plans/` inside the project; a third is available and is sometimes the only correct one. Two cases force it:
+  - **A public repository whose planning must survive.** Gitignoring `plans/` is right for confidentiality and leaves the planning with no history, no backup and no multi-machine access — see the consequence stated above. A 1:1 private steward repository gives all three back without putting a byte of planning in public. The procedure and scaffolds are in this repository at `provisional/review-control-loop/`.
+  - **An agent working on a developer's codebase, which is not its to write to.** A tool that plans against someone else's repository cannot put its trio there; it keeps it in its own per-project location — for example `~/.bud/<project-key>/<bud>/`, keyed to the codebase rather than living in it.
+
+  In both cases `plans/` keeps its shape — the trio at the root, the same knowledge subdirectories — and only its **location** moves. The layout is a structure, not an address.
+
+  ⚠️ **The middle option is the one that quietly loses work.** "Public repo → gitignore `plans/`, and it has no backup unless you mirror it elsewhere" names a hazard and leaves the mirroring to discipline. This repository followed its own advice and accumulated 25 planning files tracked nowhere, going back seven months, until they were preserved on 2026-09-16. If planning must be gitignored, decide where its durable copy lives **at the same moment** — not later, because later is how it stays on one disk.
 
 Getting this backwards is costly in both directions: a private project that gitignores out of habit loses history for no benefit, and a public project that tracks by default publishes its strategy. The trap is moving between the two — the convention inverts and nothing in the working tree signals it. (One practical marker: encode visibility in the checkout location, so the path itself tells you which convention applies.)
 
