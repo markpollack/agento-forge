@@ -71,6 +71,13 @@ if ! grep -q 'plans/inbox/{new,cur,archive,dead}' "$steward_dir/BINDING.md"; the
   printf 'BINDING.md does not bind the gitmaildir lifecycle.\n' >&2
   exit 1
 fi
+for target in AGENTS.md BINDING.md; do
+  if ! grep -qx "@$target" "$steward_dir/CLAUDE.md"; then
+    printf 'CLAUDE.md does not import %s (add a line "@%s"; see ~/scripts/claude-bridge.py).\n' \
+      "$target" "$target" >&2
+    exit 1
+  fi
+done
 if ! grep -q 'inbox preflight' "$steward_dir/AGENTS.md"; then
   printf 'AGENTS.md does not require planning/controller inbox preflight.\n' >&2
   exit 1

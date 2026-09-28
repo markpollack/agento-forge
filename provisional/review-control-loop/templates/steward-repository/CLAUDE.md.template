@@ -1,4 +1,10 @@
 # {{PROJECT_NAME}} Steward
 
-Read `AGENTS.md`, then `BINDING.md`. The binding names the active private authorities and the paired
-project boundary. Do not duplicate roadmap or current control state in this tool-specific bridge.
+`AGENTS.md` and `BINDING.md` are imported below, so their content loads with every Claude Code
+session. The binding names the active private authorities, the paired project boundary and any
+delegated authority. Name them with `@` imports, never only in prose: a named-but-not-imported file
+is invisible to Claude Code's permission check. Do not duplicate roadmap or current control state in
+this tool-specific bridge.
+
+@AGENTS.md
+@BINDING.md

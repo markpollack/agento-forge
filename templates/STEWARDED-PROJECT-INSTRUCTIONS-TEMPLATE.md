@@ -12,7 +12,8 @@
 
 Two files, and the split is deliberate. `AGENTS.md` is canonical and tool-neutral; `CLAUDE.md` is
 a bridge that exists only so a Claude Code session lands somewhere and is redirected. Any other
-tool's convention file should be the same four-line bridge.
+tool's convention file should be the same short bridge, importing `AGENTS.md` where the tool
+supports imports.
 
 Keep `AGENTS.md` short. It answers one question — *what does an agent working in **this
 repository** need that it cannot infer from the code?* Build gates, hard rules, invariants that
@@ -48,9 +49,16 @@ Do not copy private planning, roadmap, checkpoint, or dirty-tree state into publ
 ```markdown
 # {{PROJECT_NAME}} Claude Code Bridge
 
-Read and follow `AGENTS.md`. It is the canonical repository instruction file for all coding agents.
-Do not duplicate project guidance or private steward state here.
+`AGENTS.md` is the canonical repository instruction file for all coding agents; it is imported
+below so its content loads with every session. Do not duplicate project guidance or private steward
+state here.
+
+@AGENTS.md
 ```
+
+The `@` import matters: a file only *named* in CLAUDE.md is not loaded, so neither the session nor
+Claude Code's permission check sees it. `~/scripts/claude-bridge.py` checks and fixes existing
+bridges.
 
 ## Also do
 
