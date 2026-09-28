@@ -191,8 +191,10 @@ from the inspected bootstrap commit. Repository privacy is an invariant, not a n
 Only after the steward authority is committed and privately pushed may a separately authorized
 project change:
 
-- add or reduce tracked `AGENTS.md` to a stable bridge naming the steward binding;
-- reduce tool-specific instruction files to minimal bridges;
+- add or reduce tracked `AGENTS.md` to the shape in `guides/project-instruction-files.md`: stable
+  repository facts (build and test, modules, architecture, hard rules, doc links) plus a pointer to
+  the steward binding;
+- reduce tool-specific instruction files to minimal bridges that import `AGENTS.md`;
 - remove or archive competing public/ignored planning authority according to the recorded migration;
   and
 - preserve project-owned code, tests, builds, releases, and public documentation.

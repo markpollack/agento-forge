@@ -7,6 +7,10 @@
 >
 > **Established from**: `agent-judge` (the first pair), applied to `agent-client` (commit
 > `359d281`, 559 lines → 28 + 4).
+>
+> **Policy**: [`guides/project-instruction-files.md`](../guides/project-instruction-files.md) says
+> what each section must contain, what is excluded and where it goes instead, the size budget, and
+> the audit checklist. This template is the skeleton; the guide wins if they disagree.
 
 ## The shape
 
@@ -15,33 +19,50 @@ a bridge that exists only so a Claude Code session lands somewhere and is redire
 tool's convention file should be the same short bridge, importing `AGENTS.md` where the tool
 supports imports.
 
-Keep `AGENTS.md` short. It answers one question — *what does an agent working in **this
-repository** need that it cannot infer from the code?* Build gates, hard rules, invariants that
-erode silently. Everything about **why** the project exists, what it should become, and what is
-decided belongs in the steward.
+Keep `AGENTS.md` short, about 60 lines or fewer. It answers one question: *what does a cold agent
+working in **this repository** need that it cannot quickly infer from the code?* That means how to
+build and test, the modules and architecture, hard rules and invariants, and links to the docs.
+Everything about **why** the project exists, what it should become, and what is decided belongs in
+the steward.
 
 ## `AGENTS.md`
 
 ```markdown
 # {{PROJECT_NAME}} Agent Instructions
 
+{{ONE_LINE_PURPOSE}}
+
 This public repository owns code, tests, builds, releases, shipped contracts, and public
 documentation. Private planning and control state are authoritative in
 `{{STEWARD_DIR}}`; read its `BINDING.md` before planning or executing work.
 
-<!-- Build gate: the exact command, plus anything bound to an early phase that fails
-     before compilation. -->
+## Build and test
 
-<!-- Hard rules: constraints an agent would otherwise violate reasonably.
-     State the rule and the consequence, not just the rule. -->
+<!-- The exact commands, copy-pasteable. Name the gate that must pass before a commit, and
+     anything bound to an early phase that fails before compilation. -->
 
-<!-- Invariants: boundaries that erode without a written reason. Give each one a check
-     a session can actually run before committing. -->
+## Modules
+
+<!-- A short map: module or directory, then one line on what it holds. -->
+
+## Architecture
+
+<!-- Only the few decisions an agent must respect (dependency direction, public API boundary,
+     what stays framework-free). Not a design document. -->
+
+## Hard rules and invariants
+
+<!-- Each rule states its consequence: what breaks and who notices. Where one exists, give a
+     check a session can run before committing. -->
 
 Follow `/home/mark/projects/agento-forge/guides/java-library-quality.md`. The project uses a
 customized source license; see `LICENSE`. Commit messages contain no AI attribution.
 
 Do not copy private planning, roadmap, checkpoint, or dirty-tree state into public files.
+
+## Docs
+
+<!-- Links to the online documentation, and the source of truth for the API. -->
 ```
 
 ## `CLAUDE.md`
@@ -49,9 +70,8 @@ Do not copy private planning, roadmap, checkpoint, or dirty-tree state into publ
 ```markdown
 # {{PROJECT_NAME}} Claude Code Bridge
 
-`AGENTS.md` is the canonical repository instruction file for all coding agents; it is imported
-below so its content loads with every session. Do not duplicate project guidance or private steward
-state here.
+`AGENTS.md` is the canonical instruction file for all coding agents and is imported below; do not
+duplicate project guidance or private steward state here.
 
 @AGENTS.md
 ```
@@ -75,7 +95,9 @@ bridges.
 
 - Do not re-track `plans/` in the project to "make it durable." That publishes private planning
   and undoes the decision the steward exists to implement.
-- Do not carry vision, roadmap or open questions into `AGENTS.md`. If an agent needs them, it
-  needs the steward.
+- Do not carry vision, roadmap, open questions, current status or per-commit design notes into
+  `AGENTS.md`. If an agent needs them, it needs the steward. The guide's exclusion table says where
+  each one goes.
+- Do not summarize in place when `AGENTS.md` outgrows its budget. Move the content out.
 - Do not do this while a session is mid-work in the project — rewriting its instruction file
   underneath it is a collision, not a cleanup.

@@ -61,5 +61,5 @@ ID. Never edit an immutable transport message to carry its disposition.
 - Planning, decision, review, evidence, and correspondence commits occur here.
 - Implementation commits occur in the paired project repository.
 - Cross-repository work becomes a named dependency or work order owned by its recipient.
-- The paired project's tracked `AGENTS.md` is a stable bridge only; it carries no current control
-  state.
+- The paired project's tracked `AGENTS.md` carries only stable repository facts, per
+  `guides/project-instruction-files.md` in agento-forge; it carries no current control state.

@@ -51,6 +51,11 @@ Stage 1 through Stage 4 into one action, however routine it looks.
 | 4 | Prove real transport with the first message |
 | 5 | Capture dogfood corrections back into the procedure |
 
+Stage 3 brings the project's instruction files into line with
+`{forge}/guides/project-instruction-files.md`, using
+`{forge}/templates/STEWARDED-PROJECT-INSTRUCTIONS-TEMPLATE.md` as the skeleton. After bootstrap, if
+Stage 3 was not run, that is the next project-side step.
+
 Stages 3 and 4 are **separately authorized**. Finishing 1 and 2 is a complete, useful outcome; say
 so plainly rather than implying the steward is fully live.
 

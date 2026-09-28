@@ -63,6 +63,7 @@ correlation ID. The transport record is immutable and is never edited to carry i
 - Planning, decision, review, evidence, and correspondence commits occur here.
 - Implementation commits occur in the project repository.
 - Cross-repository work becomes a named dependency or work order owned by its recipient.
-- The paired project's tracked `AGENTS.md` is a stable bridge only. It carries no current action,
+- The paired project's tracked `AGENTS.md` carries only stable repository facts, per
+  `guides/project-instruction-files.md` in agento-forge. It carries no current action,
   candidate, roadmap, message, checkpoint, or dirty-tree state.
 - Tool-specific instruction files are optional minimal bridges, not duplicate authority.
