@@ -32,6 +32,8 @@ the steward.
 
 {{ONE_LINE_PURPOSE}}
 
+## Steward
+
 This public repository owns code, tests, builds, releases, shipped contracts, and public
 documentation. Private planning and control state are authoritative in
 `{{STEWARD_DIR}}`; read its `BINDING.md` before planning or executing work.
@@ -50,7 +52,7 @@ documentation. Private planning and control state are authoritative in
 <!-- Only the few decisions an agent must respect (dependency direction, public API boundary,
      what stays framework-free). Not a design document. -->
 
-## Hard rules and invariants
+## Hard rules
 
 <!-- Each rule states its consequence: what breaks and who notices. Where one exists, give a
      check a session can run before committing. -->
