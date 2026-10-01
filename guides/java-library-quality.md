@@ -868,15 +868,105 @@ its data-flow inspections. Per principle 4, a check only some contributors can r
 
 Being proven in the ACP Java SDK; add here when its evidence arrives:
 
-- **PMD + CPD** as a `verify` gate: cognitive complexity, method/class size (NCSS), GodClass, excessive
-  parameter lists, copy-paste detection. Measured need: only 8 of 853 methods exceeded cyclomatic
-  complexity 10, but one 159-line method was the same block copied 18 times, one constructor took 19
-  arguments, and three classes ran about 1,000 lines each. Thresholds come from the tested ruleset.
+- **Javadoc prose gate (ACP proposal A7, step G8)**: Checkstyle `SummaryJavadoc` (forbidden stock
+  openings) plus a small shared Vale ruleset (AI filler phrases at error, summary length at warning). Proposed by the
+  owner, not yet proven; an LLM "clarity judge" is future only.
 - **SpotBugs**, high-confidence and rank ≤ 9 only, aimed at concurrency patterns.
 - **Lincheck** (§8) and **PIT** mutation testing (a scoped pilot on one package, profile-only threshold,
   not a build gate).
 
-Not proposed as gates: Checkstyle (style; overlaps PMD on what matters) and Sonar (needs a server).
+---
+
+## 10. Complexity and Duplication (PMD + CPD)
+
+### Purpose
+AI-written code tends to be long, flat and copy-pasted: it works, but a reader can't see its shape.
+Method-level cyclomatic complexity alone misses it (in the ACP Java SDK only 8 of 853 methods exceeded 10).
+PMD with a small ruleset, plus its copy-paste detector CPD, gates it in `verify`.
+
+Evidence (ACP Java SDK, `agentclientprotocol/java-sdk` `2201b3b..8be8b9d`, 15 commits): 35 PMD violations
+and 5 CPD blocks fixed to zero; worst method cyclomatic 18 → 7; longest method 150 lines (one lambda) →
+39; largest non-schema class 1,045 → 322 lines; tests unchanged (957), no baseline file.
+
+### Ruleset and thresholds
+
+Full commented ruleset: [java-library-pmd-ruleset.xml](java-library-pmd-ruleset.xml). Each threshold was
+set from a measurement of that code base; **measure yours first**, set thresholds just strict enough to
+catch the worst code, then fix to zero.
+
+| Rule | Reported at | Why |
+|---|---|---|
+| `CognitiveComplexity` (method) | 15 | SonarSource default. Charges for nesting; looks inside lambdas, where reactive code keeps logic |
+| `CyclomaticComplexity` (method / class) | 10 / 80 | McCabe and PMD defaults. Catches wide, flat methods cognitive complexity forgives |
+| `NcssCount` (method / class, nested classes counted) | 30 / 300 | Ignores Javadoc, so a documented API interface is measured by its code |
+| `LongLambda` (custom XPath rule) | 30 statements | PMD's NCSS does not count lambda bodies; the worst method was one lambda. Add this in any reactive or lambda-heavy code base |
+| `ExcessiveParameterList` | 7 | Beyond six, the arguments are a type of their own |
+| CPD (`pmd:cpd-check`) | 100 tokens | Below 100 it mostly reports parallel declarations (record headers, interface signatures). Runs per module |
+
+Left out, with reasons in the ruleset: `GodClass` (caught nothing the class rules miss, plus a false
+positive), `TooManyMethods` and `ExcessivePublicCount` (measure API breadth, not tangling).
+
+One structural exemption, class-level NCSS only: a "wire record container" (a final class with no instance
+fields and no nested classes, whose nested types are records, interfaces and enums). Its size is the
+protocol's size; its methods are still measured. No baseline or exclusion file.
+
+### Maven configuration
+
+```xml
+<properties>
+    <maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
+    <pmd.version>7.28.0</pmd.version>
+    <cpd.minimumTokens>100</cpd.minimumTokens>
+</properties>
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-pmd-plugin</artifactId>
+    <version>${maven-pmd-plugin.version}</version>
+    <dependencies>
+        <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-core</artifactId>
+            <version>${pmd.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.pmd</groupId>
+            <artifactId>pmd-java</artifactId>
+            <version>${pmd.version}</version>
+        </dependency>
+    </dependencies>
+    <configuration>
+        <rulesets>
+            <ruleset>${maven.multiModuleProjectDirectory}/config/pmd/ruleset.xml</ruleset>
+        </rulesets>
+        <targetJdk>${java.version}</targetJdk>
+        <includeTests>false</includeTests>
+        <minimumTokens>${cpd.minimumTokens}</minimumTokens>
+        <printFailingErrors>true</printFailingErrors>
+        <failOnViolation>true</failOnViolation>
+        <linkXRef>false</linkXRef>
+    </configuration>
+    <executions>
+        <execution>
+            <id>pmd-gate</id>
+            <phase>verify</phase>
+            <goals>
+                <goal>check</goal>
+                <goal>cpd-check</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+### Practice
+- Fix by design, one hotspot per commit with the full test suite green after each. First-run examples: a
+  handler-registration method that copied one block 17 times became a table; a 1,045-line transport split
+  by responsibility behind an unchanged public facade; long switches and `||` chains became tables.
+- **Falsify:** plant a 45-statement nested method (fails cognitive, cyclomatic and NCSS), a 20-line block
+  copied into two methods (fails `cpd-check`) and a 40-statement lambda (fails `LongLambda`); see each fail,
+  revert.
+- Not gates for this purpose: Checkstyle as a general style checker (it overlaps PMD on what matters; the narrow Javadoc use in §6 and the pending A7 is separate) and Sonar (needs a server).
 
 ---
 
@@ -894,6 +984,7 @@ When finishing a Java library project:
 - [ ] **NullAway on Java 17 targets** - JDK 21 profile with `--release 17`, plus a JDK 21 CI job (§4.7)
 - [ ] **Scheduled dependency scan** - OSV over Maven's resolved tree, weekly and on pom changes; fails on HIGH or unscored (§5)
 - [ ] **Concurrency** - a CI job pinned to one CPU for code with locks or ordering (§8)
+- [ ] **Complexity and duplication** - PMD + CPD in `verify`, thresholds set from measurement, fixed to zero, no baseline (§10)
 - [ ] **Javadoc** - Public API documentation
 - [ ] **Phase Review** - API design + code quality + grammar + design conformance review ([template](../phases/phase-review-template.md))
 - [ ] **Dependency Audit** - Remove/replace heavy dependencies with CVEs
