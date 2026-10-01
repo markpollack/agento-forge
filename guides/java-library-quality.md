@@ -34,70 +34,120 @@ bug hunt: ArchUnit found 3 cycles, NullAway 9 real bugs, Error Prone's own check
 ## 1. Code Coverage with JaCoCo
 
 ### Purpose
-Measure test coverage to identify untested code paths.
+Measure test coverage, and gate it per module: LINE and BRANCH floors in `verify`, each set from that
+module's measured coverage. A floor stops coverage from sliding; the report shows where the untested
+paths are.
+
+Evidence (ACP Java SDK, `agentclientprotocol/java-sdk` `0c07dcf..700807e`): 47 new tests, then floors on
+six modules. The first run was a bug hunt: agents registered by class were created anew for every request,
+so state in their fields was lost between requests (fixed red-first). It also found a shared transport core
+at 0% in its own module (tested only from another), I/O code exercised only in child JVMs (not
+instrumented), three annotation handlers no test bound, and two transport-robustness gaps.
+
+| Module | Before (line / branch) | After | Floor |
+|---|---|---|---|
+| acp-core | 77 / 65 | 84 / 72 | 82 / 70 |
+| acp-agent-support | 70 / 47 | 88 / 78 | 85 / 76 |
+| acp-streamable-http-jetty | 88 / 78 | 88 / 78 | 86 / 76 |
+| acp-json-jackson2 | 100 / 63 | same | 98 / 60 |
+| acp-json-jackson3 | 96 / 63 | same | 94 / 60 |
+| acp-test | 79 / 40 | same | 76 / 38 |
 
 ### Maven Configuration
 
-**Parent pom.xml** (in `<pluginManagement>`):
+**Parent pom.xml:**
 ```xml
+<properties>
+    <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+    <!-- Coverage floors; each module overrides them with its own measured floors -->
+    <jacoco.minimum.line>1.00</jacoco.minimum.line>
+    <jacoco.minimum.branch>1.00</jacoco.minimum.branch>
+</properties>
+
 <plugin>
     <groupId>org.jacoco</groupId>
     <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.11</version>
+    <version>${jacoco-maven-plugin.version}</version>
     <executions>
         <execution>
             <id>prepare-agent</id>
-            <goals>
-                <goal>prepare-agent</goal>
-            </goals>
+            <goals><goal>prepare-agent</goal></goals>
         </execution>
+        <!-- verify, after failsafe appends its data, before the gate: the report shows what the gate checks -->
         <execution>
             <id>report</id>
-            <phase>test</phase>
-            <goals>
-                <goal>report</goal>
-            </goals>
+            <phase>verify</phase>
+            <goals><goal>report</goal></goals>
+        </execution>
+        <execution>
+            <id>coverage-gate</id>
+            <phase>verify</phase>
+            <goals><goal>check</goal></goals>
+            <configuration>
+                <rules>
+                    <rule>
+                        <element>BUNDLE</element>
+                        <limits>
+                            <limit>
+                                <counter>LINE</counter>
+                                <value>COVEREDRATIO</value>
+                                <minimum>${jacoco.minimum.line}</minimum>
+                            </limit>
+                            <limit>
+                                <counter>BRANCH</counter>
+                                <value>COVEREDRATIO</value>
+                                <minimum>${jacoco.minimum.branch}</minimum>
+                            </limit>
+                        </limits>
+                    </rule>
+                </rules>
+            </configuration>
         </execution>
     </executions>
 </plugin>
 ```
 
-**Module pom.xml** (in `<plugins>`):
+**Each module pom.xml:**
 ```xml
-<plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-</plugin>
+<properties>
+    <!-- measured line 84.21%, branch 72.16-72.33%, less 2 points -->
+    <jacoco.minimum.line>0.82</jacoco.minimum.line>
+    <jacoco.minimum.branch>0.70</jacoco.minimum.branch>
+</properties>
 ```
+
+If surefire or failsafe sets its own `argLine` (Lincheck, Mockito agents), write `@{argLine}` in it and
+declare an empty `<argLine/>` property, so the JaCoCo agent survives and the build still works when JaCoCo
+is skipped.
+
+### Choosing floors
+1. **Floor = measured − 2 points, rounded down to a whole percent.** Measure from a clean `verify` on every
+   JDK the build supports, at least twice; run-to-run noise from concurrent tests was ≤ 0.4 points.
+2. **Gate both LINE and BRANCH.** Deleting a WebSocket integration test kept line coverage above its floor
+   and failed only on branch.
+3. **Default floor 1.00**, not none (a missing property gives an obscure Maven error) and not 0 (a new
+   module would pass silently). A new module fails readably until it declares measured floors. A module with
+   no executable code passes at 1.00 (an empty ratio passes).
+4. **Count each module's own classes from its own tests** (JaCoCo's per-module default). Code tested only
+   from another module shows up as untested; that is the useful signal.
+5. **Report in `verify`**, next to the gate and after failsafe. A report bound to `test` shows less than the
+   gate checks.
+6. **No CLASS-level rules** unless they catch something real; after testing, the remaining 0% classes were
+   1–5 line records, anonymous type tokens and interface defaults. **No per-class exclusions.** Exclude data
+   records only if they skew the figure (here they covered 80% against 77% for the rest, so they stayed in).
+7. **Raise floors as coverage rises; lower one only with a reason in the commit.**
+8. `-DskipTests` makes the check skip itself (no exec file), so a release pipeline running
+   `verify -DskipTests` is unaffected.
+
+**Falsify:** delete one core test class per module and see its floor fail. In the ACP SDK: acp-core line
+0.81 < 0.82 and branch 0.68 < 0.70; agent-support 0.75 < 0.85 and 0.63 < 0.76; jetty line held, branch
+0.74 < 0.76.
 
 ### Usage
 ```bash
-./mvnw test
-# Report at: target/site/jacoco/index.html
+./mvnw clean verify
+# Report at: target/site/jacoco/index.html (per module)
 ```
-
-### Tips
-- Run `./mvnw test` to generate the report
-- View HTML report for visual coverage analysis
-- Consider adding coverage thresholds for CI:
-  ```xml
-  <execution>
-      <id>check</id>
-      <goals><goal>check</goal></goals>
-      <configuration>
-          <rules>
-              <rule>
-                  <limits>
-                      <limit>
-                          <counter>LINE</counter>
-                          <minimum>0.80</minimum>
-                      </limit>
-                  </limits>
-              </rule>
-          </rules>
-      </configuration>
-  </execution>
-  ```
 
 ---
 
@@ -842,8 +892,73 @@ response was published wedged the next request only under `taskset -c 0`
 ([issue #14](https://github.com/agentclientprotocol/java-sdk/issues/14)); the repro and its fix live in
 this job.
 
-*Not yet standard:* Lincheck, which model-checks a concurrent data structure against a sequential spec,
-is being proven in the ACP SDK. See "Pending" at the end of §9.
+### Lincheck: model checking the concurrent state
+
+[Lincheck](https://github.com/JetBrains/lincheck) runs a concurrent object's operations from several
+threads under every interleaving it explores (model checking, deterministic and seeded) and checks each
+result against a sequential specification. The contention job reproduces timing races end to end; Lincheck
+covers the state machines exhaustively. They find different things: use both for libraries with locks,
+queues or request correlation.
+
+Evidence (ACP Java SDK, `agentclientprotocol/java-sdk` `8228548`): five Lincheck test classes (the per-session prompt
+lock, including the issue #14 rule that the turn ends before the response is published; the pending-response
+table; the SSE outbound mailbox and session table; serialised emission). **Four real bugs:**
+1. "Is any prompt active?" could answer no while one was active: it read `ConcurrentHashMap.isEmpty()`,
+   whose striped size counters are briefly wrong mid-update. Now it reads the entries.
+2. Requests that timed out or were cancelled never left the pending-request table, a slow leak on
+   long-lived sessions (mutation testing, §12, found it independently).
+3. A request failed twice when the transport died during close; and, by reading the same code, a request
+   registered during shutdown could be dropped without ever being failed.
+4. A session stream requested after its connection closed stayed open forever.
+
+The mailbox and serialised emission were clean and stay as regression guards.
+
+**Setup:**
+```xml
+<!-- root dependencyManagement -->
+<lincheck.version>3.7</lincheck.version>
+<dependency>
+    <groupId>org.jetbrains.lincheck</groupId>
+    <artifactId>lincheck</artifactId>
+    <version>${lincheck.version}</version>
+</dependency>
+
+<!-- each module that uses it (test scope); no add-opens needed for Lincheck 3.x on JDK 17 or 21 -->
+<properties><argLine/></properties>  <!-- JaCoCo fills it; empty when skipped (§1) -->
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <configuration>
+        <argLine>@{argLine} -XX:+IgnoreUnrecognizedVMOptions -XX:+EnableDynamicAgentLoading</argLine>
+    </configuration>
+</plugin>
+```
+
+**Example** (the #14 ordering: a client that saw the response is never rejected):
+```java
+private static final int SCALE = Integer.getInteger("lincheck.scale", 1);
+
+@Test
+void aClientThatSawTheResponseIsNeverRejected() {
+    new ModelCheckingOptions().iterations(20 * SCALE).invocationsPerIteration(200)
+        .threads(2).actorsPerThread(3).actorsBefore(1).actorsAfter(1)
+        .sequentialSpecification(WireSpec.class).check(Wire.class);
+}
+```
+
+**Practice:**
+1. Extract the state machine from Reactor or servlet I/O and model that; small synchronous Reactor chains
+   run fine under Lincheck.
+2. Use `@Validate` invariants for "no loss, no double completion". Checking return values alone missed the
+   leak.
+3. Keep test bookkeeping thread-owned (`nonParallelGroup`, thread ids), or the harness itself isn't
+   linearizable.
+4. Silence logging inside model-checked code. On JDK 17, create `Proxy` classes before `check()`.
+5. Model checking, not stress mode: stress runs took 2–3 minutes each and found nothing extra.
+6. A bounded budget in the build (about 70 s for all models), plus a CI job at 10× scale
+   (`-Dlincheck.scale=10`).
+7. **Falsify every model** by re-introducing a known bug. In the ACP SDK, 9 reintroduced bugs each failed
+   in 3–11 s with a printed interleaving.
 
 ---
 
@@ -871,9 +986,6 @@ Being proven in the ACP Java SDK; add here when its evidence arrives:
 - **Javadoc prose gate (ACP proposal A7, step G8)**: Checkstyle `SummaryJavadoc` (forbidden stock
   openings) plus a small shared Vale ruleset (AI filler phrases at error, summary length at warning). Proposed by the
   owner, not yet proven; an LLM "clarity judge" is future only.
-- **SpotBugs**, high-confidence and rank ≤ 9 only, aimed at concurrency patterns.
-- **Lincheck** (§8) and **PIT** mutation testing (a scoped pilot on one package, profile-only threshold,
-  not a build gate).
 
 ---
 
@@ -970,11 +1082,206 @@ protocol's size; its methods are still measured. No baseline or exclusion file.
 
 ---
 
+## 11. Bug Patterns (SpotBugs)
+
+### Purpose
+SpotBugs analyses bytecode for bug patterns the compiler and Error Prone don't see, above all
+inconsistent synchronisation. Gated in `verify` on two things: **every pattern at rank 9 or less**
+(SpotBugs' "scariest" 1–4 and "scary" 5–9 bands), and **the multithreaded-correctness patterns at any
+rank**.
+
+Why both halves: a rank gate alone misses most concurrency bugs. Measured ranks of planted bugs:
+`IS2_INCONSISTENT_SYNC` 17, `UW_UNCOND_WAIT` 14, `WA_NOT_IN_LOOP` 14. Raising `maxRank` to reach them lets
+in the long tail instead (237 `EI_EXPOSE_REP*` findings at rank 18 in the ACP SDK). Gate on rank, not
+confidence: rank combines severity with confidence, and a confidence-only gate still fails on
+high-confidence nits.
+
+Evidence (ACP Java SDK, `agentclientprotocol/java-sdk` `aa44e3f`, `539eaad` rank gate, `7b4efc5`
+concurrency patterns): 7 modules, about 25 s per clean build; the concurrency patterns add nothing
+measurable (the analysis already reports to rank 20; the filter only chooses what fails).
+
+### Filters
+
+The include filter chooses what fails the build: full commented filter, 32 concurrency patterns in
+groups with the reason each is a bug, and the patterns left out with reasons:
+[java-library-spotbugs-include.xml](java-library-spotbugs-include.xml). Its first rule is
+`<Not><Rank value="10"/></Not>`: a rank matcher matches rank ≥ value, so "rank 9 or less" is its negation.
+
+The exclude file holds false positives only, **each named by class, method, field and pattern with the
+reason it is false**. Never exclude a whole pattern or package: a real instance elsewhere must still fail.
+A real bug or risky pattern is fixed in the code.
+
+### Maven configuration
+
+```xml
+<properties>
+    <!-- 4.10.x needs Maven 3.8.9+; with an older wrapper use 4.9.8.x and override the engine below -->
+    <spotbugs-maven-plugin.version>4.9.8.5</spotbugs-maven-plugin.version>
+    <spotbugs.version>4.10.4</spotbugs.version>
+</properties>
+
+<plugin>
+    <groupId>com.github.spotbugs</groupId>
+    <artifactId>spotbugs-maven-plugin</artifactId>
+    <version>${spotbugs-maven-plugin.version}</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>${spotbugs.version}</version>
+        </dependency>
+    </dependencies>
+    <configuration>
+        <effort>Max</effort>
+        <threshold>Medium</threshold>
+        <maxRank>20</maxRank>
+        <includeFilterFile>${maven.multiModuleProjectDirectory}/config/spotbugs/spotbugs-include.xml</includeFilterFile>
+        <excludeFilterFile>${maven.multiModuleProjectDirectory}/config/spotbugs/spotbugs-exclude.xml</excludeFilterFile>
+        <includeTests>false</includeTests>
+        <failOnError>true</failOnError>
+    </configuration>
+    <executions>
+        <execution>
+            <id>spotbugs-gate</id>
+            <phase>verify</phase>
+            <goals><goal>check</goal></goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Run it in the default build on every JDK, not inside a JDK-specific profile (unlike NullAway, §4.7).
+
+**Trap: one `check` execution only.** Don't add a second `check` execution with its own filter. `check`
+forks the `spotbugs` goal with the plugin-level configuration only; a second execution analyses with the
+first one's settings, looks for a report that was never written, and passes silently.
+
+### First-run findings (ACP SDK, 7 modules)
+
+308 findings at any rank; 3 at the gate. Two `UR_UNINIT_READ` (rank 3) were false positives: each session
+constructor assigns a failure field through a method-reference callback that a synchronously failing
+transport invokes, which SpotBugs does not follow; each got a narrow exclusion. One
+`USO_UNSAFE_OBJECT_SYNCHRONIZATION` (rank 7) was real: a stream synchronised on itself, so any holder could
+stall the container's write callbacks; fixed with a private final lock object. Concurrency patterns at any
+rank: 0. Below the gate: 237 `EI_EXPOSE_REP`/`EI_EXPOSE_REP2` (records exposing lists), 38
+`SIC_INNER_SHOULD_BE_STATIC_ANON`, 6 `CT_CONSTRUCTOR_THROW`, and a few serialization and exception notes.
+
+*Evaluated, not adopted:* find-sec-bugs, for a protocol library. Nothing at rank 9 or less; its rank 12–15
+findings described the library's purpose (starting the configured agent process, writing JSON-RPC
+responses), plus 87 log-injection notes, for about 15 s more per analysis.
+
+### Practice
+- **Falsify** with an inconsistently synchronised counter (`IS2_INCONSISTENT_SYNC`, rank 17): neither the
+  compiler nor Error Prone catches it, so it proves the concurrency half works. Synchronising on a
+  `ConcurrentHashMap` (`JLM_*`, rank 8) proves the rank half. Removing each exclusion must fail the gate on
+  exactly its finding.
+- With Error Prone on, some rank-1 patterns (`EC_UNRELATED_TYPES`) are stopped by the compiler first; to
+  see SpotBugs fail on them, falsify with Error Prone off.
+- Detector limit: plain `UL_UNRELEASED_LOCK` never fired on obvious shapes (`lock()` without `unlock()`),
+  even at threshold Low. Keep it in the list, but don't rely on it.
+
+---
+
+## 12. Mutation Testing (PIT): a Profile, Not a Gate
+
+### Purpose
+Line coverage says a line ran; mutation testing says a test would notice if it were wrong. Run PIT as a
+Maven profile over the stateful core, with a threshold in the profile only, on demand and in a
+manual-dispatch CI job. It is a measurement, not a gate on every change.
+
+Evidence (ACP Java SDK, `agentclientprotocol/java-sdk` `56e703b..6ef42f0`, the protocol core: session
+classes, request/response plumbing, JSON layer):
+
+| | Before | After 44 tests | After the Lincheck refactor (§8) |
+|---|---|---|---|
+| Line coverage | 82% | 94% | 94% |
+| Mutation score (DEFAULTS) | 61% | 90% | 91% |
+
+The gap between 82% line coverage and 61% mutation score was the finding: whole failure paths had no test
+(agent start failure, pending requests on close, the prompt lock on the parameter type production actually
+uses, cancel releasing the lock). One real bug: timed-out and cancelled requests never left the
+pending-request table. The 19 remaining survivors are equivalent or logging-only.
+
+### Maven configuration
+
+In the module pom, not the root, so it can't collide with other gates:
+
+```xml
+<profile>
+    <id>pit</id>
+    <properties>
+        <pitest-maven.version>1.30.0</pitest-maven.version>
+        <pitest-junit5-plugin.version>1.2.3</pitest-junit5-plugin.version>
+        <pit.mutators>DEFAULTS</pit.mutators>  <!-- -Dpit.mutators=STRONGER for the larger set -->
+        <pit.threads>4</pit.threads>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-maven.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>${pitest-junit5-plugin.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>pit</id>
+                        <phase>test</phase>
+                        <goals><goal>mutationCoverage</goal></goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mutationThreshold>85</mutationThreshold>
+                    <targetClasses><param>com.example.core.Session*</param></targetClasses>
+                    <excludedClasses><param>com.example.core.Schema*</param></excludedClasses>
+                    <excludedTestClasses>
+                        <param>com.example.*IT</param>
+                        <param>com.example.ArchitectureTest</param>
+                        <param>com.example.*LincheckTest</param>
+                    </excludedTestClasses>
+                    <avoidCallsTo><avoidCallsTo>org.slf4j</avoidCallsTo></avoidCallsTo>
+                    <mutators><mutator>${pit.mutators}</mutator></mutators>
+                    <threads>${pit.threads}</threads>
+                    <timeoutConstant>8000</timeoutConstant>
+                    <timeoutFactor>2.0</timeoutFactor>
+                    <timestampedReports>false</timestampedReports>
+                    <outputFormats>
+                        <outputFormat>HTML</outputFormat>
+                        <outputFormat>XML</outputFormat>
+                    </outputFormats>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</profile>
+```
+
+Run with `./mvnw -Ppit -pl <module> -am test`. The goal is bound to a phase on purpose: invoking
+`pitest:mutationCoverage` on the command line runs it in every reactor module.
+
+### Practice
+- **Scope it** to the stateful protocol and plumbing classes, not the whole module. Exclude records and
+  schema, logging (`avoidCallsTo`), integration tests, architecture tests and model-checking tests.
+- **Threshold** at the post-triage score minus a few points, in the profile only.
+- **Triage survivors** by asking whether the behaviour matters: error responses, timeouts, cancellation,
+  ordering, close. Don't chase equivalent mutants: log branches, no-op Reactor signals, unreachable branches
+  of sealed types, the redundant half of a double-check.
+- On reactive code, timeout-based tests set the runtime, not CPU (4 or 8 threads: the same 2m41s). Keep test
+  timeouts short.
+- Run `STRONGER` occasionally: in the ACP SDK it found four more real gaps than `DEFAULTS`.
+
+---
+
 ## Checklist Summary
 
 When finishing a Java library project:
 
-- [ ] **JaCoCo** - Code coverage reporting
+- [ ] **JaCoCo floors** - per-module LINE and BRANCH floors in `verify`, measured − 2 points, default 1.00, each falsified (§1)
 - [ ] **ArchUnit** - Architecture rule enforcement
 - [ ] **ArchUnit cycles** - no package cycles at any depth; per-module tests; `failOnEmptyShould=true`; each rule falsified (§2)
 - [ ] **Oracle Review** - AI code smell detection
@@ -984,6 +1291,9 @@ When finishing a Java library project:
 - [ ] **NullAway on Java 17 targets** - JDK 21 profile with `--release 17`, plus a JDK 21 CI job (§4.7)
 - [ ] **Scheduled dependency scan** - OSV over Maven's resolved tree, weekly and on pom changes; fails on HIGH or unscored (§5)
 - [ ] **Concurrency** - a CI job pinned to one CPU for code with locks or ordering (§8)
+- [ ] **Lincheck** - model checks of the concurrent state machines, `@Validate` invariants, each model falsified (§8)
+- [ ] **SpotBugs** - rank 9 or less plus concurrency patterns at any rank in `verify`, on every JDK; narrow exclusions with reasons (§11)
+- [ ] **PIT profile** - mutation testing scoped to the stateful core, threshold in the profile, manual CI job; not a gate (§12)
 - [ ] **Complexity and duplication** - PMD + CPD in `verify`, thresholds set from measurement, fixed to zero, no baseline (§10)
 - [ ] **Javadoc** - Public API documentation
 - [ ] **Phase Review** - API design + code quality + grammar + design conformance review ([template](../phases/phase-review-template.md))
@@ -992,9 +1302,12 @@ When finishing a Java library project:
 ### Quick Commands
 
 ```bash
-# Run tests with coverage (use ./mvnw, never bare mvn; install the wrapper if missing)
-./mvnw clean test
+# Build with every gate: tests, coverage floors, PMD, SpotBugs (use ./mvnw, never bare mvn; install the wrapper if missing)
+./mvnw clean verify
 # Coverage report: target/site/jacoco/index.html
+
+# Mutation testing on one module (§12)
+./mvnw -Ppit -pl <module> -am test
 
 # Run vulnerability scan (OSV; see §5 for the full script)
 ./mvnw -q -B org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeAggregateBom -DoutputFormat=json -DincludeTestScope=false

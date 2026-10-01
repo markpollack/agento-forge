@@ -46,7 +46,7 @@ distilled into the template where the session meets it.
 | What goes in a project's AGENTS.md and CLAUDE.md? How do I audit them? | `guides/project-instruction-files.md` (skeleton: `templates/STEWARDED-PROJECT-INSTRUCTIONS-TEMPLATE.md`) |
 | How are we testing independent AI review, adjudication, materialized candidates, ratification, and implementation dispatch? | `provisional/review-control-loop/README.md` then `PROTOCOL.md` — experimental, not normative Forge doctrine |
 | What should a stage gate's exit report actually say? | `phases/phase-review-template.md` (Gate Exit Is a Measured Report) |
-| What is our Java quality bar? (JaCoCo, ArchUnit, JSpecify/NullAway, Error Prone, OSV dependency scan, concurrency, Javadoc) | `guides/java-library-quality.md` — **the canonical standard**, formerly GP-9 `java-library-finishing-touches.md` |
+| What is our Java quality bar? (JaCoCo floors, ArchUnit, JSpecify/NullAway, Error Prone, OSV dependency scan, concurrency and Lincheck, PMD + CPD, SpotBugs, PIT, Javadoc) | `guides/java-library-quality.md` — **the canonical standard**, formerly GP-9 `java-library-finishing-touches.md` |
 | How do I make `@NullMarked` actually mean something? | `guides/java-library-quality.md` §4.7 (JSpecify ships annotations only — NullAway at ERROR is the enforcer; wiring, config decisions, adoption triage) |
 | `Optional<T>` or `@Nullable` for this return? | `guides/java-library-quality.md` §4.7 (the criterion is *can the caller act on the absence?*, not method-vs-field) |
 | How does Forge compare to other AI methodologies? | `inbox/bmad-vs-forge-comparison.md`, `inbox/another-ai-methodology.md` |
