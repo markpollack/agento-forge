@@ -709,6 +709,61 @@ Document all public APIs for library consumers.
 | **Public methods** | `@param`, `@return`, `@throws` |
 | **Configuration classes** | Field meanings, defaults, valid values |
 
+### Style rules
+
+Sources: Oracle, [How to Write Doc Comments for the Javadoc Tool](https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html)
+(Java 4 era; no `{@code}`, `{@implSpec}` or `{@index}`), and Bloch, *Effective Java* 3rd ed., Item 56, which
+adds those and is current. Local copies for the team: `inbox/sources/` (not committed; both are copyrighted).
+
+**The contract, not the mechanics.** A method's comment is the contract between method and caller: say
+what it does, not how, except in classes designed for inheritance. List preconditions (usually as
+`@throws` for unchecked exceptions, or in the `@param`), postconditions, and side effects (a method that
+starts a background thread says so). State boundary conditions, null handling, and corner cases. Document
+thread-safety for every class and static method, and the serialized form of serializable classes.
+
+**The summary (first sentence).** It becomes the summary-table entry, so it must stand alone. It is
+seldom a full sentence:
+- methods and constructors: a verb phrase in the third person, "Returns the number of elements in this
+  collection", not "Return the number…";
+- classes, interfaces, fields: a noun phrase, "An instantaneous point on the time-line";
+- no two members of a class share a summary (watch overloads);
+- a period followed by a space ends it early, so wrap the abbreviation: `B.S., {@literal M.S.} or Ph.D.`
+
+**Tags.**
+- Order: `@author`, `@version` (classes and interfaces), `@param`, `@return`, `@throws`, `@see`, `@since`,
+  `@serial`, `@deprecated`. `@param` tags follow declaration order.
+- `@param` for every parameter and type parameter (`@param <K> the type of keys`), even when obvious.
+- `@return` for every non-void method. Oracle requires it even when redundant; Bloch allows omitting it
+  when identical to the description. **Standard here: include it**, and say something more specific where
+  you can.
+- `@param` and `@return` text is a noun phrase; `@throws` text is "if" plus the condition. A phrase is
+  neither capitalized nor ended with a period (Oracle; Bloch agrees on the period). Write a full sentence
+  only when you need one, and then capitalize it and end it with a period.
+- Document every exception a method throws, checked or unchecked.
+
+**Markup.** Use `{@code ...}` for code (code font, and `<` and `&` need no escaping), `{@literal ...}`
+for HTML metacharacters in prose, `<p>` for paragraphs, `<pre>{@code ... }</pre>` for multi-line
+examples (an annotation's `@` still needs escaping). Say "this list", not "the list", for the receiver.
+Link with `{@link Class#method}`. Keep source lines to 80 characters (Oracle). If source and generated
+HTML readability conflict, the generated documentation wins.
+
+**Other elements.**
+- `{@implSpec}` documents the method's contract with *subclasses* (self-use patterns); ordinary text is
+  the contract with callers. Needed only on classes designed for inheritance.
+- Enums: document every constant. Annotation types: summary is a verb phrase saying what the annotation
+  means; document members as noun phrases.
+- Package comments go in `package-info.java`; module comments in `module-info.java`.
+- Public classes should not rely on default constructors; there is nowhere to document them.
+- `{@inheritDoc}` or inherited comments avoid repeating an interface's text, but are tricky; use
+  sparingly.
+
+**Check it.** Javadoc's doclint runs by default (Bloch, Java 8+), and Checkstyle's Javadoc checks go
+further. Then read the generated HTML for every API others will use: reading it usually changes a few
+comments.
+
+*Not yet decided:* which checker is the build gate, and how it is wired. Per principle 4 it must run in
+`./mvnw verify`, not only in an IDE.
+
 ### Record Documentation Pattern
 
 ```java
