@@ -12,6 +12,25 @@ This document captures the standard "finishing touches" applied to production-re
 
 ---
 
+## Principles
+
+Proven across the gates below (ACP Java SDK, 2026-09-30 to 2026-10-01). Each new gate's first run was a
+bug hunt: ArchUnit found 3 cycles, NullAway 9 real bugs, Error Prone's own checks 3 real bugs.
+
+1. **Falsify every gate.** Plant the violation, see red, revert. A checker that is silent is
+   indistinguishable from one that is off (§4.7), and that holds for every tool here.
+2. **Each gate's first run is a bug hunt; budget for it.** Real bugs get a test that was red first.
+3. **Fix rather than baseline**, when the library has few consumers and is pre-1.0. A baseline file turns
+   today's problems into permanent exemptions.
+4. **Gates live in the build.** A check that only some contributors can run (an IDE, a cloud service) is
+   advice, not a gate.
+5. **Add one gate at a time, and land each before the next.** Each new gate changes code the next one
+   reads. When agents work in parallel clones, rebase each branch onto `main` before landing.
+6. **No secrets on organisation repositories you don't administer.** Choose tools that need none: OSV
+   over NVD, `GITHUB_TOKEN` over tokens.
+
+---
+
 ## 1. Code Coverage with JaCoCo
 
 ### Purpose
@@ -53,12 +72,12 @@ Measure test coverage to identify untested code paths.
 
 ### Usage
 ```bash
-mvn test
+./mvnw test
 # Report at: target/site/jacoco/index.html
 ```
 
 ### Tips
-- Run `mvn test` to generate the report
+- Run `./mvnw test` to generate the report
 - View HTML report for visual coverage analysis
 - Consider adding coverage thresholds for CI:
   ```xml
@@ -150,6 +169,47 @@ class ArchitectureTest {
 | `classes().that().X.should().implement(Interface.class)` | Enforce interface implementation |
 | `classes().that().X.should().beAssignableTo(Base.class)` | Enforce inheritance |
 | `noClasses().that().X.should().accessClassesThat().resideInAPackage("java.io")` | Prevent direct I/O |
+
+### Rules that find structure, not naming
+
+The naming-based examples above are the easy part. The rules that found real problems in the ACP Java
+SDK (3 cycles on the first run, including a five-class cycle in one transport package) are structural:
+
+**Cycles at every depth, not just top-level packages.** A top-level slice rule missed a cycle that the
+any-depth rule caught when planted:
+
+```java
+@ArchTest
+static final ArchRule noPackageCyclesAtAnyDepth = slices()
+    .matching("org.example.mylib.(**)")
+    .should().beFreeOfCycles();
+```
+
+**Class-level cycles inside the packages that matter.** Package rules don't see two classes in one
+package that use each other. Slice by top-level class, so nested classes count with their outer class.
+
+**One architecture test per module, importing only that module.** In a multi-module build,
+`@AnalyzeClasses(packages = ...)` imports matching classes from the whole classpath, so a module's rules
+silently check its dependencies too. Import from the module's own output, through a `LocationProvider`
+or `ClassFileImporter().importPath(...)`, and assert that nothing from another module came in.
+
+**No empty passes.** ArchUnit passes a rule whose `that()` selects nothing. Add
+`src/test/resources/archunit.properties` to every module:
+
+```properties
+# Fail a rule whose "that" clause selects no classes, so a rule cannot pass on an empty import.
+archRule.failOnEmptyShould=true
+```
+
+**State each module's intent as a rule, with a one-line comment.** Examples: JSON implementation modules
+use only the JSON interfaces and the schema; transports never reach the session implementation classes;
+the annotations module depends on nothing in the library.
+
+**Falsify every rule.** Plant the violation, see that exact rule fail, revert (the ACP SDK recorded 18
+plantings). See principle 1.
+
+**Fix violations by design.** Move a type or invert a dependency. Keep a named exemption only when the
+fix is out of proportion, with a written reason.
 
 ---
 
@@ -381,6 +441,15 @@ Four decisions in that config, each with a measured reason:
 | Bound to `default-compile` | Test sources are deliberately **unchecked**: tests sit in the same package names and inherit `@NullMarked`, and checking them reported 72 sites in one repo, essentially all one shape (a test navigating a legitimately-absent chain where the surrounding assertion is the proof and NullAway cannot see through AssertJ). Annotation churn, no defect signal |
 | Never `<fork>true</fork>` | compiler-plugin 3.14.0 then swallows every diagnostic and reports a bare "Compilation failure" |
 
+**Libraries that target Java 17.** Error Prone 2.50 needs JDK 21 to run, but many libraries still
+target 17. The pattern that works (ACP Java SDK):
+
+- **Profile.** Put the Error Prone configuration in a profile activated by `<jdk>[21,)</jdk>`, and compile
+  with `maven.compiler.release=17`. A JDK 21 build is checked and still produces Java 17 bytecode. A
+  JDK 17 build is unchanged.
+- **CI.** Add a JDK 21 job running `./mvnw -B clean verify` next to the existing JDK 17 jobs.
+- **JVM flags.** The `.mvn/jvm.config` export flags are harmless on JDK 17.
+
 Two failure modes worth recognizing: a missing `com.sun.tools.javac.processing` export fails as an
 `IllegalAccessError` rather than a missing-flag message; and on JDK 21 a missing
 `-XDaddTypeAnnotationsToSymbol=true` fails inside Error Prone itself.
@@ -401,6 +470,17 @@ Two things that measurement taught, worth expecting:
   run closed by making it *visible* — a superclass field made `final` and constructor-injected, a
   `requireX` helper returning the value so the check and the use cannot separate twenty lines apart —
   or *asserted with its reason*. Zero needed `@SuppressWarnings`. Reach for suppression last.
+
+Three more lessons for the triage pass (ACP Java SDK, 9 real bugs on first run, including requests that
+were never answered):
+
+- **Use `clean` in multi-module builds.** An incremental `compile` does not recheck dependent modules
+  after an upstream change; the final clean build found two more sites.
+- **Read what the checker can't.** `AtomicReference<T>` hid two getters that returned null; NullAway
+  trusts the type argument. The fix was `AtomicReference<@Nullable T>` and a `@Nullable` return.
+- **The wire-record exception to "never nullable collections."** On a JSON-RPC wire, an absent list and
+  an empty list are different values, so optional collection components of wire records may be
+  `@Nullable`. Everywhere else, the rule holds.
 
 **`Optional<T>` vs `@Nullable` — classify by what the caller can DO, not by position.**
 
@@ -431,12 +511,100 @@ environmental and the caller can only catch-and-ignore, the throw is a worse spe
 off. Prove it runs: plant a null into a non-null component and confirm the build goes **RED**, then
 confirm the legal-absence paths stay **green**. Only then is a silence a measurement.
 
+#### 8. Error Prone's own checks, not only NullAway
+
+The §4.7 configuration passes `-XepDisableAllChecks`, which leaves Error Prone's own bug checks off. For
+a library you own end to end, turn them on: in the ACP Java SDK they found three real bugs on the first
+run: stdout of a child process decoded in the platform charset; `toLowerCase()` without a locale
+breaking media-type checks on a Turkish-locale machine; and an opaque `ClassCastException` for a handler
+with the wrong return type. (The §4.7 reason for disabling them, that stock checks scope to a module and
+land lint on parked legacy code, still applies when adopting on such a codebase; use `-XepDisableAllChecks`
+there until the legacy code is in scope.)
+
+Configuration, inside the same `default-compile` execution as NullAway:
+
+```xml
+<failOnWarning>true</failOnWarning>
+<compilerArgs>
+    <arg>-XDcompilePolicy=simple</arg>
+    <arg>--should-stop=ifError=FLOW</arg>
+    <arg>-XDaddTypeAnnotationsToSymbol=true</arg>
+    <!-- Disabled as style for this code base, each with its reason:
+         StatementSwitchToExpressionSwitch: arrow or colon switch is a style choice. -->
+    <arg>-Xplugin:ErrorProne -Xep:StatementSwitchToExpressionSwitch:OFF -Xep:NullAway:ERROR -XepOpt:NullAway:JSpecifyMode=true -XepOpt:NullAway:OnlyNullMarked=true</arg>
+</compilerArgs>
+```
+
+- **`failOnWarning` rather than a list of checks at ERROR.** Error Prone has no "warnings as errors"
+  flag, and a hand-picked list silently misses checks added in later versions. Javac's own default
+  warnings also fail; deprecation and unchecked stay notes unless `-Xlint` enables them.
+- **Triage each finding** the way §4.7 triages NullAway: a real bug gets a fix and a test that was red
+  first; a risky pattern gets fixed; a pure style check is disabled by name with a one-line reason in
+  the pom. No `@SuppressWarnings` without a written reason.
+- **Reactor libraries:** `-XepOpt:CheckReturnValue:Packages=reactor.core.publisher`, so a dropped `Mono`
+  or `Flux`, which never runs, is a compile error. Keep a checked-in list of results that may be
+  dropped, with reasons, via `-XepOpt:CheckReturnValue:ApiExclusionList=<file>`. `subscribe(...)` and
+  terminal `tryEmit*` calls belong on it; `tryEmitNext` does not, because dropping its result loses a
+  message.
+- **Libraries that speak a protocol over stdout:** `-Xep:SystemOut:ERROR`, because a stray print
+  corrupts the stream.
+- **Upgrades need a triage pass.** New default checks arrive at ERROR with each Error Prone release; say
+  so in a pom comment.
+- **Falsify:** plant a dropped `Mono`, an `Integer == Integer` and an unused private field; all three
+  must fail the JDK 21 build.
+
 ---
 
-## 5. OWASP Dependency-Check
+## 5. Dependency Scanning (OSV standard; OWASP optional)
 
 ### Purpose
-Scan dependencies for known security vulnerabilities (CVEs).
+Scan dependencies for known security vulnerabilities (CVEs), including ones published *after* the last
+clean scan. The gap is time: in the ACP Java SDK, seven HIGH Jackson CVEs appeared after a release's
+clean scan and nothing noticed until a manual Qodana run.
+
+### Standard: OSV-Scanner over Maven's resolved tree
+
+OWASP Dependency-Check needs an NVD API key in practice, and on an organisation repository the
+maintainer is not an admin of, a CI secret is out of reach. OSV needs no account, key or local database:
+Maven resolves the tree, then OSV-Scanner checks it.
+
+```bash
+./mvnw -q -B org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeAggregateBom \
+    -DoutputFormat=json -DincludeTestScope=false
+cp target/*-cyclonedx.json target/bom.cdx.json
+osv-scanner scan source --config osv-scanner.toml --lockfile target/bom.cdx.json   # osv-scanner 2.6.0
+```
+
+- **Don't point OSV-Scanner at `pom.xml`.** Its own resolution fails on a reactor's SNAPSHOT links
+  between modules and falls back to direct dependencies only. Let Maven resolve.
+- **Gate rule:** fail on CVSS 7.0 or more, or on an unscored finding, so a new advisory can't pass
+  silently. List lower findings without failing.
+- **Accepted findings** go in `osv-scanner.toml`. Each entry needs an `id`, a `reason` and an
+  `ignoreUntil` date, after which it fails again.
+- **Triggers:** weekly on a schedule, on demand, and on pushes to `main` that change a `pom.xml`.
+- **Pin the scanner** by version and SHA-256, and upload SARIF to code scanning
+  (`security-events: write` on the job only).
+- A complete, tested script and workflow are public at `agentclientprotocol/java-sdk`:
+  `.github/scripts/osv-scan.sh` and `.github/workflows/dependency-scan.yml` (commit `3a129d6`). They were
+  falsified: the scan fails on Jackson 2.22.2 naming the four CVEs, and passes on 2.22.3.
+
+> **Dependabot is blind to BOM-managed versions.** Dependabot reads `pom.xml` without running Maven. For a
+> dependency whose version comes from an imported BOM (`jackson-bom`, `reactor-bom`), GitHub's dependency
+> graph records **no version**, so Dependabot never alerts on it. Check:
+>
+> ```bash
+> gh api repos/<owner>/<repo>/dependency-graph/sbom \
+>   -q '.sbom.packages[]|select(.name|test("jackson-databind"))|.versionInfo'
+> ```
+>
+> An empty result means Dependabot is blind to that library. Leave it on for directly versioned
+> libraries, but don't rely on it.
+
+Scanning many repositories on a schedule belongs to whoever watches the whole estate, not to each library.
+
+### Optional: OWASP Dependency-Check
+
+A local cross-check for anyone with an NVD key. Not a gate: it needs a secret.
 
 ### Maven Configuration
 
@@ -461,7 +629,7 @@ Scan dependencies for known security vulnerabilities (CVEs).
 </plugin>
 ```
 
-### NVD API Key (Recommended)
+### NVD API Key
 
 Get a free API key from https://nvd.nist.gov/developers/request-an-api-key
 
@@ -484,14 +652,14 @@ Add to `~/.m2/settings.xml`:
 
 Or for CI, create an org-level secret `NVD_API_KEY` and pass via:
 ```bash
-mvn verify -DnvdApiKey=${{ secrets.NVD_API_KEY }}
+./mvnw verify -DnvdApiKey=${{ secrets.NVD_API_KEY }}
 ```
 
 ### Usage
 
 ```bash
 # Run vulnerability scan
-mvn dependency-check:check
+./mvnw dependency-check:check
 
 # Report at: target/dependency-check-report.html
 ```
@@ -590,9 +758,70 @@ The implementation agent generates a populated review prompt file (`plans/prompt
 
 ### Automation Path
 As the Judge Framework matures, review sections become automated judges:
-- **Deterministic**: Coverage thresholds, ArchUnit rules, unused imports → `mvn verify`
+- **Deterministic**: Coverage thresholds, ArchUnit rules, unused imports → `./mvnw verify`
 - **AI-based**: Naming quality, documentation clarity, design conformance → Judge implementations
 - **Manual**: Compound review combining all dimensions → this template
+
+---
+
+## 8. Concurrency Testing
+
+### Purpose
+Catch races that a multi-core CI runner hides.
+
+### One-CPU contention job
+
+Run the concurrency-sensitive tests (code with locks, ordering, or pending-response maps) in a CI job
+pinned to one CPU:
+
+```yaml
+contention:
+  runs-on: ubuntu-latest
+  steps:
+    # ... checkout, JDK
+    - run: taskset -c 0 ./mvnw -B -pl <module> -am test -Dtest='<ContentionTests>' -Dsurefire.failIfNoSpecifiedTests=false
+```
+
+On one CPU, races that a multi-core runner hides stay open. In the ACP Java SDK, a lock released after a
+response was published wedged the next request only under `taskset -c 0`
+([issue #14](https://github.com/agentclientprotocol/java-sdk/issues/14)); the repro and its fix live in
+this job.
+
+*Not yet standard:* Lincheck, which model-checks a concurrent data structure against a sequential spec,
+is being proven in the ACP SDK. See "Pending" at the end of §9.
+
+---
+
+## 9. Qodana: a Second Tool, Never the Gate
+
+**Rule:** the gates live in the Maven build, where every contributor runs them. Not everyone who builds
+this code has Qodana, so having two tools is good: Qodana is for whoever has it, for its visualisation and
+its data-flow inspections. Per principle 4, a check only some contributors can run is advice, not a gate.
+
+- **No Docker needed.** The native `qodana-jvm` mode runs it locally.
+- **Its value is triage input.** Its first ACP SDK run found seven HIGH CVEs in Jackson published after
+  the last release's clean scan, and about 25 data-flow warnings. It also reported 348 coverage notes,
+  which belong to the coverage gate, and a long tail of style notes. Triage by hand into the gate-backed
+  work.
+- **Exclude ignored trees** in `qodana.yaml`, or it reports on files that aren't the library.
+- **Expect a local cache.** It writes a large type-graph cache, `.repograph/`, into the project. Add it to
+  `.gitignore` or `.git/info/exclude`.
+- **Cloud upload.** It uploads to qodana.cloud when a token is configured, even when the project setting
+  says "run locally".
+
+### Pending (not yet standard)
+
+Being proven in the ACP Java SDK; add here when its evidence arrives:
+
+- **PMD + CPD** as a `verify` gate: cognitive complexity, method/class size (NCSS), GodClass, excessive
+  parameter lists, copy-paste detection. Measured need: only 8 of 853 methods exceeded cyclomatic
+  complexity 10, but one 159-line method was the same block copied 18 times, one constructor took 19
+  arguments, and three classes ran about 1,000 lines each. Thresholds come from the tested ruleset.
+- **SpotBugs**, high-confidence and rank ≤ 9 only, aimed at concurrency patterns.
+- **Lincheck** (§8) and **PIT** mutation testing (a scoped pilot on one package, profile-only threshold,
+  not a build gate).
+
+Not proposed as gates: Checkstyle (style; overlaps PMD on what matters) and Sonar (needs a server).
 
 ---
 
@@ -602,10 +831,14 @@ When finishing a Java library project:
 
 - [ ] **JaCoCo** - Code coverage reporting
 - [ ] **ArchUnit** - Architecture rule enforcement
+- [ ] **ArchUnit cycles** - no package cycles at any depth; per-module tests; `failOnEmptyShould=true`; each rule falsified (§2)
 - [ ] **Oracle Review** - AI code smell detection
 - [ ] **JSpecify** - Null safety with `@NullMarked` packages
 - [ ] **NullAway at ERROR** - JSpecify has no enforcement; unchecked annotations are false claims. Budget the adoption triage (§4.7)
-- [ ] **OWASP** - Dependency vulnerability scanning
+- [ ] **Error Prone's own checks** - `-XepDisableAllChecks` removed, `failOnWarning`, style checks disabled by name with reasons (§4.8)
+- [ ] **NullAway on Java 17 targets** - JDK 21 profile with `--release 17`, plus a JDK 21 CI job (§4.7)
+- [ ] **Scheduled dependency scan** - OSV over Maven's resolved tree, weekly and on pom changes; fails on HIGH or unscored (§5)
+- [ ] **Concurrency** - a CI job pinned to one CPU for code with locks or ordering (§8)
 - [ ] **Javadoc** - Public API documentation
 - [ ] **Phase Review** - API design + code quality + grammar + design conformance review ([template](../phases/phase-review-template.md))
 - [ ] **Dependency Audit** - Remove/replace heavy dependencies with CVEs
@@ -613,17 +846,16 @@ When finishing a Java library project:
 ### Quick Commands
 
 ```bash
-# Run tests with coverage
-mvn clean test
+# Run tests with coverage (use ./mvnw, never bare mvn; install the wrapper if missing)
+./mvnw clean test
 # Coverage report: target/site/jacoco/index.html
 
-# Run vulnerability scan
-mvn dependency-check:check
-# Report: target/dependency-check-report.html
+# Run vulnerability scan (OSV; see §5 for the full script)
+./mvnw -q -B org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeAggregateBom -DoutputFormat=json -DincludeTestScope=false
 
 # Check dependency tree
-mvn dependency:tree
+./mvnw dependency:tree
 
 # Apply formatting
-mvn spring-javaformat:apply
+./mvnw spring-javaformat:apply
 ```
