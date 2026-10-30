@@ -55,6 +55,23 @@ a paragraph in a design document nobody re-reads. (This is the same move as the
 re-measured, no cell changes on reasoning alone. Reasoning is how you decide where to look for the
 exhibit; it is not the exhibit.
 
+## Exhibit: the ordinary follow-up
+
+A draft says that obtaining a successful result permits another operation on the same healthy,
+open resource. Construct a complete program that obtains the result and immediately submits the
+follow-up, keeping the earlier handle open. If the design instead requires a second cleanup wait,
+point to the conflicting contract passages. If code exists, force that schedule and show the failure.
+The [invented report client](../examples/consumer-first-client/README.md) shows this gap and a
+corrected promise. Its syntax check is not behavioral evidence.
+
+This is also a useful search when reviewing consumer code: a detailed state-machine review may
+never have tried the ordinary next action. Read complete examples before earlier findings and
+review usability with correctness at the existing checkpoint.
+
+The “MUST” severity rule above concerns **blocking review findings**. It does not weaken an imported
+normative MUST because reproduction is unavailable. Keep the requirement's strength and record an
+unresolved evidence gap.
+
 ## The pairing that keeps it honest
 
 A counterexample regime has exactly one failure mode: **the absent counterexample read as proof.** "I

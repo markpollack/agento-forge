@@ -107,6 +107,27 @@ If you find yourself mixing types — explaining why in the middle of a how-to, 
 5. **Write explanations** — Architecture overview, design rationale, trade-offs. Draw from DESIGN.md and decision records.
 6. **Verify all code examples** — Run every example. Broken examples are worse than no examples.
 
+## Carry the design examples forward
+
+Start tutorials and how-tos from the accepted consumer programs or user flows. Keep the result and
+next action clear; preserve the return, cancellation and ownership promises. Run the examples against
+the implementation at a named revision and record which promises they demonstrate and which remain
+untested. Replace proposed signatures only when implementation evidence supports them. A compile-only
+stub is not a working tutorial. Retain the reviewed before specification separately and explain any
+changed promises in the after documentation.
+
+## Optional provisional architecture guide
+
+When dogfooding architecture documentation, assess readers and questions before choosing chapters;
+record selected and declined views with reasons. Label claims **declared design**, **declared policy**,
+**extracted structure**, **observed execution**, **executed check**, **static comparison**, or **proposed**;
+hand-drawn figures are also **conceptual**. Generate facts with pinned tools, keep diagram sources and
+provenance, fail the build on generated-fact drift, render and read the output, and reproduce cold-review
+findings. Name maintenance triggers. A before spec stays intact; write a separate after guide at a code
+revision and explain material differences in a third document when useful.
+The [provisional pack](../provisional/architecture-documentation/README.md) has assessment, guide and
+view templates and local tools. It remains dogfood-only pending a second completed application.
+
 ## Suggested Directory Layout
 
 ```

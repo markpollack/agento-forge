@@ -9,6 +9,17 @@
 
 {{ONE_PARAGRAPH — what the tool does, why it's needed, what it enables for the main project.}}
 
+## Consumer Example and Contract
+
+{{COMPLETE_INVOCATION_AND_NEXT_USE_OF_ITS_OUTPUT}}
+
+Start with one invocation using concrete inputs and show the consumer reading the result. Label
+proposed commands or helpers. In a paragraph answer: what was accepted; what normal return guarantees;
+what failure/cancellation means; what can safely happen next; and who owns output/temporary resources.
+State when a question does not apply. Add another example only for a distinct behavior.
+
+{{FIVE_QUESTION_PARAGRAPH}}
+
 ## Inputs
 
 | Input | Source | Format |
@@ -45,7 +56,12 @@
 
 ## Testing Strategy
 
-{{HOW_TO_VERIFY_THE_TOOL_WORKS — e.g., spot-check N outputs manually, compare against known-good examples, round-trip validation}}
+{{CONSUMER_NEED → RETURN_PROMISE → DESIGN_DECISION → SCENARIO_AND_ASSERTION}}
+
+Name planned checks before implementation; afterwards cite actual results and limits. Read the
+example first at the existing review. Ready means the consumer can explain the result and next action,
+needs no internal-state knowledge, sees clear failure/cleanup/ownership boundaries and existing/proposed
+labels, and can identify a check for each important promise. Keep unresolved limits and deferrals visible.
 
 ## Open Questions
 

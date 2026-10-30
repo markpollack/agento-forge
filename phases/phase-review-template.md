@@ -32,6 +32,14 @@ MUST FIX items block stage completion. SHOULD FIX items are addressed before the
 
 **Lens selection (do this before writing the review prompt).** Severity is one axis; *coverage* is the other. Pick the applicable lenses from [`concepts/review-lenses.md`](../concepts/review-lenses.md) for this gate — requirements-traceability and adversarial fidelity always; producer-coverage + persona-verb matrix for any contract/interface gate; a cold second-implementation spike before any freeze ([protocol](../guides/second-implementation-protocol.md)); the inverted gap-hunt whenever the review would otherwise be purely validation-framed (validation certifies what was asked; it is silent about what wasn't). Findings additionally carry the **(a) validates / (b) additive / (c) would-touch-approved-design** classification — only (c) reopens settled decisions, at a high bar. A gate that runs only the validation lens should say so explicitly, as a known coverage gap.
 
+**Consumer-code lens (11).** Read complete programs or visible flows before earlier findings.
+Check configuration → operation → result → next action → cleanup, including consequential failures.
+For significant operations ask what was accepted, what normal return guarantees, what failure or
+cancellation means, what can happen next and who owns remaining resources. Judge usability and
+correctness together at this gate; no extra review cycle. Existing/proposed labels and compilation
+must not be mistaken for executed behavior. Finding severity does not change a normative requirement's
+keyword strength.
+
 **Scope note: this template gates a stage of implementation work.** A change to something already *decided* — a frozen contract, a ratified design decision, a published API — runs the heavier [act pipeline](../concepts/act-pipeline.md) instead: cold machine review → fix round → team review of the post-fix artifact → ratification as one lockstep change.
 
 ---
@@ -52,6 +60,10 @@ Two measured instances, both from gates that reported clean under one instrument
 - A coverage ledger built from a canonical pattern catalogue reported complete, while the largest untouched family in the corpus (157 cases) sat outside the catalogue entirely. The ledger had no row for it, so every check running against the ledger agreed there was nothing to find.
 
 The second is the sharper lesson: **the instrument's own structure decides what can be missing.** Pick the second instrument for its *different shape* — walk the artifact where the first walked the plan, walk the corpus where the first walked the specification — not for a second pass over the same axis.
+
+For consumer behavior, pair the requirement-to-check census with a walk through complete programs
+or flows. Report which important results, next actions and lifetime/failure boundaries were exercised,
+and what remains planned or untested. A requirement list alone cannot reveal a missing ordinary use.
 
 ### 2. Denominators come from the rule's blast radius, not the corpus's obvious shape
 
@@ -99,6 +111,16 @@ You are reviewing the {{STAGE_NAME}} deliverables of the {{PROJECT_NAME}} projec
 - **Design doc**: `{{DESIGN_DOC_PATH}}`
 - **Roadmap**: `{{ROADMAP_PATH}}`
 
+#### Read Consumer Examples First
+
+{{CONSUMER_EXAMPLES_AND_CONTRACTS}}
+
+Before earlier findings, read these complete programs or visible flows. Explain each result and next
+permitted action. For each significant operation check the five questions: acceptance, normal return,
+failure/cancellation, safe next action and remaining ownership. Identify internal-state knowledge,
+extra waits or conversions that ordinary use requires without a reason. Then read the implementation
+and evidence to check whether it upholds those promises. Report evidence levels and limits explicitly.
+
 #### Source Files to Review
 
 {{SOURCE_FILE_LIST}}
@@ -116,6 +138,10 @@ You are reviewing the {{STAGE_NAME}} deliverables of the {{PROJECT_NAME}} projec
 #### Review Checklist
 
 ##### A. API Design Review
+
+Include consumer-code lens 11 in this same review: can the complete examples work correctly from
+names, types and the stated contracts? Link each claimed promise to the actual implementation check,
+not just a signature or stub compile. For non-API features, use the visible flow and resulting artifact.
 
 For each public class and method, evaluate:
 
@@ -330,6 +356,7 @@ The key insight is that the Phase Review is already structured as a judge — it
 | `{{REFERENCE_IMPL_PATH}}` | Path to reference implementation (or "N/A") | `{project-root}/reference/data_loader.py` |
 | `{{DESIGN_DOC_PATH}}` | Path to design document | `{project-root}/plans/DESIGN.md` |
 | `{{ROADMAP_PATH}}` | Path to roadmap | `{project-root}/plans/ROADMAP.md` |
+| `{{CONSUMER_EXAMPLES_AND_CONTRACTS}}` | Complete programs/flows and operation contracts, at named revisions | Links to accepted examples, current implementation and verification results |
 | `{{SOURCE_FILE_LIST}}` | Numbered list of source files with full paths | (see example below) |
 | `{{TEST_FILE_LIST}}` | Numbered list of test files with full paths | (see example below) |
 | `{{CONFIG_AND_DOCS_LIST}}` | Numbered list of config/doc files with full paths | (see example below) |
@@ -346,7 +373,7 @@ The generic checklist covers common concerns. Add project-specific items under e
 
 Pass the populated prompt to a QA agent (a separate Claude session or dedicated review agent). The reviewer should:
 
-1. Read all listed files
+1. Read the complete consumer examples first, before earlier findings, then the other listed files
 2. Evaluate against all checklist items
 3. Produce findings organized by severity
 4. Include file paths and line numbers for every finding

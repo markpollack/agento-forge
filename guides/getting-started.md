@@ -80,11 +80,19 @@ After research, **update your vision**. Research always changes something — a 
 
 ## Step 4: Design (Phase 2)
 
-With research done, write the technical spec:
+With research done, start with a complete program or user flow: configuration, action, result,
+ordinary follow-up and cleanup. Include failure or cancellation where it changes the next action.
+One example and a paragraph can cover a small change; add examples for distinct behavior.
 
-- **Interfaces first** — What are the public APIs? What data flows through the system?
-- **Decisions with rationale** — For every architectural choice, document why and what alternatives you rejected.
-- **Behavioral contracts** — What does each component promise? What are the error cases?
+For each significant operation, answer: what was accepted; what normal return guarantees; what
+happens on failure/cancellation; what the consumer can do next; and who owns the remaining resources.
+List the complete in-scope API or visible actions, marking existing behavior at a revision and proposed
+changes. Then use selected precedent to design the mechanisms that deliver those promises.
+
+Connect **consumer need → operation postcondition → mechanism → test evidence**. Here, a postcondition
+is what becomes true when the operation returns; before code, evidence means a planned check.
+The [consumer-first guide](consumer-first-design.md) starts with a worked example and includes a
+prompt you can paste into a design session.
 
 Use the [Design Template](../templates/DESIGN-TEMPLATE.md).
 
@@ -96,7 +104,11 @@ Before proceeding to the roadmap, verify:
 
 - [ ] Vision, research, and design tell a consistent story
 - [ ] No research questions remain that would change the approach
-- [ ] The design is specific enough to implement (interfaces, data models, error handling)
+- [ ] A reader can explain the example's result and next action without internal-state knowledge or extra unexplained waits
+- [ ] The five questions cover acceptance, completion, failure/cancellation, cleanup and ownership where relevant
+- [ ] The complete surface labels existing/proposed behavior, including errors and helpers
+- [ ] Each important promise has a check and supporting mechanism; limits and deferrals are clear
+- [ ] Usability and correctness were reviewed together, reading examples before earlier findings
 
 If yes, move to the Execution Pipeline. If no, iterate through Steps 2-4 again.
 
@@ -145,7 +157,7 @@ Work through the roadmap. The feedback loop differs based on what you're buildin
 
 With a working implementation:
 
-1. Write a getting-started guide for users
+1. Turn the accepted consumer examples into a getting-started guide for users
 2. Document the public API
 3. Create at least one tutorial
 4. Test every code example

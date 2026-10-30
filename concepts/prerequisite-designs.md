@@ -89,8 +89,15 @@ This is the **Depth-First Probe** pattern applied to data/tooling prerequisites 
 
 Prerequisite designs use a subset of the full [DESIGN-TEMPLATE.md](../templates/DESIGN-TEMPLATE.md). See [PREREQUISITE-DESIGN-TEMPLATE.md](../templates/PREREQUISITE-DESIGN-TEMPLATE.md) for the template.
 
+Start with the consumer: show a complete invocation and the next use of its output. One example
+and a paragraph can answer what was accepted, what normal return guarantees, what failure/cancellation
+means, what can happen next and who owns the remaining resources. State what does not apply.
+Then choose the output format and implementation. Link each important promise to a check; read the
+example first at the existing review. This does not require a separate API or requirements document.
+
 The key sections are:
 - **Overview** — One paragraph, what it does and why it's needed
+- **Consumer example and contract** — Invocation, result use and five-question paragraph
 - **Inputs / Outputs** — What goes in, what comes out, with formats and schemas
 - **Design Decisions** — Key choices with rationale and alternatives considered
 - **Data Model** — The output schema (this becomes an input contract for the main project)

@@ -37,7 +37,7 @@ Do NOT proceed to Phase 2 (theme mapping) or Phase 3 (theme doc updates). Instea
 1. Skip directly to Phase 5 (KB-FEDERATION.md freshness update only)
 2. Do NOT append to any theme docs
 3. Do NOT update ACTION-ITEMS.md
-4. Do NOT update CLAUDE.md routing rows
+4. Do NOT update AGENTS.md routing rows
 5. Commit with message: `Ingest status (LIGHT): {project-name} {YYYY-MM-DD} → KB-FEDERATION freshness only`
 
 **If the status is FULL treatment**: proceed normally to Phase 2.
@@ -120,7 +120,7 @@ when a theme would be unroutable.
 - **M** (medium): 800–1,800 — read whole only when the theme is the primary target
 - **L** (large): > 1,800 — navigate via THEME-INDEX summaries + targeted offsets
 
-If a class changed, update the Size cell in BOTH theme tables: root `CLAUDE.md` and `synthesis/CLAUDE.md`. Never record exact line counts anywhere — size classes only (exact counts rot on every ingest; classes only change on threshold crossings).
+If a class changed, update the Size cell in BOTH theme tables: root `AGENTS.md` and `synthesis/CLAUDE.md`. Never record exact line counts anywhere — size classes only (exact counts rot on every ingest; classes only change on threshold crossings).
 
 ---
 
@@ -172,11 +172,11 @@ cannot find by name is a structural change someone needs to know about.
 
 ---
 
-## Phase 6: Update CLAUDE.md
+## Phase 6: Update AGENTS.md
 
 **High-risk file** — only update when the status report directly supports the change.
 
-In `CLAUDE.md` (project root):
+In `AGENTS.md` (project root; `CLAUDE.md` is only a bridge that imports it, so never edit it):
 
 1. Update the navigation row for this project (rows 42-44 range) if it exists, or add one.
 2. If the project's state has changed materially (new stage complete, new blocker), update
@@ -184,7 +184,7 @@ In `CLAUDE.md` (project root):
 3. Update `**Journal current through**` date if this status covers newer work than the
    current date shown.
 
-Do **not** add unrelated cross-project coordination notes, routing changes, or strategic framing that is not grounded in this specific project's status report. Each CLAUDE.md change must be traceable to the ingested status.
+Do **not** add unrelated cross-project coordination notes, routing changes, or strategic framing that is not grounded in this specific project's status report. Each AGENTS.md change must be traceable to the ingested status.
 
 ---
 
@@ -195,7 +195,7 @@ Do **not** add unrelated cross-project coordination notes, routing changes, or s
 Stage only the exact files intentionally changed by this ingest:
 
 ```bash
-git add KB-FEDERATION.md synthesis/phase2/theme-{N}-*.md synthesis/phase3/ACTION-ITEMS.md CLAUDE.md
+git add KB-FEDERATION.md synthesis/phase2/theme-{N}-*.md synthesis/phase3/ACTION-ITEMS.md AGENTS.md
 ```
 
 Before committing, verify no unrelated files are staged:
@@ -210,7 +210,7 @@ Only these files should be staged:
 - `synthesis/phase2/theme-*.md` (updated ones only)
 - `synthesis/phase3/ACTION-ITEMS.md`
 - `KB-FEDERATION.md`
-- `CLAUDE.md`
+- `AGENTS.md`
 
 Commit message format:
 ```
@@ -223,7 +223,7 @@ Project-grounded changes:
 
 Run metadata changes:
 - KB-FEDERATION.md: freshness date updated
-- CLAUDE.md: journal date updated (run bookkeeping, not project-derived)
+- AGENTS.md: journal date updated (run bookkeeping, not project-derived)
 
 Decisions:
 - If >3 themes: {confidence justification for each}
@@ -241,5 +241,5 @@ The "Project-grounded" and "Run metadata" distinction is required. Run metadata 
 - **One status file per invocation** — don't try to batch multiple projects at once.
 - If the status file has a "Cross-Project Impact" section, check those other projects
   too and make note of cascading updates needed.
-- **Source grounding**: every new KB claim (theme update, action-item progress, CLAUDE.md change) must be traceable to a specific fact in the collected status report. Do not add interpretive synthesis, strategic framing, or cross-project coordination notes that are not grounded in the report being ingested.
+- **Source grounding**: every new KB claim (theme update, action-item progress, AGENTS.md change) must be traceable to a specific fact in the collected status report. Do not add interpretive synthesis, strategic framing, or cross-project coordination notes that are not grounded in the report being ingested.
 - **Scope discipline**: a single-project ingest must not update KB sections unrelated to that project. If you notice something relevant to another project, note it in the commit message as a follow-up — do not modify unrelated sections in this commit.

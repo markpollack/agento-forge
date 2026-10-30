@@ -1,0 +1,7 @@
+{
+  "title": "Observed overview: one scoped example scenario",
+  "scenario": "Example only: replace with the named test, inputs, and what was excluded. State whether replayed or live.",
+  "class_prefixes": [],
+  "loop_labels": {},
+  "full_trace": "observed-sequence.svg"
+}

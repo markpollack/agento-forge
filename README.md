@@ -57,7 +57,7 @@ Not sure which to choose? See [variants/README.md](variants/README.md) for a det
 |-------|------|---------|--------|
 | 0 | [Vision](phases/00-vision.md) | Define what to build and why | VISION.md |
 | 1 | [Research](phases/01-research.md) | Deep investigation of the problem space | Research corpus, reference implementations |
-| 2 | [Design](phases/02-design.md) | Technical specification and decisions | DESIGN.md, decision records |
+| 2 | [Design](phases/02-design.md) | Consumer examples, operation contracts and supporting design | DESIGN.md, decision records |
 | 3 | [Roadmap](phases/03-roadmap.md) | Break design into implementable steps | ROADMAP.md with entry/exit criteria |
 | 4 | [Learning Loop](phases/04-learning-loop.md) | Iterative implementation with feedback | Working implementation + learnings |
 | 5 | [Documentation](phases/05-documentation.md) | User-facing docs and tutorials | docs/ directory |
@@ -99,7 +99,8 @@ See [concepts/knowledge-base-architecture.md](concepts/knowledge-base-architectu
 - **[Judges and Evaluation](concepts/judges-and-evaluation.md)** — Deterministic + AI judges
 - **[Knowledge Base Architecture](concepts/knowledge-base-architecture.md)** — Two KB types, librarian layer, federation
 - **[Conversation Bootstrapping](concepts/conversation-bootstrapping.md)** — Starting projects from saved AI conversations
-- **[Review Lenses](concepts/review-lenses.md)** — Nine viewpoints, each catching a failure class the others structurally cannot
+- **[Consumer-first design](guides/consumer-first-design.md)** — Start with a complete program or user flow, state what each operation guarantees, then design and test the mechanisms. Includes a worked example and session prompt.
+- **[Review Lenses](concepts/review-lenses.md)** — Eleven viewpoints, each catching a failure class the others structurally cannot
 - **[Refutation by Counterexample](concepts/refutation-by-counterexample.md)** — Findings are exhibits, non-findings are recorded searches
 - **[The Act Pipeline](concepts/act-pipeline.md)** — Reviewing and ratifying a change to something already decided
 

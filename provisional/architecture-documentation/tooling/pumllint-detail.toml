@@ -1,0 +1,9 @@
+# pumllint 0.33.0, --fail-on minor. Structural checks stay on for full recordings.
+[rules]
+inline-skinparam = false
+participant-naming = { pattern = "^[A-Z][A-Za-z0-9_]*$" }
+# A full recording can contain self-calls and many elements; the overview carries size limits.
+no-self-message = false
+max-participants = false
+max-messages = false
+max-elements = false

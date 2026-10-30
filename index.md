@@ -23,6 +23,8 @@ distilled into the template where the session meets it.
 | What is Forge and how does it work? | `README.md` |
 | Which variant should I use for my project? | `variants/README.md` |
 | How do I get started with Forge? | `guides/getting-started.md` |
+| How do I design from complete consumer programs or user flows? | `guides/consumer-first-design.md` (worked example and design-session prompt), then `phases/02-design.md` and `templates/DESIGN-TEMPLATE.md` |
+| How do I review whether ordinary use makes sense? | `concepts/review-lenses.md` (consumer-code lens 11; same checkpoint as correctness) |
 | What are the six phases? | `README.md` (The Six Phases table) |
 | Which concept page is worth my time right now? | `concepts/index.md` (the register — rules + read-this-when) |
 | How does the discovery loop work? When does execution go back to it? | `concepts/discovery-loop.md` (both loops) |
@@ -45,6 +47,7 @@ distilled into the template where the session meets it.
 | How do I run an independent second implementation against my own contract? | `guides/second-implementation-protocol.md` |
 | What goes in a project's AGENTS.md and CLAUDE.md? How do I audit them? | `guides/project-instruction-files.md` (skeleton: `templates/STEWARDED-PROJECT-INSTRUCTIONS-TEMPLATE.md`) |
 | How are we testing independent AI review, adjudication, materialized candidates, ratification, and implementation dispatch? | `provisional/review-control-loop/README.md` then `PROTOCOL.md` — experimental, not normative Forge doctrine |
+| How do I specify architecture before a spike, document existing code afterwards, and explain the changes? | `provisional/architecture-documentation/README.md` then `SPEC-MODE.md` (before/review/after/changes), `ASSESS.md` and `PALETTE.md`; local tools in `tooling/` — provisional |
 | What should a stage gate's exit report actually say? | `phases/phase-review-template.md` (Gate Exit Is a Measured Report) |
 | What is our Java quality bar? (JaCoCo floors, ArchUnit, JSpecify/NullAway, Error Prone, OSV dependency scan, concurrency and Lincheck, PMD + CPD, SpotBugs, PIT, Javadoc) | `guides/java-library-quality.md` — **the canonical standard**, formerly GP-9 `java-library-finishing-touches.md` |
 | How do I make `@NullMarked` actually mean something? | `guides/java-library-quality.md` §4.7 (JSpecify ships annotations only — NullAway at ERROR is the enforcer; wiring, config decisions, adoption triage) |

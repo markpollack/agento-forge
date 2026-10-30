@@ -1,0 +1,12 @@
+# Example scope; replace with the entry methods of the selected components.
+# Record one named test, not the suite. Exclude JDK, dependencies and test code.
+# Broad package instrumentation can produce enormous recordings.
+name: example-system
+language: java
+packages:
+  - path: example.app
+    methods:
+      - class: Session
+        name: submit|cancel|close
+      - class: Execution
+        name: run|finish

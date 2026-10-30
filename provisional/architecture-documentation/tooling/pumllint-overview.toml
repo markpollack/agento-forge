@@ -1,0 +1,10 @@
+# Starting profile for pumllint 0.33.0, --fail-on minor. Calibrate on real output.
+[rules]
+# Local generators own styling; no shared remote theme.
+inline-skinparam = false
+# Component ids normalized from hyphens to underscores.
+participant-naming = { pattern = "^[a-z][a-z0-9_]*$" }
+# Replace with only the orchestrators whose own steps explain the scenario.
+no-self-message = { allowed = [] }
+# A starting reading-size budget; explain any calibrated change.
+max-participants = { max = 8 }

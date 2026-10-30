@@ -30,6 +30,7 @@
 | The rule | Read this when | Page |
 |---|---|---|
 | State a decision as a **predicate over artifacts** — something an observation could contradict — and name it in the exit criterion that defends it (`defends DD-23`); a decision no criterion names is undefended, and you can see that without a taxonomy. | You're writing a design decision, or writing the step that is supposed to keep it true. | [decision-enforcement.md](decision-enforcement.md) |
+| When a model drives a workflow, the model turns the human's words into a **structured intent** and code decides every state change: legal in this state, at most one per turn, refusals that name the next valid step. Ask of each prompt sentence *"if the model ignored this, what happens?"* — a badly worded reply stays text; state changing unasked goes to code. Conditional words in a prompt (*only when, after, unless, stop*) are state written as prose. | You're writing a system prompt or skill for an agent that runs workflow steps, or a prompt has grown rules about when to do things. | [model-code-boundary.md](model-code-boundary.md) |
 | One word, one meaning, within one context — and where two contexts legitimately differ, write the translation where they meet. Classify occurrences by *sense* before any sweep, and never re-spell a word inside a quotation. | Two constructs are competing for a name, a rename keeps being re-argued, or someone is about to find-and-replace. | [vocabulary-law.md](vocabulary-law.md) |
 | Decide during design what a verdict is: deterministic judges for what must be true, AI judges for what resists automation — and write every manual review as if a program would run it. | You're specifying the Phase-4 feedback loop for an agent or a project. | [judges-and-evaluation.md](judges-and-evaluation.md) |
 | Build a knowledge base so any file is reachable in **≤3 hops** from a routing table, and state in every index what the KB does *not* cover. | You're designing knowledge an agent will read at runtime, or a KB has outgrown its index. *(Federation and the curator/navigator split are the second half of this page.)* | [knowledge-base-architecture.md](knowledge-base-architecture.md) |
@@ -49,6 +50,7 @@
 | The rule | Read this when | Page |
 |---|---|---|
 | A finding is an **exhibit the receiver can run**, not an assessment; a non-finding is a **recorded search** that states the method which could have found the thing. A MUST without its breaking case is a SHOULD. | You're writing a review prompt, grading findings, or about to claim something is complete. | [refutation-by-counterexample.md](refutation-by-counterexample.md) |
+| Read complete consumer programs or visible flows before earlier findings; judge result, next action and ownership with correctness at the same checkpoint. | A design has detailed mechanisms but ordinary use is unclear. | [review-lenses.md](review-lenses.md#consumer-code-lens) · [worked guide](../guides/consumer-first-design.md) |
 | A review is a stack of viewpoints, each catching a failure class the others structurally cannot — so pair every validating lens with an inverting one, because validation is silent about what was never asked. | You're gating a design or freezing a contract and choosing review coverage. | [review-lenses.md](review-lenses.md) |
 | Before committing to a roadmap, hand the trio to a fresh session that has none of your context and ask it for **criticism, not confirmation**. | You think discovery is done. | [conversational-review.md](conversational-review.md) |
 | To change something already decided: proposal → cold machine review on **restricted inputs** → fix round with prior revisions retained under supersede banners → humans on the **post-fix artifact only** → one lockstep ratification. | A frozen contract, a ratified decision, or a public API has to move. *(§ Team review for what humans are actually for here.)* | [act-pipeline.md](act-pipeline.md) |
@@ -75,6 +77,7 @@ These carry rules too, but they are instruments and standards rather than concep
 | To design a surface people author against (DSL, fluent API, CLI) so mistakes get real diagnostics | [`../guides/authoring-surface-quality.md`](../guides/authoring-surface-quality.md) |
 | The Java quality bar (JaCoCo, ArchUnit, JSpecify/NullAway, OWASP, Javadoc) | [`../guides/java-library-quality.md`](../guides/java-library-quality.md) |
 | To batch-ingest research results into an existing KB, or scout references for a new one | [`../guides/curator-intake.md`](../guides/curator-intake.md) · [`../guides/reference-harvest.md`](../guides/reference-harvest.md) |
+| To dogfood architecture documentation before a spike or from existing code, with reader-selected views and evidence labels | [`../provisional/architecture-documentation/README.md`](../provisional/architecture-documentation/README.md) — provisional, not doctrine; phase docs distill the opt-in procedure |
 | Which variant to use, and how Phase 4 differs across them | [`../variants/README.md`](../variants/README.md) |
 
 ## Not covered
@@ -90,5 +93,6 @@ This section does **not** include:
 Several pages carry **`Status: PROVISIONAL`** — one project, written down because the practice converged
 under adversarial review, not because it has been run twice. They are marked in their own headers:
 `act-pipeline`, `registers-of-absence`, `refutation-by-counterexample`, `vocabulary-law`,
-`decision-enforcement`, `research-diversion`. The trigger for promoting any of them is a **second** effort
+`decision-enforcement`, `research-diversion`, `model-code-boundary` (ratified by the Owner 2026-10-23, still
+one product line). Ratification adopts a rule; it does not promote the page. The trigger for promoting any of them is a **second** effort
 running the practice — the graduation rule pointed at this corpus's own pages.

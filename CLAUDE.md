@@ -39,7 +39,7 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | KB creation & federation | `variants/kb.md` | Graduation ladder, `/forge-kb` vs `/forge-research-kb`, federation registration, freshness obligations |
 | Phase 0: Vision | `phases/00-vision.md` | Problem statement, success criteria, unknowns, exit criteria |
 | Phase 1: Research | `phases/01-research.md` | Investigation of problem space, reference implementations |
-| Phase 2: Design | `phases/02-design.md` | Technical specification, decisions with rationale |
+| Phase 2: Design | `phases/02-design.md` | Consumer examples, operation contracts, mechanisms and readiness gate |
 | Phase 3: Roadmap | `phases/03-roadmap.md` | Implementable steps with entry/exit criteria |
 | Phase 4: Learning Loop | `phases/04-learning-loop.md` | Iterative execution with variant-specific feedback |
 | Session handoffs | `concepts/session-handoff.md` + `.claude/commands/prepare-handoff.md` | `/prepare-handoff` — the closing ritual: currency pass → inbox work order → launcher |
@@ -48,9 +48,11 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Changing a decided artifact | `concepts/act-pipeline.md` | Cold machine review → fix round → team review of the post-fix artifact → lockstep ratification |
 | Review evidence standard | `concepts/refutation-by-counterexample.md` | Findings are exhibits, non-findings are recorded searches |
 | Provisional review control loop | `provisional/review-control-loop/README.md` + `PROTOCOL.md` | Dogfood-only materialized candidates, AI review/adjudication, human ratification, and bounded implementation dispatch; not normative Forge doctrine |
+| Provisional architecture documentation | `provisional/architecture-documentation/README.md` + `ASSESS.md`, `PALETTE.md`, `EVIDENCE.md`, `JAVA-EVIDENCE.md`, `templates/` | Before/after/change documents; pre-spike specs with Mermaid and fresh outside-KB review (`SPEC-MODE.md`); existing-code evidence pipeline and local non-Java tools (`tooling/`). Reader-selected views, labelled claims; dogfood-only, not normative |
 | **Concepts register** | `concepts/index.md` | 23 concepts as one-line rules + read-this-when, grouped by the moment each bites (starting · deciding · building · reviewing · shipping). **Start here for anything under `concepts/`** — the rules are self-sufficient; open a page only when its row describes your situation |
 | Core concepts (23 docs) | `concepts/` | The two loops, KB architecture, judges, steward, oracles, research patterns, improvement flywheel, review lenses, act pipeline, registers of absence, vocabulary law |
 | Templates (12 docs) | `templates/` | Fill-in templates for every phase output |
+| Consumer-first design | `guides/consumer-first-design.md` + `examples/consumer-first-client/README.md` | Worked example, five operation questions, proportional design and pasteable session prompt |
 | Getting started | `guides/getting-started.md` | Step-by-step walkthrough of applying Forge |
 | Engineering standards | `guides/java-library-quality.md`, `guides/authoring-surface-quality.md`, `guides/second-implementation-protocol.md` | The Java quality bar; refuse-don't-default for surfaces people author against; the cold-second-implementation protocol |
 | Methodology comparisons & research | `inbox/` | BMAD-METHOD comparison, AGENTS.md standard, PLANS.md convergence (staging area) |
@@ -74,7 +76,7 @@ forge-methodology/
 │   ├── research-agent.md
 │   ├── steward-agent.md
 │   ├── conversational-review.md       # discovery-phase artifact review (light)
-│   ├── review-lenses.md               # the 9-lens catalog
+│   ├── review-lenses.md               # the 11-lens catalog
 │   ├── act-pipeline.md                # changing a DECIDED artifact (heavy)
 │   ├── refutation-by-counterexample.md  # the evidence standard
 │   ├── registers-of-absence.md        # known gaps + terminal finding states

@@ -70,7 +70,7 @@ if they do, it is a conversation mislabeled as a talk.
    conversation's subject.
 2. **Self-heal**: if no existing prefix fits, propose a new 3–6 char prefix, and **append a
    row** to the registry in `conversations/INTAKE.md` (topic + authority class). Mirror it
-   into the human-readable prefix table in `CLAUDE.md` in the same run (ritual-maintained
+   into the human-readable prefix table in the KB's root entry doc (`AGENTS.md` where present, else `CLAUDE.md`) in the same run (ritual-maintained
    duplication — see the contract header).
 3. Assign the next free sequence number `{N}` within that prefix.
 4. Rename to the contract's filename pattern (§1), e.g. `ChatGPT-{PREFIX}-{N}-{Title}.md`,
@@ -136,7 +136,7 @@ Rules (same discipline as `/ingest-status`):
 - Update the theme matrix in `synthesis/phase2/THEME-INDEX.md`.
 - **Size-class maintenance**: after appending, `wc -l` each touched theme doc; if it crossed
   an S/M/L threshold (S <800, M 800–1,800, L >1,800), update the Size cell in BOTH theme
-  tables (root `CLAUDE.md` and `synthesis/CLAUDE.md`). Never record exact line counts.
+  tables (the root entry doc and `synthesis/CLAUDE.md`). Never record exact line counts.
 
 ---
 
@@ -156,7 +156,7 @@ ungrounded in the source.
 ## Phase 8: Inventory + synthesis log
 
 1. **INVENTORY.md**: add a row for the new file if inventory tracking is in the contract (§5).
-2. **Synthesis log** (§7): append one dated line to the `CLAUDE.md` header in the
+2. **Synthesis log** (§7): append one dated line to the header of the KB's root entry doc (`AGENTS.md` where present, else `CLAUDE.md`), in the
    established format, naming the ingested id, the themes touched, and the MASTER-SUMMARY
    offset. Update any prefix table "Synthesized?" column if present. This line is the
    freshness authority for the conversation channel.
@@ -172,7 +172,7 @@ changed. Typical set:
 git add conversations/ongoing/{renamed-file}.md conversations/INTAKE.md \
         synthesis/phase1/MASTER-SUMMARY.md synthesis/phase1/CONVERSATION-INDEX.md \
         synthesis/phase2/theme-*.md synthesis/phase2/THEME-INDEX.md \
-        synthesis/phase3/ACTION-ITEMS.md INVENTORY.md CLAUDE.md
+        synthesis/phase3/ACTION-ITEMS.md INVENTORY.md AGENTS.md   # or CLAUDE.md, whichever is the root entry doc
 git diff --name-only --cached   # verify nothing unrelated is staged
 ```
 
@@ -186,7 +186,7 @@ Source-grounded changes:
 - ACTION-ITEMS: {added/advanced/skipped} — {reason; "skipped — external-ref" if so}
 
 Run metadata:
-- CLAUDE.md: synthesis-log line added; prefix registry synced (if new prefix)
+- Root entry doc: synthesis-log line added; prefix registry synced (if new prefix)
 ```
 
 ---

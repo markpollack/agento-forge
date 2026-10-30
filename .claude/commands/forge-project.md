@@ -217,11 +217,35 @@ files; duplicated instructions will drift.
 
 #### DESIGN.md
 
-Fill in all sections:
+Fill the applicable sections of DESIGN-TEMPLATE in this order. A small change can use one complete
+example and a paragraph; an ordinary feature often needs 2–3 examples and a stateful API 3–4, chosen
+for different behavior rather than a quota.
 
+- **Consumer examples first** — Configuration through operation, concrete result, ordinary follow-up
+  and cleanup; add relevant failure/cancellation paths. Define helpers and label proposed syntax.
+  Product features use the visible user flow instead of a program.
+  Callable programs can take configured, caller-owned dependencies with that boundary stated.
+- **Today versus proposed** — For each main consumer task, place today's code at a pinned repository
+  revision and source location beside the proposed program or flow. Record when no current path exists.
+- **Existing-path inventory** — Every public way to the same capability, including lower-level APIs
+  absent from the new examples: retain with a reason it cannot bypass the new contract, route through
+  that contract with the enforcement point named, or remove with replacement/loss stated. Use one
+  public way per capability unless a reason is recorded. A type-migration row alone is insufficient.
+- **Public surface** — Every in-scope public type, constructor, method, configuration, result and error,
+  with full signatures/exceptions and an existing-at-revision or proposed label.
+  Pin large existing definitions in an appendix; name relevant inherited members and compatibility
+  effects of changed/retired entries without cataloging unrelated dependencies.
+- **Operation contracts** — For each significant operation: what was accepted; what normal return
+  guarantees; what failure/cancellation means; what the caller can safely do next; who owns what remains.
+  Submission and result retrieval have separate boundaries; required processing differs from observers.
+  Cover partial startup failure: who owns cleanup and which diagnostics remain if no handle returns?
+- **Selected precedent** — Platform conventions, actual source guarantees, differing assumptions and
+  reuse/adapt/avoid decisions from the research already done.
+- **Trace** — Consumer need → operation postcondition → mechanism → test evidence. Every mechanism
+  and requirement names a promise or concrete safeguard; withdraw untraced rules, reserving IDs.
+  Before implementation, evidence is a named scenario/assertion, not a claim that behavior was tested.
 - **Build Coordinates** — groupId, artifactId, version, module structure, key dependencies
 - **Architecture** — Components, responsibilities, data flow
-- **Interfaces** — Contracts with behavioral specifications
 - **Data Models** — Fields, types, nullable, descriptions
 - **Design Decisions** — Context, decision, alternatives, rationale
 - **Error Handling** — Strategy
@@ -252,11 +276,21 @@ current action changed → update ROADMAP checkboxes → commit.
 
 ### Phase 5: Review and Refine
 
+Read complete consumer examples before earlier findings. Review usability and correctness together
+at this checkpoint; do not add a separate review cycle for consumer-code lens 11. Before calling the
+design ready, check that the result and next action are understandable; ordinary use needs no internal
+states or unexplained waits; the five operation questions are answered; the complete surface labels
+existing/proposed behavior; and important promises have checks with limits and deferrals stated.
+Check the current-versus-proposed comparisons and every existing path's disposition, including
+non-bypass reasons and any justified exceptions to one public way per capability.
+Compilation of proposed signatures proves types/syntax only. Preserve the applicable Phase 2 gates.
+At intermediate checkpoints, name what is ready for review and what still blocks the full design.
+
 Present drafts and ask:
 
 1. Does VISION.md capture what you're building and why?
 2. Are the success criteria the right targets?
-3. Does DESIGN.md cover the architecture — components, interfaces, decisions?
+3. Can a consumer use the examples correctly, and can the proposed mechanisms keep their promises?
 4. Does the ROADMAP order make sense?
 5. Are the integration points with existing projects correct?
 6. What would you change?
@@ -275,6 +309,7 @@ Iterate until satisfied.
    - Mission (implement Stage 1 of ROADMAP.md)
    - "Before You Start" checklist (read AGENTS.md, VISION.md, DESIGN.md, ROADMAP.md)
    - First roadmap step with entry/exit criteria
+   - Accepted consumer examples, operation contracts and the scenarios/assertions to demonstrate
    - Key integration context (which projects to reference, which interfaces to implement)
    - "After Each Step" checklist (run tests, update learnings, commit)
 
