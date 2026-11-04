@@ -10,7 +10,30 @@
 
 {{ONE_PARAGRAPH_DESCRIBING_IMPLEMENTATION_ORDER_AND_RATIONALE}}
 
-> **Before every commit**: Verify ALL exit criteria for the current step are met — especially the standard items (see [Step Exit Criteria Convention](#step-exit-criteria-convention)). Do NOT remove exit criteria to mark a step complete — fulfill them.
+> **Before marking a step complete**: Verify ALL its exit criteria are met — especially the standard items (see [Step Exit Criteria Convention](#step-exit-criteria-convention)). Do NOT remove exit criteria to mark it complete. A session may commit clearly labeled WIP without claiming the step is complete.
+
+## Feature completion and delivery
+
+> A feature is complete when its accepted implementation is integrated into main and usable through the project's normal delivery path. Remaining review, qualification, publication or consumer verification must appear explicitly in the roadmap, with an owner. Temporary worktrees and build caches must be removed or have a recorded reason to remain.
+
+**Integration target:** {{MAIN_OR_DOCUMENTED_PROJECT_TARGET}}
+**Normal delivery path:** {{PACKAGE_SNAPSHOT_OR_APPLICATION_OR_REPRODUCIBLE_PRIVATE_TOOL}}
+**Fresh consumer check:** {{COMMAND_AND_OWNING_STEP}}
+
+For each feature/use case, identify the existing steps or add the applicable delivery work:
+
+| Feature / use case | Implementation | Review / qualification | Main integration | Delivery / publication | Fresh consumer verification | Workspace disposition |
+|---|---|---|---|---|---|---|
+| {{FEATURE}} | {{STEP_AND_STATE}} | {{STEP_AND_STATE}} | {{OWNER_STEP_AND_STATE}} | {{OWNER_STEP_OR_NOT_APPLICABLE_WITH_REASON}} | {{STEP_AND_STATE}} | {{TASK_RECEIPT_OR_RETAINED_OWNER_REASON_NEXT_ACTION}} |
+
+Link owning receipts; do not duplicate their evidence here. Implementation steps may be complete
+while the feature remains open. For each blocked transition, name its owner, blocker and next action.
+One feature can span several commits, steps and sessions; do not publish after every small step.
+
+Use existing workspaces/caches where they suffice. Any temporary worktree, branch or private cache
+needs a purpose, owner and closing condition in the current task/handoff. Do not clone a whole Maven
+repository or create a writable hard-linked copy. Preserve unrelated work and frozen evidence.
+See [the delivery/workspace guide](../guides/feature-completion-and-workspaces.md).
 
 ## Stage 1: {{STAGE_NAME}}
 

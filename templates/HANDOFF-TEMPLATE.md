@@ -21,6 +21,18 @@ just the task.}
 in-flight external things that may report back mid-session (satellite sessions, long-running jobs) and what
 to do when they do.}
 
+## Feature delivery and temporary resources
+
+{State the feature/use case's integration target and normal delivery path. Link the roadmap steps
+for unfinished review/qualification, main integration, publication/delivery and fresh consumer
+verification, with owner/blocker/next action. A locally tested or pushed implementation is not a
+completed feature until its applicable delivery checks pass.}
+
+{Account for temporary branches/worktrees/private caches used by this task: path/ref, owner,
+purpose, closing condition and disposition — removed, actively retained, or blocked with reason
+and next action. Name durable evidence/restoration references. Preserve unrelated work; do not
+delete another owner's resources or create a replacement checkout merely for the next session.}
+
 ## Do this now
 {The concrete, ordered work list. Each item: what, where, and its acceptance check. End with:}
 - **STOP after {checkpoint}** and report back: {the report format — what landed, decisions taken,

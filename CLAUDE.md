@@ -41,6 +41,7 @@ Answer questions grounded in this corpus. Navigate using routing tables, not bru
 | Phase 1: Research | `phases/01-research.md` | Investigation of problem space, reference implementations |
 | Phase 2: Design | `phases/02-design.md` | Consumer examples, operation contracts, mechanisms and readiness gate |
 | Phase 3: Roadmap | `phases/03-roadmap.md` | Implementable steps with entry/exit criteria |
+| Feature completion and workspaces | `guides/feature-completion-and-workspaces.md` | Feature delivery through main/normal consumption; temporary workspace/cache entry and closeout rules, distilled into roadmap and handoff templates |
 | Phase 4: Learning Loop | `phases/04-learning-loop.md` | Iterative execution with variant-specific feedback |
 | Session handoffs | `concepts/session-handoff.md` + `.claude/commands/prepare-handoff.md` | `/prepare-handoff` — the closing ritual: currency pass → inbox work order → launcher |
 | KB session handoffs | `variants/kb.md` ("Session Handoff") + `.claude/commands/prepare-kb-handoff.md` | `/prepare-kb-handoff` — the KB closing ritual: corpus-truth currency pass → regenerate the standing forage order (`HANDOFF-FORAGE.md`) → launcher; template `templates/HANDOFF-KB-TEMPLATE.md` |

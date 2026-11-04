@@ -87,6 +87,18 @@ The steward alternates between two modes within each session:
 
 **Which mode to use?** If the human says "check on things" or "what's the status" → Stewardship Mode. If they say "fix this" or "implement that" → Development Mode. When in doubt, start with Stewardship Mode and propose Development Mode actions.
 
+## Feature delivery and workspace health
+
+A feature is complete when its accepted implementation is integrated into main and usable through the project's normal delivery path. Remaining review, qualification, publication or consumer verification must appear explicitly in the roadmap, with an owner. Temporary worktrees and build caches must be removed or have a recorded reason to remain.
+
+Track those transitions in the existing roadmap. Development can span sessions; preserve WIP
+without marking unfinished steps complete. Reuse the normal checkout/cache where possible.
+A temporary branch/worktree/private repository needs purpose, owner and closing condition.
+At handoff, remove it after authorized preservation or record retention and next action.
+Do not clone whole Maven repositories or use writable hard-linked copies. No estate-wide cleanup
+is implied; inspect only the resources associated with the current work unless separately scoped.
+See [the delivery/workspace guide](../guides/feature-completion-and-workspaces.md).
+
 ## Monitoring Integration
 
 The steward uses available monitoring tools to stay aware of project state:

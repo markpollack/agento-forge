@@ -24,6 +24,17 @@ Break the stable design into an ordered sequence of implementable steps, each wi
 5. **Group into stages** — Related steps form roadmap stages. Each stage ends with a consolidation step that compacts per-step learnings into `LEARNINGS.md` and a [stage review](phase-review-template.md).
 6. **Identify the learnings structure** — What will you capture along the way? Set up the learnings file structure.
 
+## Feature completion and delivery
+
+**A feature is complete when its accepted implementation is integrated into main and usable through the project's normal delivery path. Remaining review, qualification, publication or consumer verification must appear explicitly in the roadmap, with an owner. Temporary worktrees and build caches must be removed or have a recorded reason to remain.**
+
+Group the applicable review, main integration, delivery/publication, fresh consumer and workspace
+disposition work under the feature or use case. Individual implementation steps can complete first;
+the feature remains open. Name an owner and next action for blocked delivery. Session boundaries
+do not require new worktrees or private caches, and do not require publication after every small step.
+State this convention near the roadmap's top. See the
+[workspace and delivery guide](../guides/feature-completion-and-workspaces.md) for exceptions and examples.
+
 ## Exit Criteria
 
 - Every design component has at least one roadmap step

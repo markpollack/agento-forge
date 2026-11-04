@@ -71,6 +71,20 @@ The modes are not mutually exclusive. Eval-agent projects that generate code (Ja
 
 Both modes use the same roadmap structure, the same learnings capture, and the same phase review gates. They differ only in how "done" is measured.
 
+## Finish the feature through its normal delivery path
+
+A feature is complete when its accepted implementation is integrated into main and usable through the project's normal delivery path. Remaining review, qualification, publication or consumer verification must appear explicitly in the roadmap, with an owner. Temporary worktrees and build caches must be removed or have a recorded reason to remain.
+
+An implementation step may pass while review, native qualification or delivery remains open.
+Keep those transitions in ROADMAP.md with an owner; do not treat a pushed task branch or local install
+as the final consumer path. Integrate accepted work promptly through the owning project's gates.
+
+Before creating a worktree or private cache, record why existing resources do not suffice and its
+owner/closing condition. Do not clone whole Maven repositories or make writable hard-linked copies.
+At closeout, remove temporary resources only after preservation and ownership checks, or record why
+they remain and the next action. No blanket cleanup or extra publication permission is implied.
+See [the delivery/workspace guide](../guides/feature-completion-and-workspaces.md).
+
 ## Session Boundaries (Handoffs)
 
 Phase 4 execution routinely outlives a single AI session. Treat sessions as disposable and the repo as the

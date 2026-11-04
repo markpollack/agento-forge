@@ -30,9 +30,17 @@ The handoff is only trustworthy if the documents it points at are true. Bring th
 2. **Update**: CLAUDE.md's current-status/next-action section; roadmap step checkboxes (tick ONLY what met
    its exit criteria — never round up); the status board; a learnings file for anything significant not yet
    recorded (discoveries, bugs found, decisions taken, run mechanics learned).
-3. **Verify the build if code changed this session** (`./mvnw verify` or equivalent) — a handoff must never
+3. **Account for feature delivery and temporary resources**: distinguish completed implementation
+   from unfinished review/qualification, main integration, publication/delivery and fresh consumer
+   verification. Put missing transitions in ROADMAP.md with owner, blocker and next action. Record
+   every task-created branch/worktree/private cache and its removed/retained/blocked disposition.
+   Preserve original evidence and unrelated work. Do not clone entire Maven repositories, create
+   writable hard-linked caches, or require a new worktree for a new session. Remove temporary
+   resources only within existing authority after preservation; otherwise retain them explicitly.
+   See [the feature completion guide](../../guides/feature-completion-and-workspaces.md).
+4. **Verify the build if code changed this session** (`./mvnw verify` or equivalent) — a handoff must never
    silently pass a broken tree forward. If it's red, say so IN the handoff rather than fixing at the buzzer.
-4. **Commit** the currency pass (project commit conventions apply).
+5. **Commit** the currency pass (project commit conventions apply).
 
 ## Phase 2: Write the Work Order
 
@@ -46,14 +54,17 @@ Create `plans/inbox/handoff-{YYYY-MM-DD}-{topic}.md` from `$AGENTO_FORGE_HOME/te
    files (no "explore the sibling repo").
 3. **Where things stand** — per-lane/per-stage state with done/in-progress/blocked markers; name every
    blocking gate; list in-flight external work that may report back mid-session and what to do when it does.
-4. **Do this now** — the ordered work list with acceptance checks, ending with an explicit **STOP
+4. **Feature delivery and temporary resources** — carry the unfinished roadmap transitions,
+   owning next actions and resource dispositions described above. Do not equate a session return
+   or clean pushed task branch with feature completion.
+5. **Do this now** — the ordered work list with acceptance checks, ending with an explicit **STOP
    condition** and the report-back format.
-5. **Run mechanics** — the hard-won operational knowledge from this session: exact commands for long jobs,
+6. **Run mechanics** — the hard-won operational knowledge from this session: exact commands for long jobs,
    environment pins, detach/poll patterns, known traps. This is the section compaction would have destroyed;
    be generous.
-6. **Guardrails** — the standing rules easiest to violate mid-flow (commit conventions, honest-measurement
+7. **Guardrails** — the standing rules easiest to violate mid-flow (commit conventions, honest-measurement
    rules, classify-don't-guess policies, visibility constraints).
-7. **Human-gates** — decisions reserved for the human, with enough context to raise them crisply. Surface,
+8. **Human-gates** — decisions reserved for the human, with enough context to raise them crisply. Surface,
    never decide.
 
 **Supersede consumed handoffs**: if a previous session-continuation handoff exists in `plans/inbox/` and has
