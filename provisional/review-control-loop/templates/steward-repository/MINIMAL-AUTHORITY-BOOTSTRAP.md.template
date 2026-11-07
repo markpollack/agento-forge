@@ -9,7 +9,6 @@
 > **Excluded dirty/untracked status entries at bootstrap:** {{EXCLUDED_STATUS_COUNT}}
 > **Bootstrap script SHA-256:** `{{BOOTSTRAP_SCRIPT_SHA256}}`
 
-The project had no committed `plans/{VISION,DESIGN,ROADMAP}.md` trio. This steward was initialized
-from the exact accepted seed copied beside this record. No historical planning was inferred from
+{{TRIO_STATEMENT}} This steward was initialized from the exact accepted seed copied beside this record. No historical planning was inferred from
 project documentation or untracked files. The active trio and continuity checkpoint were
 intentionally incomplete at scaffold time and had to pass final validation before commit.

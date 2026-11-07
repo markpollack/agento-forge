@@ -97,13 +97,19 @@ its project:
 
 The choice is determined by evidence, not preference:
 
-**Does the project have a committed active planning trio?**
+**How many of `plans/{VISION,DESIGN,ROADMAP}.md` are committed at the exact project commit?**
 
-- **Yes** → `bootstrap-steward-repository.sh`. Planning imports from the **exact committed object
-  via `git archive`, never from a dirty working tree.**
-- **No** → `bootstrap-minimal-steward-repository.sh`. It requires an exact accepted **seed work
-  order from a named private authority repository**, creates a deliberately incomplete minimal trio,
-  and refuses to run when a committed trio already exists.
+- **All three** → `bootstrap-steward-repository.sh`. Planning imports from the **exact committed
+  object via `git archive`, never from a dirty working tree.**
+- **One or two (a partial trio)** → `bootstrap-minimal-steward-repository.sh`, unpatched. It prints
+  which members are present, imports the committed `plans/` tree from the exact committed object
+  into `plans/archive/project-planning-<date>/`, verified against blob hashes, and still creates the
+  minimal trio. A present member is **evidence for** that trio, not a replacement.
+- **None** → `bootstrap-minimal-steward-repository.sh`.
+
+The minimal scaffold requires an exact accepted **seed work order from a named private authority
+repository**, creates a deliberately incomplete minimal trio, and refuses only a **complete**
+committed trio, pointing to the import scaffold.
 
 The minimal path is **initialization from explicit authority** — not reconstruction of historical
 planning from public documentation or an untracked status summary. If you find yourself inventing

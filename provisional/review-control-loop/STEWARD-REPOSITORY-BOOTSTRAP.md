@@ -78,12 +78,26 @@ The current scaffold enforces the singular root trio. A multi-effort exception s
 deviation; do not create root pointer files or flatten load-bearing paths merely to satisfy the
 validator.
 
-If the project has no committed active planning trio, use the separate minimal-authority scaffold
-`scripts/bootstrap-minimal-steward-repository.sh`. It requires an exact accepted seed work order
-from a named private authority repository, creates a deliberately incomplete minimal trio, and
-refuses to run when a committed project trio already exists. Complete and validate that trio before
-the first commit. This is initialization from explicit authority, not reconstruction of historical
-planning from public documentation or an untracked status summary.
+Choose the scaffold by counting the committed trio members at the exact project commit:
+
+| Committed `plans/{VISION,DESIGN,ROADMAP}.md` | Scaffold |
+|---|---|
+| all three | import scaffold `scripts/bootstrap-steward-repository.sh` |
+| one or two (**partial trio**) | minimal scaffold `scripts/bootstrap-minimal-steward-repository.sh` |
+| none | minimal scaffold `scripts/bootstrap-minimal-steward-repository.sh` |
+
+The minimal-authority scaffold requires an exact accepted seed work order from a named private
+authority repository, creates a deliberately incomplete minimal trio, prints which trio members are
+present, and refuses only a **complete** committed trio, pointing to the import scaffold. A partial
+trio is not the same as none: when any member is present, the scaffold imports the project's
+committed `plans/` tree from the exact committed object via `git archive` into
+`plans/archive/project-planning-<established>/`, verifies every imported file against its blob hash,
+and records the partial trio in `plans/archive/migration/STEWARD-BOOTSTRAP.md`. A present member is
+evidence for the minimal trio, not a replacement for it; the missing documents are the deliverable,
+and every document derived from imported evidence stays marked `PENDING OWNER RATIFICATION`.
+Complete and validate the minimal trio before the first commit. This is initialization from explicit
+authority, not reconstruction of historical planning from public documentation or an untracked
+status summary.
 
 ## Stage 1 — create and validate the local private boundary
 
@@ -149,6 +163,10 @@ provisional/review-control-loop/scripts/test-minimal-steward-repository.sh
 The fixture proves committed-object import, exclusion of dirty/untracked planning, coexistence with
 ordinary Forge inbox intake, mandatory gitmaildir paths, instruction-file provenance, empty initial
 audit state, continuity-gate refusal/acceptance, and refusal to reuse a non-empty destination.
+The minimal fixture also proves the partial-trio path (one and two members accepted and reported,
+committed `plans/` imported and blob-verified, dirty and untracked planning excluded, minimal trio
+still unresolved), refusal of an import that omits a committed path, the original no-trio path, and
+refusal of a complete trio.
 
 ## Gitmaildir-enabled by construction
 
@@ -310,13 +328,19 @@ Every bootstrap records:
 Fold a repeated repair into this scaffold, validator, or procedure before creating the next steward.
 Do not preserve oral folklore as the only fix.
 
+Folded repair, for example: a partial committed trio was twice worked around with a scratch copy of
+the minimal scaffold that refused only a complete trio. That repair now lives in
+`scripts/bootstrap-minimal-steward-repository.sh` and its fixture; a partial trio uses the minimal
+scaffold unpatched, and recording the scratch-copy deviation is no longer required.
+
 ## Stop conditions
 
 Stop without improvising when:
 
 - the source planning authority is uncommitted or contradictory;
 - the destination is non-empty;
-- an active trio path is missing;
+- the import scaffold is chosen and an active trio path is missing (a partial trio uses the minimal
+  scaffold instead);
 - remote privacy cannot be verified;
 - a public bridge would expose private content;
 - importing would rewrite load-bearing paths; or

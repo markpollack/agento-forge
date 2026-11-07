@@ -23,8 +23,9 @@
 
 ## Planning path disposition
 
-[REQUIRED] State that no committed planning trio existed, name preserved evidence, and account for
-any explicitly preserved untracked status without treating it as authority.
+[REQUIRED] State which committed trio members existed (none, or a partial trio), name preserved
+evidence, including any `plans/archive/project-planning-<date>/` import and any later path moves,
+and account for any explicitly preserved untracked status without treating it as authority.
 
 ## Continuity assertion
 
