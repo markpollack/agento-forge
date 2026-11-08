@@ -9,6 +9,9 @@
 > **Evidence destination:** {{step-learning-or-implementation-record-path}}
 > **Worker:** {{fresh-session/tool-selection}}
 > **Stop:** {{exact-step-boundary}}
+> **Preferred path:** {{the intended implementation route}}
+> **Full gate:** {{exact command(s) that must pass before delivery}}
+> **Owner decision required for:** {{changes to acceptance criteria, a weaker gate, work in another repository, or other named limits}}
 
 This is a dispatch envelope, not a second implementation plan. VISION owns purpose and boundaries,
 DESIGN owns behavior, ROADMAP owns work items and exit criteria, and the ratification record owns
@@ -31,6 +34,10 @@ candidate with repeated `git show`, per-file hashes, or a worktree.
 Execute ROADMAP {{roadmap-step-id}} exactly. ROADMAP owns its sequence, work items, deliverables, and
 exit criteria. DESIGN and its referenced decisions own semantics. Stop with a concise exhibit rather
 than choosing a new design branch if implementation reveals a conflict or new failure case.
+
+If the preferred path hits a separate defect, ship the smallest change that still meets the exit criteria with the full
+gate green, and record the separate defect with its owning repository's steward. Stop for an Owner decision instead if
+that would change the exit criteria, weaken the full gate, or expand the work into another repository.
 
 For `BOUNDED CORRECTION` mode, execute only the reopened step's named correction block. Preserve the
 original implementation evidence and write a new correction record or dated correction exhibit as

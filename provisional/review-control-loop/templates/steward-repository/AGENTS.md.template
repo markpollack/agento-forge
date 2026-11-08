@@ -14,3 +14,9 @@ incoming messages. Never put current message IDs, correlations, dispositions, or
 Keep this repository private. Code, tests, builds, releases, and public documentation change in the
 paired project repository, never here. Do not copy private planning or control state into public
 project files. Git commits contain no AI attribution.
+
+When the preferred path hits a separate defect, ship the smallest change that keeps the full gate green. Where a quick
+check can establish it, check whether the defect also occurs on the baseline. If a smaller change still meets the work
+order's acceptance criteria and passes the full gate, continue within the existing authorization and record the
+separate defect with its owning repository's steward. Bring the Owner a decision if proceeding would change the
+acceptance criteria, weaken the gate, or expand the work into another repository.
