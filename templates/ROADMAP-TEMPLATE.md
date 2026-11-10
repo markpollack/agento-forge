@@ -14,6 +14,8 @@
 
 ## Feature completion and delivery
 
+> **Main only at every step exit (Owner, 2026-11-10).** Every step ends with the project and steward repositories on `main` only: no extra worktree, no other local or origin branch, no stash. A resource that must stay is recorded in the step's learnings file with owner, purpose and closing condition. "Let's get our entire house in order. Only then do we start new construction."
+
 > A feature is complete when its accepted implementation is integrated into main and usable through the project's normal delivery path. Remaining review, qualification, publication or consumer verification must appear explicitly in the roadmap, with an owner. Temporary worktrees and build caches must be removed or have a recorded reason to remain.
 
 **Integration target:** {{MAIN_OR_DOCUMENTED_PROJECT_TARGET}}
@@ -341,6 +343,7 @@ roadmap, same purpose — know the ground before building on it — and it is **
 **Entry criteria** *(inter-stage gate — do not skip)*:
 - [ ] Stage 1 consolidation complete — Read: `plans/learnings/step-1.K-stage1-summary.md`
 - [ ] Read: `plans/learnings/LEARNINGS.md` — full compacted project learnings
+- [ ] Project and steward repos are `main` only — no retained resource carried across a stage boundary
 - [ ] Read: `DESIGN.md` — sections relevant to Stage 2 work
 
 **Work items**:
@@ -429,6 +432,8 @@ closes and nobody notices that either. See `concepts/registers-of-absence.md`.
 - [ ] Create: `plans/learnings/step-X.Y-topic.md`
 - [ ] Update `CLAUDE.md` with distilled learnings
 - [ ] Update `ROADMAP.md` checkboxes
+- [ ] Workspace: project and steward repos are `main` only (`scripts/check-main-only.sh` prints MAIN-ONLY for each),
+      or each remaining worktree/branch is recorded in this step's learnings file with owner, purpose and closing condition
 - [ ] COMMIT
 ```
 
@@ -450,6 +455,7 @@ The **first step of Stage N (N > 1)** must have these entry criteria in addition
 ```markdown
 - [ ] Stage N-1 consolidation complete — Read: `plans/learnings/step-X.K-stageN-1-summary.md`
 - [ ] Read: `plans/learnings/LEARNINGS.md` — full compacted project learnings
+- [ ] Project and steward repos are `main` only — no retained resource carried across a stage boundary
 ```
 
 **Why**: Stage consolidation is the *exit* of Stage N-1, but it is only honored if Stage N's *entry* gates on it. Without an explicit entry gate, a new stage can start before consolidation is done, causing exactly the knowledge fragmentation that consolidation is meant to prevent.

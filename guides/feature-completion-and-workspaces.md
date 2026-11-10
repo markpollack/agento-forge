@@ -76,7 +76,14 @@ Update the roadmap before the successor handoff. Account for:
 
 A session may end before feature completion. Commit/push clearly labeled WIP where allowed; never
 call a failing or unfinished step complete to satisfy a closeout checklist. Preserve unrelated work.
-No automatic deletion, force push, branch removal or publication is authorized by this guide.
+Every step exits with the project and steward repositories on `main` only (Owner, 2026-11-10):
+archive first, then remove. Archive worktree files as a tarball and branches as a verified
+`git bundle` under `~/archive/<repo>-<YYYY-MM-DD>/` with a README saying what was removed, why it
+was safe and how to restore it; then remove the worktree and delete the local and origin branches.
+Merge accepted work to main through the normal gate first; never merge proof work to reach zero.
+Leave another owner's resources, or anything you are unsure of, for the Owner. Never delete
+unmerged work without a verified bundle, and never force-push main. Publication is not authorized
+by this guide. `scripts/check-main-only.sh` prints MAIN-ONLY when nothing remains.
 
 ## Feature exit
 
