@@ -1,5 +1,7 @@
 # Forge Methodology
 
+@AGENTS.md
+
 A six-phase methodology for building AI agents, software projects, and conducting research. Forge separates discovery (iterative phases 0-2) from execution (sequential phases 3-5), treats evaluation as first-class, and produces learnings as a primary artifact alongside code.
 
 ## The reading contract
